@@ -768,116 +768,117 @@
 // };
 
 // export default RegisterPage;
+////////////////////////////////////////////////////////////withot thunc down work الاصلية 
 
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { register, verifyOTP } from '../features/auth/authActions'; // تأكد من أن verifyOTP موجود
-import { useNavigate } from 'react-router-dom';
+// import { useState, useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { register, verifyOTP } from '../features/auth/authActions'; // تأكد من أن verifyOTP موجود
+// import { useNavigate } from 'react-router-dom';
 
-const RegisterPage = () => {
-  const [username, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [otp, setOtp] = useState(''); // حالة للـ OTP
-  const [isOtpSent, setIsOtpSent] = useState(false); // حالة للتحقق مما إذا تم إرسال OTP
-  const [isOtpVerified, setIsOtpVerified] = useState(false); // حالة للتحقق من نجاح OTP
+// const RegisterPage = () => {
+//   const [username, setName] = useState('');
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [otp, setOtp] = useState(''); // حالة للـ OTP
+//   const [isOtpSent, setIsOtpSent] = useState(false); // حالة للتحقق مما إذا تم إرسال OTP
+//   const [isOtpVerified, setIsOtpVerified] = useState(false); // حالة للتحقق من نجاح OTP
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isLoading, error, userInfo } = useSelector((state) => state.auth);
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+//   const { isLoading, error, userInfo } = useSelector((state) => state.auth);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
 
-    const userData = {
-      username,
-      email,
-      password,
-    };
+//     const userData = {
+//       username,
+//       email,
+//       password,
+//     };
   
-    try {
-      await dispatch(register(userData)); // انتظار تسجيل المستخدم
-      setIsOtpSent(true); // تحديث الحالة لإظهار نموذج OTP
-    } catch (error) {
-      console.error(error);
-    }
-  };
+//     try {
+//       await dispatch(register(userData)); // انتظار تسجيل المستخدم
+//       setIsOtpSent(true); // تحديث الحالة لإظهار نموذج OTP
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
 
-  const handleVerifyOtp = async (e) => {
-    e.preventDefault();
+//   const handleVerifyOtp = async (e) => {
+//     e.preventDefault();
   
-    if (!email || !otp) {
-      console.error('Email and OTP are required');
-      return;
-    }
+//     if (!email || !otp) {
+//       console.error('Email and OTP are required');
+//       return;
+//     }
   
-    const otpData = {
-      email,
-      otp,
-    };
+//     const otpData = {
+//       email,
+//       otp,
+//     };
   
-    try {
-      await dispatch(verifyOTP(otpData)); // انتظار التحقق من OTP
-      setIsOtpVerified(true); // تحديث الحالة عند نجاح التحقق
-    } catch (error) {
-      console.error('Error verifying OTP:', error);
-    }
-  };
+//     try {
+//       await dispatch(verifyOTP(otpData)); // انتظار التحقق من OTP
+//       setIsOtpVerified(true); // تحديث الحالة عند نجاح التحقق
+//     } catch (error) {
+//       console.error('Error verifying OTP:', error);
+//     }
+//   };
 
-  // استخدام useEffect لتوجيه المستخدم بعد نجاح التحقق من OTP
-  useEffect(() => {
-    if (isOtpVerified) {
-      navigate('/');  // توجيه المستخدم إلى الصفحة الرئيسية
-    }
-  }, [isOtpVerified, navigate]);
+//   // استخدام useEffect لتوجيه المستخدم بعد نجاح التحقق من OTP
+//   useEffect(() => {
+//     if (isOtpVerified) {
+//       navigate('/');  // توجيه المستخدم إلى الصفحة الرئيسية
+//     }
+//   }, [isOtpVerified, navigate]);
 
-  return (
-    <div>
-      <h2>Register</h2>
-      {!isOtpSent ? (
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Name"
-            value={username}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Registering...' : 'Register'}
-          </button>
-        </form>
-      ) : (
-        <form onSubmit={handleVerifyOtp}>
-          <input
-            type="text"
-            placeholder="Enter OTP"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Verifying...' : 'Verify OTP'}
-          </button>
-        </form>
-      )}
-      {error && <p>{error}</p>}
-      {userInfo && isOtpSent && <p>Check your email for the OTP.</p>}
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <h2>Register</h2>
+//       {!isOtpSent ? (
+//         <form onSubmit={handleSubmit}>
+//           <input
+//             type="text"
+//             placeholder="Name"
+//             value={username}
+//             onChange={(e) => setName(e.target.value)}
+//           />
+//           <input
+//             type="email"
+//             placeholder="Email"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//           />
+//           <input
+//             type="password"
+//             placeholder="Password"
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//           />
+//           <button type="submit" disabled={isLoading}>
+//             {isLoading ? 'Registering...' : 'Register'}
+//           </button>
+//         </form>
+//       ) : (
+//         <form onSubmit={handleVerifyOtp}>
+//           <input
+//             type="text"
+//             placeholder="Enter OTP"
+//             value={otp}
+//             onChange={(e) => setOtp(e.target.value)}
+//           />
+//           <button type="submit" disabled={isLoading}>
+//             {isLoading ? 'Verifying...' : 'Verify OTP'}
+//           </button>
+//         </form>
+//       )}
+//       {error && <p>{error}</p>}
+//       {userInfo && isOtpSent && <p>Check your email for the OTP.</p>}
+//     </div>
+//   );
+// };
 
-export default RegisterPage;
+// export default RegisterPage;
 
 //////////////////////////////////////////////////////////  without thunk
 // import  { useState, useEffect } from 'react';
@@ -1085,3 +1086,205 @@ export default RegisterPage;
 // };
 
 // export default RegisterPage;
+////////////////////////////////////////////////////////////////////////////////////////// work without design 
+// import { useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { register, verifyOTP } from '../features/auth/authThunck';
+// import { useNavigate } from 'react-router-dom';
+
+
+// const Register = () => {
+//   const [username, setUsername] = useState('');
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [otp, setOtp] = useState('');
+//   const [isOtpSent, setIsOtpSent] = useState(false);
+//   const dispatch = useDispatch();
+//   const { isLoading, error } = useSelector((state) => state.auth);
+//   const navigate = useNavigate();
+
+
+  
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (!isOtpSent) {
+//       try {
+//         await dispatch(register({ username, email, password })).unwrap();
+//         setIsOtpSent(true);
+//       } catch (err) {
+//         console.error('Registration failed:', err);
+//       }
+//     } else {
+//       try {
+//         await dispatch(verifyOTP({ email, otp })).unwrap();
+//         navigate('/'); // توجيه إلى الصفحة الرئيسية بعد التحقق من OTP بنجاح
+//       } catch (err) {
+//         console.error('OTP verification failed:', err);
+//       }
+//     }
+//   };
+
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       {!isOtpSent ? (
+//         <>
+//           <input
+//             type="text"
+//             value={username}
+//             onChange={(e) => setUsername(e.target.value)}
+//             placeholder="Username"
+//             required
+//           />
+//           <input
+//             type="email"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//             placeholder="Email"
+//             required
+//           />
+//           <input
+//             type="password"
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//             placeholder="Password"
+//             required
+//           />
+//           <button type="submit" disabled={isLoading}>
+//             {isLoading ? 'Registering...' : 'Register'}
+//           </button>
+//         </>
+//       ) : (
+//         <>
+//           <input
+//             type="text"
+//             value={otp}
+//             onChange={(e) => setOtp(e.target.value)}
+//             placeholder="Enter OTP"
+//             required
+//           />
+//           <button type="submit" disabled={isLoading}>
+//             {isLoading ? 'Verifying...' : 'Verify OTP'}
+//           </button>
+//         </>
+//       )}
+//       {error && <p>{error}</p>}
+//     </form>
+//   );
+// };
+
+// export default Register;
+/////////////////////////////////////////////////////////////////////////////////////////////
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { register, verifyOTP } from '../features/auth/authThunck';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/NavBar';
+import Door from '../../assets/signup.svg';
+
+const Register = () => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [otp, setOtp] = useState('');
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isOtpSent) {
+      try {
+        await dispatch(register({ username, email, password })).unwrap();
+        setIsOtpSent(true);
+      } catch (err) {
+        console.error('Registration failed:', err);
+      }
+    } else {
+      try {
+        await dispatch(verifyOTP({ email, otp })).unwrap();
+        navigate('/'); // توجيه إلى الصفحة الرئيسية بعد التحقق من OTP بنجاح
+      } catch (err) {
+        console.error('OTP verification failed:', err);
+      }
+    }
+  };
+
+  return (
+    <>
+      <Navbar />
+      <section className="h-[7%] flex box-border justify-center items-center mt-24">
+        <div className="bg-[#DFD3C3] rounded-2xl flex max-w-3xl p-5 items-center">
+          <div className="md:w-1/2 px-8">
+            <h2 className="font-bold text-3xl text-[#8D493A]">Sign Up</h2>
+            <p className="text-sm mt-4 text-[#8D493A]">
+              {isOtpSent ? 'Verify your OTP to complete registration!' : 'New here? Create your account today!'}
+            </p>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              {!isOtpSent ? (
+                <>
+                  <input
+                    className="p-2 mt-8 rounded-xl border"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Username"
+                    required
+                  />
+                  <input
+                    className="p-2 mt-4 rounded-xl border"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                    required
+                  />
+                  <input
+                    className="p-2 mt-4 rounded-xl border"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    required
+                  />
+                  <button
+                    className="bg-[#8D493A] text-white py-2 rounded-xl hover:scale-105 duration-300 hover:bg-[#D0B8A8] font-medium"
+                    type="submit"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Registering...' : 'Register'}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <input
+                    className="p-2 mt-8 rounded-xl border"
+                    type="text"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    placeholder="Enter OTP"
+                    required
+                  />
+                  <button
+                    className="bg-[#8D493A] text-white py-2 rounded-xl hover:scale-105 duration-300 hover:bg-[#D0B8A8] font-medium"
+                    type="submit"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Verifying...' : 'Verify OTP'}
+                  </button>
+                </>
+              )}
+              {error && <p className="text-red-500">{error}</p>}
+            </form>
+          </div>
+          <div className="md:block hidden w-1/2">
+            <img className="rounded-2xl max-h-[1600px]" src={Door} alt="signup form image" />
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Register;

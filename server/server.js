@@ -11,8 +11,8 @@ const habitday = require('./Routes/HabitRoutes.js');
 const contentRoutes = require('./Routes/ContentRoutes');
 const reviewRoutes = require('./Routes/ReviewRoutes');
 const userRoutes = require('./Routes/UserRoutes')
-const collegeRoutes = require('./Routes/ResourceRoutes.js'); 
-const academicYearRoutes = require('./Routes/ResourceRoutes.js');
+const ResourceRoutes = require('./Routes/ResourceRoutes.js'); 
+const cartRoutes = require('./Routes/CartRoutes.js');
 const cors = require('cors'); // استيراد مكتبة cors
 
 
@@ -34,11 +34,11 @@ connectDB(); // الاتصال بقاعدة البيانات
 
 // Routes
 app.use('/api/habits', habitday); // استخدام المسارات الخاصة بالـ habits
-app.use('/api',contentRoutes);
-app.use('/api', collegeRoutes);
-app.use('/api', academicYearRoutes);
+app.use('/api/content',contentRoutes); 
+app.use('/api', ResourceRoutes);
 app.use('/api/review',reviewRoutes)
-app.use('/api/users',userRoutes)
+app.use('/api/users',userRoutes)  
+app.use('/api/cart',cartRoutes) 
 // بدء الاستماع للطلبات على المنفذ المحدد
 const PORT = process.env.PORT ;
 // const PORT = process.env.PORT || 4000;

@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../Controllers/UserController');
-// const authenticateToken = require('../Middleware/auth');
+
+const authenticateToken = require('../Middleware/auth');
 
 // مسار التسجيل
 // router.post('/register', registerUser);
@@ -15,6 +16,19 @@ router.post('/register', userController.registerUser);
 // Route لتسجيل الدخول وإرجاع توكن JWT
 router.post('/login', userController.loginUser); 
 
+
+router.get('/status', userController.getLoginStatus);
+
+// مسار لتسجيل الخروج
+router.post('/logout', userController.logout);
+
+// نقطة النهاية الجديدة لجلب بيانات المستخدم
+router.get('/profile', userController.getUserProfile); 
+
+// المسار الخاص بالتحقق من حالة تسجيل الدخول
+// router.get('/auth/status', authenticateToken, userController.getLoginStatus );
+// Route لتسجيل الخروج
+// router.post('/logout', userController.logoutUser);
 // // Route للحصول على معلومات المستخدم المحمي بالـ token
 // router.get('/profile', authenticateToken, userController.getProfile);
 

@@ -360,97 +360,97 @@
 
 
 //////////////////////////////////////// old way without thunk
-import { loginRequest, loginSuccess, loginFailure } from './authSlice';
-import axios from 'axios';
+// import { loginRequest, loginSuccess, loginFailure } from './authSlice';
+// import axios from 'axios';
 
-// تسجيل الدخول
-export const login = (username, password) => async (dispatch) => {
-  console.log('Request data:', { username, password });
+// // تسجيل الدخول
+// export const login = (username, password) => async (dispatch) => {
+//   console.log('Request data:', { username, password });
 
-  try {
-    dispatch(loginRequest());
-    const trimmedUsername = username.trim();
-    const trimmedPassword = password.trim();
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true, // التأكد من إرسال الكوكي
-    };
+//   try {
+//     dispatch(loginRequest());
+//     const trimmedUsername = username.trim();
+//     const trimmedPassword = password.trim();
+//     const config = {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       withCredentials: true, // التأكد من إرسال الكوكي
+//     };
 
-    const { data } = await axios.post(
-      'http://localhost:5000/api/users/login',
-      { username: trimmedUsername, password: trimmedPassword }, // استخدم القيم المقطوعة
-      config
-    );
+//     const { data } = await axios.post(
+//       'http://localhost:5000/api/users/login',
+//       { username: trimmedUsername, password: trimmedPassword }, // استخدم القيم المقطوعة
+//       config
+//     );
 
-    dispatch(loginSuccess(data));
+//     dispatch(loginSuccess(data));
 
-  } catch (error) {
-    dispatch(
-      loginFailure(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-      )
-    );
-  }
-};
+//   } catch (error) {
+//     dispatch(
+//       loginFailure(
+//         error.response && error.response.data.message
+//           ? error.response.data.message
+//           : error.message
+//       )
+//     );
+//   }
+// };
 
-export const register = ({ username, email, password }) => async (dispatch) => {
-  try {
-    dispatch(loginRequest());
+// export const register = ({ username, email, password }) => async (dispatch) => {
+//   try {
+//     dispatch(loginRequest());
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true, // التأكد من إرسال الكوكي
-    };   
+//     const config = {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       withCredentials: true, // التأكد من إرسال الكوكي
+//     };   
 
-    const { data } = await axios.post('http://localhost:5000/api/users/register', { username, email, password }, config);
+//     const { data } = await axios.post('http://localhost:5000/api/users/register', { username, email, password }, config);
 
-    dispatch(loginSuccess(data));
+//     dispatch(loginSuccess(data));
 
-  } catch (error) {
-    dispatch(loginFailure(
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message
-    ));
-  }
-};
+//   } catch (error) {
+//     dispatch(loginFailure(
+//       error.response && error.response.data.message
+//         ? error.response.data.message
+//         : error.message
+//     ));
+//   }
+// };
 
-export const verifyOTP = ({ email, otp }) => async (dispatch) => {
-  try {
-    dispatch({ type: 'VERIFY_OTP_REQUEST' });
+// export const verifyOTP = ({ email, otp }) => async (dispatch) => {
+//   try {
+//     dispatch({ type: 'VERIFY_OTP_REQUEST' });
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true, // التأكد من إرسال الكوكي
-    };
+//     const config = {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       withCredentials: true, // التأكد من إرسال الكوكي
+//     };
 
-    const { data } = await axios.post(
-      'http://localhost:5000/api/users/verify-otp',
-      { email, otp },  // البيانات المرسلة للـ API
-      config
-    ); 
+//     const { data } = await axios.post(
+//       'http://localhost:5000/api/users/verify-otp',
+//       { email, otp },  // البيانات المرسلة للـ API
+//       config
+//     ); 
 
-    dispatch({ type: 'VERIFY_OTP_SUCCESS', payload: data });
+//     dispatch({ type: 'VERIFY_OTP_SUCCESS', payload: data });
 
-    localStorage.setItem('userInfo', JSON.stringify(data));
-  } catch (error) {
-    dispatch({
-      type: 'VERIFY_OTP_FAIL',
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+//     localStorage.setItem('userInfo', JSON.stringify(data));
+//   } catch (error) {
+//     dispatch({
+//       type: 'VERIFY_OTP_FAIL',
+//       payload:
+//         error.response && error.response.data.message
+//           ? error.response.data.message
+//           : error.message,
+//     });
+//   }
+// };
 ////////////////////////////////////////////////////////////////////////////// with thunc1
 // import axios from 'axios';
 
@@ -550,3 +550,49 @@ export const verifyOTP = ({ email, otp }) => async (dispatch) => {
 //       : error.message;
 //   }
 // };
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+import axios from 'axios';
+
+const API_URL = 'http://localhost:5000/api/users';
+
+export const loginApi = async (username, password) => {
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  };
+  const response = await axios.post(`${API_URL}/login`, { username, password }, config);
+  return response.data;
+};
+
+export const registerApi = async (userData) => {
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  };
+  const response = await axios.post(`${API_URL}/register`, userData, config);
+  return response.data;
+};
+
+export const verifyOTPApi = async (email, otp) => {
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  };
+  const response = await axios.post(`${API_URL}/verify-otp`, { email, otp }, config);
+  return response.data;
+};
+
+export const logoutApi = async () => {
+  const config = { withCredentials: true };
+  const response = await axios.post(`${API_URL}/logout`, {}, config);
+  return response.data;
+};
+
+export const getLoginStatusApi = async () => {
+  const config = { withCredentials: true };
+  const response = await axios.get(`${API_URL}/status`, config);
+  // const response = await axios.get(`${API_URL}/login-status`, config); هذا التغيير
+console.log(response.data); // تحقق هنا إذا كانت البيانات تحتوي على 'role'
+
+  return response.data;
+};

@@ -19,12 +19,32 @@
 
 // module.exports = AcademicYear;
 // Models/AcademicYearModel.js
+////////////////////////////////////////////////////////////
+// const mongoose = require('mongoose');
+
+// const academicYearSchema = new mongoose.Schema({
+//   name: { type: String, required: true },
+//   imageUrl: { type: String },
+//   college: { type: mongoose.Schema.Types.ObjectId, ref: 'College', required: true }
+// });
+
+// module.exports = mongoose.model('AcademicYear', academicYearSchema);
+/////////////////////////////////////////////////////////////////////////
 const mongoose = require('mongoose');
 
 const academicYearSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  nameAr: { type: String, required: true }, // الاسم بالعربية
   imageUrl: { type: String },
-  college: { type: mongoose.Schema.Types.ObjectId, ref: 'College', required: true }
-});
+  description: { type: String },
+  college: { type: mongoose.Schema.Types.ObjectId, ref: 'College', required: true },
+  order: { type: Number, required: true }, // ترتيب السنة الدراسية
+  isActive: { type: Boolean, default: true },
+}, { timestamps: true });
 
-module.exports = mongoose.model('AcademicYear', academicYearSchema);
+// إنشاء فهرس مركب للكلية والترتيب
+academicYearSchema.index({ college: 1, order: 1 }, { unique: true });
+
+const AcademicYear = mongoose.model('AcademicYear', academicYearSchema);
+
+module.exports = AcademicYear;

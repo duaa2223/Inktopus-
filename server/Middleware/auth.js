@@ -81,53 +81,158 @@
 // };
 
 // module.exports = authenticateToken;
-////////////////////////////////////////cookie
-const jwt = require('jsonwebtoken');
-
-const authenticateToken = (req, res, next) => {
-  try {
-  // الحصول على التوكن من الكوكي
-  const token = req.cookies.token;
-
-  // if (!token) return res.status(401).json({ message: 'Token required' });
-  if (!token) {
-    return res.status(401).json({ errorMessage: "Unauthorized" });
-  }
-
-  const verified = jwt.verify(token, process.env.JWT_SECRET);
-  req.user = verified.userId;
-  console.log("req.user: ", req.user);
-  next();
-} catch (err) {
-  console.error(err);
-  res.status(401).json({ errorMessage: "Unauthorized" });
-}
-};
-
-module.exports = authenticateToken;
-
-
+////////////////////////////////////////cookie my
 // const jwt = require('jsonwebtoken');
 
 // const authenticateToken = (req, res, next) => {
+//   try {
 //   // الحصول على التوكن من الكوكي
-//   const token = req.cookies.jwt;
+//   const token = req.cookies.token;
 
-//   // تحقق مما إذا كان هناك توكن
+//   // if (!token) return res.status(401).json({ message: 'Token required' });
 //   if (!token) {
 //     return res.status(401).json({ errorMessage: "Unauthorized" });
 //   }
 
-//   // التحقق من صحة التوكن
-//   jwt.verify(token, process.env.JWT_SECRET, (err, verified) => {
-//     if (err) {
-//       console.error(err);
-//       return res.status(401).json({ errorMessage: "Unauthorized" });
-//     }
-//     req.user = verified.user; // تخزين معلومات المستخدم في req.user
-//     console.log("req.user: ", req.user);
-//     next(); // الانتقال إلى الـ Middleware التالي
-//   });
+//   const verified = jwt.verify(token, process.env.JWT_SECRET);
+//   req.user = verified.userId;
+//   console.log("req.user: ", req.user);
+//   next();
+// } catch (err) {
+//   console.error(err);
+//   res.status(401).json({ errorMessage: "Unauthorized" });
+// }
 // };
 
 // module.exports = authenticateToken;
+
+
+// const jwt = require("jsonwebtoken"); // obada
+// require("dotenv").config();
+
+// const auth = (req, res, next) => {
+//   const token = req.cookies.token;
+
+//   console.log("Received token:", token);
+//   try {
+//     if (!token) {
+//       return res
+//         .status(401)
+//         .json({ loggedIn: false, message: "No token provided" });
+//     }
+//     const user = jwt.verify(token, process.env.JWT_SECRET);
+//     req.user = user;
+//     req.body.userId = user.id;
+//     console.log("Token verified successfully. User ID:", req.user);
+//     next();
+//   } catch (error) {
+//     console.error("Error verifying token:", error.message);
+//     res.status(500).send("Error verifying token: " + error.message);
+//   }
+// };
+// module.exports = auth;
+//////////////////////////////////////////////work
+// const jwt = require("jsonwebtoken");
+// require("dotenv").config();
+
+// const auth = (req, res, next) => {
+//   const token = req.cookies.token; // الحصول على التوكن من الكوكي
+
+//   console.log("Received token:", token);
+//   try {
+//     if (!token) {
+//       return res
+//         .status(401)
+//         .json({ loggedIn: false, message: "No token provided" });
+//     }
+//     const user = jwt.verify(token, process.env.JWT_SECRET); // التحقق من التوكن
+//     req.user = user; 
+//     req.body.userId = user.id;
+//     console.log("Token verified successfully. User ID:", req.user);
+//     next();
+//   } catch (error) {
+//     console.error("Error verifying token:", error.message);
+//     res.status(500).send("Error verifying token: " + error.message);
+//   }
+// };
+
+// module.exports = auth;
+////////////////////////////////////////////////
+// const jwt = require("jsonwebtoken");
+// require("dotenv").config();
+
+// const auth = (req, res, next) => {
+//   console.log("Cookies:", req.cookies);
+//   const token = req.cookies.token;
+//   console.log("Received token:", token);
+
+
+//   if (!token) {
+//     return res
+//       .status(401)
+//       .json({ loggedIn: false, message: "No token provided" });
+//   }
+
+//   try {
+//     const user = jwt.verify(token, process.env.JWT_SECRET);
+//     req.user = user;
+//     req.user = { id: user.userId }; 
+    
+//      // تخزين المعرف في req.user.id
+//     // req.body.userId = user.userId;  هذه الاصلية قبل ان اضيف التي بالاعلى ليعمل ال فورم الاضافة 
+//     console.log("Token verified successfully. User ID:", user.userId); // تم تعديل هذا السطر
+//     next();
+//   } catch (error) {
+//     console.error("Error verifying token:", error.message);
+//     if (error.name === 'TokenExpiredError') {
+//       return res
+//         .status(401)
+//         .json({ loggedIn: false, message: "Token expired" });
+//     }
+//     return res
+//       .status(403)
+//       .json({ loggedIn: false, message: "Invalid token" });
+//   }
+// };
+
+// module.exports = auth;
+
+///////////////////////////////////////////////////////////////
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const auth = (req, res, next) => {
+  console.log("Cookies:", req.cookies);
+  const token = req.cookies.token;
+  console.log("Received token:", token);
+
+  if (!token) {
+    return res
+      .status(401)
+      .json({ loggedIn: false, message: "No token provided" });
+  }
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    
+    // إضافة الـ userId والـ role إلى req.user
+    req.user = { id: user.userId, role: user.role };
+
+    console.log("Token verified successfully. User ID:", user.userId);
+    console.log("User role:", user.role);
+
+    next();
+  } catch (error) {
+    console.error("Error verifying token:", error.message);
+    if (error.name === 'TokenExpiredError') {
+      return res
+        .status(401)
+        .json({ loggedIn: false, message: "Token expired" });
+    }
+    return res
+      .status(403)
+      .json({ loggedIn: false, message: "Invalid token" });
+  }
+};
+
+module.exports = auth;

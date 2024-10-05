@@ -1181,7 +1181,6 @@ const users = {}; // يمكنك استخدام قاعدة بيانات لتخز�
 
 const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
-
   // تحقق من الحقول المطلوبة
   if (!username || !email || !password) {
       return res.status(400).json({ message: 'Username, email, and password are required' });
@@ -1199,75 +1198,12 @@ const registerUser = async (req, res) => {
   await sendOTPEmail(email, otp);
   res.status(200).json({ message: 'OTP sent successfully. Please check your email.' });
 };
-// verfay otp
-// const verifyOTP = async (req, res) => {
-//   const { email, otp } = req.body;
 
-//   if (!email || !otp) {
-//     return res.status(400).json({ message: 'Email and OTP are required' });
-//   }
-
-//   // البحث عن المستخدم في قاعدة البيانات
-//   const user = await User.findOne({ email });
-
-//   if (!user || user.otp !== otp || user.otpExpiry < Date.now()) {
-//     return res.status(400).json({ message: 'Invalid OTP or OTP has expired. Please try again.' });
-//   }
-
-//   // إنشاء التوكن بعد التحقق الناجح
-//   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-//   // إزالة الـ OTP بعد التحقق الناجح
-//   user.otp = null;
-//   user.otpExpiry = null;
-//   await user.save();
-
-//   res.status(200).json({
-//     message: 'User registered successfully!',
-//     token: token,
-//     user: {
-//       id: user._id,
-//       username: user.username,
-//       email: user.email,
-//     }
-//   });
-// };
-
-// const verifyOTP = async (req, res) => {
-//   const { email, otp } = req.body;
-
-//   if (!email || !otp) {
-//     return res.status(400).json({ message: 'Email and OTP are required' });
-//   }
-
-//   // البحث عن المستخدم في قاعدة البيانات
-//   const user = await User.findOne({ email });
-
-//   if (!user || user.otp !== otp || user.otpExpiry < Date.now()) {
-//     return res.status(400).json({ message: 'Invalid OTP or OTP has expired. Please try again.' });
-//   }
-
-//   // إزالة الـ OTP بعد التحقق الناجح
-//   user.otp = null; // يجب أن تصبح null بعد التحقق
-//   user.otpExpiry = null; // يجب أن تصبح null بعد التحقق
-//   user.isActivated = true; // تفعيل الحساب
-//   await user.save(); // حفظ التغييرات في قاعدة البيانات
-
-//   // إنشاء التوكن
-//   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-//   res.status(200).json({
-//     message: 'User registered successfully!',
-//     token: token,
-//     user: {
-//       id: user._id,
-//       username: user.username,
-//       email: user.email,
-//     }
-//   });
-// };
 const verifyOTP = async (req, res) => {
   const { email, otp } = req.body;
+  console.log("Received email:", email);
+  console.log("Received OTP:", otp);
+
 try{
   if (!email || !otp) {
     return res.status(400).json({ message: 'Email and OTP are required' });
@@ -1277,18 +1213,28 @@ try{
   const user = await User.findOne({ email });
 
   if (!user || user.otp !== otp || user.otpExpiry < Date.now()) {
+    console.log("User not found with email:", email);
+    console.log("Invalid OTP or OTP expired");
     return res.status(400).json({ message: 'Invalid OTP or OTP has expired. Please try again.' });
   }
-
   // إزالة الـ OTP بعد التحقق الناجح
   user.otp = null; // يجب أن تصبح null بعد التحقق
   user.otpExpiry = null; // يجب أن تصبح null بعد التحقق
   user.isActivated = true; // تفعيل الحساب
   await user.save(); // حفظ التغييرات في قاعدة البيانات
 
-  // إنشاء التوكن
-  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  // // إنشاء التوكن
+  // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
+  // إنشاء التوكن
+const token = jwt.sign(
+  { 
+    userId: user._id.toString(), 
+    role: user.role // إضافة الـ role إلى التوكن
+  }, 
+  process.env.JWT_SECRET, 
+  { expiresIn: '1h' }
+);
 
   res.cookie('token', token, { httpOnly: true });
   return res.status(201).json({  message: 'OTP verified successfully. User is logged in.' });
@@ -1297,16 +1243,6 @@ try{
   return res.status(500).json({ message: 'Server error' });
 }
 };
-//   res.status(200).json({
-//     message: 'User registered successfully!',
-//     token: token,
-//     user: {
-//       id: user._id,
-//       username: user.username,
-//       email: user.email,
-//     }
-//   });
-// };
 
 // تسجيل الدخول
 const loginUser = async (req, res) => {
@@ -1323,22 +1259,19 @@ const loginUser = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: 'Invalid username or password' });
 
-        // if (!user.otp || user.otpExpiry < Date.now()) {
-        //     return res.status(400).json({ message: 'OTP has expired, please request a new one.' });
-        // }
-
-        // if (user.otp !== otp) {
-        //     return res.status(400).json({ message: 'Invalid OTP' });
-        // }
-
-        // // إزالة OTP بعد التحقق الناجح
-        // user.otp = null;
-        // user.otpExpiry = null;
-        // await user.save();
-
-        // إنشاء التوكن
-        const token = jwt.sign({ userId: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        const refreshToken = jwt.sign({ userId: user._id.toString() }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
+       
+        // // إنشاء التوكن
+        // const token = jwt.sign({ userId: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // // const refreshToken = jwt.sign({ userId: user._id.toString() }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
+// إنشاء التوكن
+const token = jwt.sign(
+  { 
+    userId: user._id.toString(), 
+    role: user.role // إضافة الـ role إلى التوكن
+  }, 
+  process.env.JWT_SECRET, 
+  { expiresIn: '1h' }
+);
 
         // تخزين التوكن في الكوكي
         res.cookie('token', token, {
@@ -1349,48 +1282,119 @@ const loginUser = async (req, res) => {
         });
 
         // تخزين refresh token
-        res.cookie('refreshToken', refreshToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 أيام
-            sameSite: 'Strict',
-        });
+        // res.cookie('refreshToken', refreshToken, {
+        //     httpOnly: true,
+        //     secure: process.env.NODE_ENV === 'production',
+        //     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 أيام
+        //     sameSite: 'Strict',
+        // });
 
-        res.status(200).json({ message: 'Logged in successfully'  });
+        res.status(200).json({ message: 'Logged in successfully', role: user.role  });
     } catch (error) {
         res.status(500).json({ message: error.message});
     }
 }; 
 
-// تحديث التوكن
-const refreshToken = async (req, res) => {
-    const { refreshToken } = req.cookies;
 
-    if (!refreshToken) {
-        return res.status(401).json({ message: 'Refresh token not found, please log in again.' });
+const getLoginStatus = async (req, res) => {
+  try {
+    // التحقق من وجود التوكن في الكوكي
+    const token = req.cookies.token;
+    if (!token) {
+      // return res.status(200).json({ isLoggedIn: false, role: user.role  });
+      return res.status(200).json({ isLoggedIn: false, role: null }); // استخدم null بدلاً من user.role
     }
 
-    try {
-        const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
-        const newToken = jwt.sign({ userId: decoded.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        // تحديث التوكن في الكوكي
-        res.cookie('jwt', newToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 3600000, // 1 ساعة
-            sameSite: 'Strict',
-        });
-
-        res.status(200).json({ message: 'Token refreshed successfully' });
-    } catch (error) {
-        res.status(401).json({ message: 'Invalid refresh token, please log in again.'});
+    // التحقق من صحة التوكن
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+    
+    if (!user) {
+      return res.status(200).json({ isLoggedIn: false });
     }
+
+    // res.status(200).json({ isLoggedIn: true });
+    res.status(200).json({ isLoggedIn: true, role: user.role }); // أضف role هن
+  } catch (error) {
+    console.error('Error in getLoginStatus:', error);
+    res.status(200).json({ isLoggedIn: false });
+  }
 };
+
+
+const logout = (req, res) => {
+  res.clearCookie('token');
+  res.status(200).json({ message: 'Logged out successfully' });
+};
+
+// تحديث التوكن
+// const refreshToken = async (req, res) => {
+//     const { refreshToken } = req.cookies;
+
+//     if (!refreshToken) {
+//         return res.status(401).json({ message: 'Refresh token not found, please log in again.' });
+//     }
+
+//     try {
+//         const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+//         const newToken = jwt.sign({ userId: decoded.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+//         // تحديث التوكن في الكوكي
+//         res.cookie('jwt', newToken, {
+//             httpOnly: true,
+//             secure: process.env.NODE_ENV === 'production',
+//             maxAge: 3600000, // 1 ساعة
+//             sameSite: 'Strict',
+//         });
+
+//         res.status(200).json({ message: 'Token refreshed successfully' });
+//     } catch (error) {
+//         res.status(401).json({ message: 'Invalid refresh token, please log in again.'});
+//     }
+// };
+
+
+const getUserProfile = async (req, res) => {
+  try {
+    // التحقق من وجود التوكن في الكوكي
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    // التحقق من صحة التوكن
+    const verifytoken = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(verifytoken.userId).select('-password'); // استثناء كلمة المرور من البيانات المعادة
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // إرسال بيانات المستخدم
+    res.status(200).json({
+      username: user.username,
+      email: user.email,
+      profilePicture: user.profilePicture,
+      role: user.role,
+      bio: user.bio,
+      savedBooks: user.savedBooks,
+      publishedBooks: user.publishedBooks,
+      yearsOfExperience: user.yearsOfExperience,
+      // يمكنك إضافة المزيد من المعلومات هنا حسب الحاجة
+    });
+  } catch (error) {
+    console.error('Error in getUserProfile:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 
 module.exports = {
     registerUser,
     verifyOTP,
     loginUser,
-    refreshToken,
+    getLoginStatus,
+    logout,
+    getUserProfile
+    // refreshToken,
 };
