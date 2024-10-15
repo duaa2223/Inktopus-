@@ -95,9 +95,15 @@ const userSchema = new Schema(
     otp: String, 
     otpExpiry: Date,
     yearsOfExperience: { type: Number },
+    publisherApplicationStatus: {
+      type: String,
+      enum: ["none", "pending", "approved", "rejected"],
+      default: "none"
+    },
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User", userSchema, "Users");
+// const User = mongoose.model("User", userSchema, "Users");
+const User = mongoose.models.User || mongoose.model("User", userSchema, "Users");
 module.exports = User;

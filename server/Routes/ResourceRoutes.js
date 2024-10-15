@@ -29,7 +29,7 @@ const {
 router.get('/colleges', getAllColleges); 
 
 // إضافة كلية جديدة
-router.post('/colleges', createCollege);
+router.post('/colleges', createCollege); 
 
 //academic-years
 // الحصول على المراحل الدراسية الخاصة بكل كلية

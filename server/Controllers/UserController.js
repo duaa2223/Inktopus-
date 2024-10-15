@@ -1389,12 +1389,48 @@ const getUserProfile = async (req, res) => {
 };
 
 
+// دالة لاسترجاع جميع المستخدمين
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({}, 'username email role isActivated').exec(); // تحديد الحقول المطلوبة
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: "An error occurred while fetching users" });
+  }
+};
+
+// دالة لتعديل حالة المستخدم (نشط/غير نشط)
+const toggleUserActivation = async (req, res) => {
+  try {
+    const { userId } = req.params; // ID المستخدم المراد تعديله
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // تعديل حالة التفعيل
+    user.isActivated = !user.isActivated;
+    await user.save();
+
+    res.status(200).json({ message: "User activation status updated", isActivated: user.isActivated });
+  } catch (error) {
+    console.error("Error updating user status:", error);
+    res.status(500).json({ error: "An error occurred while updating user status" });
+  }
+};
+
+
+
 module.exports = {
     registerUser,
     verifyOTP,
     loginUser,
     getLoginStatus,
     logout,
-    getUserProfile
+    getUserProfile,
+    getAllUsers,
+    toggleUserActivation,
     // refreshToken,
 };

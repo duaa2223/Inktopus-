@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../Controllers/UserController');
+const checkRole = require('../Middleware/checkRole'); // Middleware للتحقق من الدور
 
-const authenticateToken = require('../Middleware/auth');
+const auth= require('../Middleware/auth');
 
 // مسار التسجيل
 // router.post('/register', registerUser);
@@ -24,6 +25,15 @@ router.post('/logout', userController.logout);
 
 // نقطة النهاية الجديدة لجلب بيانات المستخدم
 router.get('/profile', userController.getUserProfile); 
+
+// استرجاع جميع المستخدمين
+router.get('/users', userController.getAllUsers); 
+
+// مسار لتعديل حالة المستخدم، متاح فقط للمستخدمين الذين لديهم دور "admin"
+// router.put('/users/:userId/toggle-activation', auth, checkRole('admin'), userController.toggleUserActivation);
+
+// تعديل حالة المستخدم
+router.put('/users/:userId/toggle-activation',auth ,checkRole('admin'),userController.toggleUserActivation);
 
 // المسار الخاص بالتحقق من حالة تسجيل الدخول
 // router.get('/auth/status', authenticateToken, userController.getLoginStatus );

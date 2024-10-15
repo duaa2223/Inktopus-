@@ -52,6 +52,7 @@ import BookDetails from './pages/Details';
 import CartPage from './pages/Cart';
 import UploadContentForm from './pages/ProfilePublisher'
 import './index.css'; 
+import AdminDashboard from './pages/Dashboard'
 
 // import { useEffect } from 'react';
 // import { dispatch } from 'react-redux';
@@ -95,8 +96,8 @@ const App = () => {
             } /> 
               <Route path="/book/:id" element={<BookDetails />} />
               <Route path="/cart" element={<CartPage />} />
-              <Route path="/form" element={<UploadContentForm />} />
-              
+              <Route path="/form" element={<UploadContentForm />} /> 
+              <Route path="/dashboard" element={<AdminDashboard  />} />
               
         </Routes>
       </Router>

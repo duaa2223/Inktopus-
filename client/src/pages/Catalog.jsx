@@ -601,27 +601,99 @@
 // };
 
 // export default ContentPage;
-import { useEffect, useState } from 'react';
+/////////////////////////////////////////////////////////////////////////////
+// import { useEffect, useState } from 'react';
+// import { useParams, Link } from 'react-router-dom';
+// import axios from 'axios';
+// import Navbar from '../components/NavBar';
+
+// const ContentPage = () => {
+//   const { collegeId, academicYearId } = useParams();
+//   const [contents, setContents] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const fetchContents = async () => {
+//       try {
+//         setLoading(true);
+//         const response = await axios.get(`http://localhost:5000/api/content/college/${collegeId}/year/${academicYearId}`);
+//         setContents(response.data.contents); // استخدم contents بدلاً من response.data
+//         setLoading(false);
+//       } catch (error) {
+//         console.error('Error fetching contents:', error);
+//         setError('فشل في تحميل المحتويات. يرجى المحاولة مرة أخرى لاحقاً.');
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchContents();
+//   }, [collegeId, academicYearId]);
+
+//   if (loading) return <div>جاري التحميل...</div>;
+//   if (error) return <div>{error}</div>;
+
+//   return (
+//     <>
+//       <Navbar />
+//       <div className="container mx-auto mt-10">
+//         <h1 className="text-3xl font-bold mb-6">المحتوى المتاح</h1>
+//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//           {contents.length > 0 ? (
+//             contents.map(content => (
+//               <div key={content._id} className="bg-white shadow-lg rounded-lg overflow-hidden">
+//                 <img src={content.cover_image || '/default-image.png'} alt={content.title} className="w-full h-48 object-cover" />
+//                 <div className="p-4">
+//                   <h2 className="text-xl font-semibold mb-2">{content.title}</h2>
+//                   <p className="text-gray-600 mb-2">المؤلف: {content.author}</p>
+//                   <p className="text-gray-600 mb-2">النوع: {content.content_type}</p>
+//                   <p className="text-gray-600 mb-4">{content.description}</p>
+//                   <div className="flex justify-between items-center">
+//                     <span className="text-blue-600 font-bold">${content.price}</span>
+//                     <Link to={`/book/${content._id}`}>
+//                       <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+//                         عرض التفاصيل
+//                       </button>
+//                     </Link>
+//                   </div>
+//                 </div>
+//               </div>
+//             ))
+//           ) : (
+//             <p className="text-center text-gray-500">لا توجد محتويات متاحة لهذه الكلية والمرحلة.</p>
+//           )}
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default ContentPage;
+///////////////////////////////////////////////////////////////////////////////////
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../components/NavBar';
+import { Input, Button, Card } from '../components/ui/UIComponents';
 
 const ContentPage = () => {
   const { collegeId, academicYearId } = useParams();
   const [contents, setContents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
 
   useEffect(() => {
     const fetchContents = async () => {
       try {
         setLoading(true);
         const response = await axios.get(`http://localhost:5000/api/content/college/${collegeId}/year/${academicYearId}`);
-        setContents(response.data.contents); // استخدم contents بدلاً من response.data
+        setContents(response.data.contents);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching contents:', error);
-        setError('فشل في تحميل المحتويات. يرجى المحاولة مرة أخرى لاحقاً.');
+        setError('Failed to load contents. Please try again later.');
         setLoading(false);
       }
     };
@@ -629,41 +701,74 @@ const ContentPage = () => {
     fetchContents();
   }, [collegeId, academicYearId]);
 
-  if (loading) return <div>جاري التحميل...</div>;
-  if (error) return <div>{error}</div>;
+  const filteredContents = contents.filter(content =>
+    content.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    content.author.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredContents.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if (loading) return <div className="text-center py-10">Loading...</div>;
+  if (error) return <div className="text-center py-10 text-red-500">{error}</div>;
 
   return (
-    <>
-      <Navbar />
-      <div className="container mx-auto mt-10">
-        <h1 className="text-3xl font-bold mb-6">المحتوى المتاح</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {contents.length > 0 ? (
-            contents.map(content => (
-              <div key={content._id} className="bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src={content.cover_image || '/default-image.png'} alt={content.title} className="w-full h-48 object-cover" />
-                <div className="p-4">
-                  <h2 className="text-xl font-semibold mb-2">{content.title}</h2>
-                  <p className="text-gray-600 mb-2">المؤلف: {content.author}</p>
-                  <p className="text-gray-600 mb-2">النوع: {content.content_type}</p>
-                  <p className="text-gray-600 mb-4">{content.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-blue-600 font-bold">${content.price}</span>
-                    <Link to={`/book/${content._id}`}>
-                      <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                        عرض التفاصيل
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-500">لا توجد محتويات متاحة لهذه الكلية والمرحلة.</p>
-          )}
+    <div className="container mx-auto px-4 py-8" style={{ backgroundColor: '#F8EDE3' }}>
+      <h1 className="text-4xl font-bold mb-8 text-center text-[#8D493A]">Learning Resources</h1>
+      
+      <div className="mb-6 flex justify-center">
+        <div className="relative w-full max-w-xl">
+          <Input
+            placeholder="Search for books or authors..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 rounded-full"
+          />
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
         </div>
       </div>
-    </>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {currentItems.map(content => (
+          <Card key={content._id} title={content.title}>
+            <img src={content.cover_image || '/default-image.png'} alt={content.title} className="w-full h-48 object-cover mb-4" />
+            <p className="text-gray-600 mb-2">Author: {content.author}</p>
+            <p className="text-gray-600 mb-2">Type: {content.content_type}</p>
+            <p className="text-gray-700 mb-4 line-clamp-2">{content.description}</p>
+            <div className="flex justify-between items-center mt-4">
+              <span className="text-[#8D493A] font-bold">${content.price}</span>
+              <Link to={`/book/${content._id}`}>
+                <Button className="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                  View Details
+                </Button>
+              </Link>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      {filteredContents.length > itemsPerPage && (
+        <div className="flex justify-center mt-8">
+          {[...Array(Math.ceil(filteredContents.length / itemsPerPage))].map((_, index) => (
+            <Button
+              key={index}
+              onClick={() => paginate(index + 1)}
+              className={`mx-1 ${currentPage === index + 1 ? 'bg-[#8D493A] text-white' : 'bg-[#DFD3C3] text-[#8D493A]'}`}
+            >
+              {index + 1}
+            </Button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 
