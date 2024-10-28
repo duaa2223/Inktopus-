@@ -2935,14 +2935,14 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 bg-[#F8EDE3]">
+    <div className="container mx-auto p-4 bg-[#F8EDE3] ">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-[#DFD3C3] rounded-lg shadow-lg p-6 mb-6"
+        className="bg-[#DFD3C3] rounded-lg shadow-lg p-6 mb-6 mt-[7rem]"
       >
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4  ">
           <h1 className="text-3xl font-bold text-[#8D493A]">Publisher Profile</h1>
           <motion.div
             whileHover={{ scale: 1.1 }}

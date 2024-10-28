@@ -6,7 +6,8 @@ const auth = require('../Middleware/auth')
 const {
   applyPublisher,
   getAllApplications,
-  updateApplicationStatus
+  updateApplicationStatus,
+  getPublisherById
 } = require('../Controllers/publisherController');
 
 // Submit a new publisher application
@@ -17,5 +18,11 @@ router.get('/applications',auth, getAllApplications);
 
 // Update application status (admin only)
 router.patch('/applications/:id', auth, updateApplicationStatus);
+
+
+
+// Get a specific publisher by ID
+router.get('/publisher/:id', auth, getPublisherById);
+
 
 module.exports = router;

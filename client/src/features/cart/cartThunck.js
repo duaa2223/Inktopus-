@@ -1,38 +1,65 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchCartApi, addToCartApi, removeFromCartApi } from '../cart/cartActions';
+import { fetchCartApi, addToCartApi, removeFromCartApi,updateQuantityApi,clearCartApi } from '../cart/cartActions';
 
 export const fetchCart = createAsyncThunk(
   'cart/fetchCart',
   async (_, { rejectWithValue }) => {
     try {
-      const data = await fetchCartApi();
-      return data;
+      const response = await fetchCartApi();
+      return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const addToCart = createAsyncThunk(
   'cart/addToCart',
-  async ({ bookId, quantity }, { rejectWithValue }) => {
+  // تغيير هنا من bookId إلى contentId
+  async ({ contentId, quantity }, { rejectWithValue }) => {
     try {
-      const data = await addToCartApi(bookId, quantity);
-      return data;
+      const response = await addToCartApi(contentId, quantity);
+      return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const removeFromCart = createAsyncThunk(
+  'cart/removeFromCart',
+  // Modified to only accept contentId since quantity isn't needed for removal
+  async (contentId, { rejectWithValue }) => {
+    try {
+      const response = await removeFromCartApi(contentId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
-export const removeFromCart = createAsyncThunk(
-  'cart/removeFromCart',
-  async (bookId, { rejectWithValue }) => {
+
+export const updateQuantity = createAsyncThunk(
+  'cart/updateQuantity',
+  async ({ contentId, quantity }, { rejectWithValue }) => {
     try {
-      const data = await removeFromCartApi(bookId);
-      return data;
+      const response = await updateQuantityApi(contentId, quantity);
+      return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// أضف thunk جديد لإفراغ السلة
+export const clearCart = createAsyncThunk(
+  'cart/clearCart',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await clearCartApi();
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );

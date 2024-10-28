@@ -33,13 +33,89 @@
 // };
 
 // export default App;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// import { useEffect } from 'react';
+// import { useDispatch } from 'react-redux';
+// import { checkLoginStatus } from './features/auth/authThunck';
+
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import { Provider } from 'react-redux'; // استيراد الـ Provider من react-redux
+// import { store } from './app/store'; // استيراد الـ store الذي قمت بتهيئته
+// import Home from './pages/Home';
+// import Login from './pages/Login';
+// import SignUp from './pages/Register';
+// import Book from './pages/Book';
+// import Resource from './pages/College';
+// import ProtectedRoute from './components/ProtectedRoute';
+// import Level from './pages/Levels';
+// import Catalogpage from './pages/Catalog';
+// import BookDetails from './pages/Details';
+// import CartPage from './pages/Cart';
+// import UploadContentForm from './pages/ProfilePublisher'
+// import './index.css'; 
+// import AdminDashboard from './pages/Dashboard'
+// import { CartProvider } from './context/cartContext';
+// // import { useEffect } from 'react';
+// // import { dispatch } from 'react-redux';
+// const App = () => {
+//   const dispatch = useDispatch();
+
+//   useEffect(() => {
+//     dispatch(checkLoginStatus());
+//   }, [dispatch]);
+// //   useEffect(() => {
+// //     const storedRole = localStorage.getItem('role');
+// //     if (storedRole) {
+// //         dispatch({
+// //             type: 'auth/setRole',
+// //             payload: storedRole,
+// //         });
+// //     }
+// // }, [dispatch]);
+
+//   return (
+
+//       <Router>
+//          <CartProvider>
+//         <Routes>
+//           <Route path="/" element={<Home />} />
+//           <Route path="/login" element={<Login />} />
+//           <Route path="/register" element={<SignUp />} />
+//           {/* <Route path="/level" element={<Level />} /> */}
+//           <Route path="/level/:collegeId" element={<Level />} />
+//           {/* <Route path="/content/:collegeId/:academicYearId" element={<Catalogpage />} /> */}
+//           <Route path="/content/college/:collegeId/year/:academicYearId" element={<Catalogpage />} />
+
+//           <Route path="/book" element={
+//               <ProtectedRoute>
+//                 <Book />
+//               </ProtectedRoute>
+//             } /> 
+//           <Route path="/college" element={
+//               // <ProtectedRoute>
+//                 <Resource />
+//               // {/* </ProtectedRoute> */}
+//             } /> 
+//               <Route path="/book/:id" element={<BookDetails />} />
+//               <Route path="/cart" element={<CartPage />} />
+//               <Route path="/form" element={<UploadContentForm />} /> 
+//               <Route path="/dashboard" element={<AdminDashboard  />} />
+              
+//         </Routes>
+//         </CartProvider>
+//       </Router>
+  
+//   );
+// };
+
+// export default App;
+//////////////////////////////////////////////////////////////////////////////////
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { checkLoginStatus } from './features/auth/authThunck';
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Provider } from 'react-redux'; // استيراد الـ Provider من react-redux
-import { store } from './app/store'; // استيراد الـ store الذي قمت بتهيئته
+import { Provider } from 'react-redux'; 
+import { store } from './app/store'; 
 import Home from './pages/Home';
 import Login from './pages/Login';
 import SignUp from './pages/Register';
@@ -50,58 +126,47 @@ import Level from './pages/Levels';
 import Catalogpage from './pages/Catalog';
 import BookDetails from './pages/Details';
 import CartPage from './pages/Cart';
-import UploadContentForm from './pages/ProfilePublisher'
+import UploadContentForm from './pages/ProfilePublisher';
+import AdminDashboard from './pages/Dashboard';
+import Navbar from './components/NavBar';
+import { Toaster } from 'react-hot-toast';
+import CheckoutPage from './pages/Checkout';
+// import { CartProvider } from './context/cartContext';
 import './index.css'; 
-import AdminDashboard from './pages/Dashboard'
 
-// import { useEffect } from 'react';
-// import { dispatch } from 'react-redux';
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(checkLoginStatus());
   }, [dispatch]);
-//   useEffect(() => {
-//     const storedRole = localStorage.getItem('role');
-//     if (storedRole) {
-//         dispatch({
-//             type: 'auth/setRole',
-//             payload: storedRole,
-//         });
-//     }
-// }, [dispatch]);
 
-  return (
 
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<SignUp />} />
-          {/* <Route path="/level" element={<Level />} /> */}
-          <Route path="/level/:collegeId" element={<Level />} />
-          {/* <Route path="/content/:collegeId/:academicYearId" element={<Catalogpage />} /> */}
-          <Route path="/content/college/:collegeId/year/:academicYearId" element={<Catalogpage />} />
-
-          <Route path="/book" element={
-              <ProtectedRoute>
-                <Book />
-              </ProtectedRoute>
-            } /> 
-          <Route path="/college" element={
-              // <ProtectedRoute>
-                <Resource />
-              // {/* </ProtectedRoute> */}
-            } /> 
-              <Route path="/book/:id" element={<BookDetails />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/form" element={<UploadContentForm />} /> 
-              <Route path="/dashboard" element={<AdminDashboard  />} />
-              
-        </Routes>
-      </Router>
   
+  return (
+    <Provider store={store}>
+      <Router>
+      <Navbar />
+      <Toaster position="top-center" />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/level/:collegeId" element={<Level />} />
+            <Route path="/content/college/:collegeId/year/:academicYearId" element={<Catalogpage />} />
+            <Route path="/book" element={<ProtectedRoute><Book /></ProtectedRoute>} />
+            <Route path="/college" element={<Resource />} />
+            <Route path="/book/:id" element={<BookDetails />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/form" element={<UploadContentForm />} />
+            <Route path="/dashboard" element={<AdminDashboard />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            {/* Optionally add a 404 route */}
+            {/* <Route path="*" element={<NotFound />} /> */}
+          </Routes>
+      
+      </Router>
+    </Provider>
   );
 };
 

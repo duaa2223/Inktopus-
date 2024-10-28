@@ -67,8 +67,28 @@ const updateApplicationStatus = async (req, res) => {
   }
 };
 
+
+// Get a specific publisher by ID
+const getPublisherById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const publisher = await User.findById(id).select('username email role publisherApplicationStatus');
+    if (!publisher || publisher.role !== 'publisher') {
+      return res.status(404).json({ message: 'Publisher not found' });
+    }
+
+    res.json(publisher);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching publisher', error: error.message });
+  }
+};
+
+
+
 module.exports = {
   applyPublisher,
   getAllApplications,
-  updateApplicationStatus
+  updateApplicationStatus,
+  getPublisherById
 };

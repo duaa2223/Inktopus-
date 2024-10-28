@@ -1046,7 +1046,112 @@
 
 // export default Level;
 /////////////////////////////////////////////////////////////////////
-import  { useEffect, useRef, useState } from 'react';
+// import  { useEffect, useRef, useState } from 'react';
+// import { useParams } from 'react-router-dom';
+// import L from 'leaflet';
+// import 'leaflet/dist/leaflet.css';
+// import axios from 'axios';
+// import Navbar from '../components/NavBar';
+
+// const Level = () => {
+//   const { collegeId } = useParams();
+//   const mapRef = useRef(null);
+//   const [academicYears, setAcademicYears] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const fetchAcademicYears = async () => {
+//       try {
+//         setLoading(true);
+//         const response = await axios.get(`http://localhost:5000/api/academic-years/${collegeId}`);
+//         setAcademicYears(response.data);
+//         setLoading(false);
+//       } catch (error) {
+//         console.error('Error fetching academic years:', error);
+//         setError('فشل في تحميل السنوات الدراسية. يرجى المحاولة مرة أخرى لاحقاً.');
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchAcademicYears();
+//   }, [collegeId]);
+
+//   useEffect(() => {
+//     if (mapRef.current || !academicYears.length) return;
+
+//     mapRef.current = L.map('map', {
+//       crs: L.CRS.Simple,
+//       minZoom: -5,
+//       maxZoom: 5,
+//     }).setView([300, 600], 0);
+
+//     academicYears.forEach((year) => {
+//       const position = [
+//         200 + Math.random() * 600,
+//         200 + Math.random() * 2000
+//       ];
+
+//       // إنشاء أيقونة مخصصة تجمع بين الصورة والدائرة
+//       const CustomIcon = L.divIcon({
+//         className: 'custom-icon',
+//         html: `
+//           <div style="position: relative; width: 80px; height: 80px;">
+//             <img src="${year.imageUrl || '/default-year-icon.png'}" alt="${year.name}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" />
+//             <div style="position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; background-color: red; border-radius: 50%;"></div>
+//           </div>
+//         `,
+//         iconSize: [80, 80],
+//         iconAnchor: [40, 40],
+//         popupAnchor: [0, -40]
+//       });
+
+//       const marker = L.marker(position, { icon: CustomIcon }).addTo(mapRef.current);
+
+//       marker.bindTooltip(year.name, {
+//         permanent: false,
+//         direction: 'top',
+//         offset: [0, -40]
+//       });
+
+//       // marker.bindPopup(`<b>${year.name}</b><br>${year.nameAr}<br>${year.description || ''}`)
+//       //   .on('click', () => {
+//       //     window.location.href = `/content/${collegeId}/${year._id}`;
+//       //   });
+//       marker.bindPopup(`<b>${year.name}</b><br>${year.nameAr}<br>${year.description || ''}`)
+//   .on('click', () => {
+//     window.location.href = `/content/college/${collegeId}/year/${year._id}`;
+//   });
+
+//     });
+
+//   }, [academicYears, collegeId]);
+
+//   if (loading) return <div>جاري التحميل...</div>;
+//   if (error) return <div>{error}</div>;
+//   if (academicYears.length === 0) return <div>لم يتم العثور على سنوات دراسية لهذه الكلية.</div>;
+
+//   return (
+//     <>
+//       <Navbar />
+//       <div className="container mx-auto px-4 py-8">
+//         <h1 className="text-3xl font-bold mb-6 text-center">اختر سنتك الدراسية</h1>
+//         <div id="map" style={{
+//           height: '80vh',
+//           width: '100%',
+//           border: '2px solid #8D493A',
+//           borderRadius: '8px',
+//           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+//         }}></div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Level;
+
+////////////////////////////////////////////
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -1060,6 +1165,57 @@ const Level = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Custom styles for the map container
+  const mapContainerStyle = {
+    height: '80vh',
+    width: '100%',
+    border: '2px solid #8D493A',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    position: 'relative',
+    overflow: 'hidden'
+  };
+
+  const levelMarkerStyle = `
+    .custom-level-marker {
+      width: 100px;
+      height: 100px;
+    }
+
+    .level-circle {
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      border: 3px solid #FF4B4B;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .level-circle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .level-number {
+      font-size: 18px;
+      font-weight: bold;
+      color: #FF4B4B;
+      margin-bottom: 4px;
+    }
+
+    .level-label {
+      font-size: 12px;
+      color: #333;
+      text-align: center;
+    }
+  `;
+
   useEffect(() => {
     const fetchAcademicYears = async () => {
       try {
@@ -1069,7 +1225,7 @@ const Level = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching academic years:', error);
-        setError('فشل في تحميل السنوات الدراسية. يرجى المحاولة مرة أخرى لاحقاً.');
+        setError('Failed to load academic years. Please try again later.');
         setLoading(false);
       }
     };
@@ -1080,69 +1236,123 @@ const Level = () => {
   useEffect(() => {
     if (mapRef.current || !academicYears.length) return;
 
+    // Add custom styles
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = levelMarkerStyle;
+    document.head.appendChild(styleSheet);
+
+    // Initialize map with bounds
     mapRef.current = L.map('map', {
       crs: L.CRS.Simple,
-      minZoom: -5,
-      maxZoom: 5,
+      minZoom: -2,
+      maxZoom: 2,
+      zoomControl: true,
+      attributionControl: false,
     }).setView([300, 600], 0);
 
-    academicYears.forEach((year) => {
+    // Add custom pane for background
+    mapRef.current.createPane('background');
+    mapRef.current.getPane('background').style.zIndex = 100;
+
+    // Add background rectangle
+    L.rectangle([[0, 0], [600, 1200]], {
+      color: 'none',
+      fillColor: '#87CEEB', // Sky blue
+      fillOpacity: 1,
+      pane: 'background'
+    }).addTo(mapRef.current);
+
+    // Add grass strip
+    L.rectangle([[400, 0], [450, 1200]], {
+      color: 'none',
+      fillColor: '#228B22', // Forest green
+      fillOpacity: 1,
+      pane: 'background'
+    }).addTo(mapRef.current);
+
+    // Add road
+    L.rectangle([[450, 0], [600, 1200]], {
+      color: 'none',
+      fillColor: '#8B4513', // Saddle brown
+      fillOpacity: 1,
+      pane: 'background'
+    }).addTo(mapRef.current);
+
+    // Calculate positions for markers
+    academicYears.forEach((year, index) => {
       const position = [
-        200 + Math.random() * 600,
-        200 + Math.random() * 2000
+        250 + (index * 50), // Gradually increase Y position
+        200 + (index * 200)  // Gradually increase X position
       ];
 
-      // إنشاء أيقونة مخصصة تجمع بين الصورة والدائرة
       const CustomIcon = L.divIcon({
-        className: 'custom-icon',
+        className: 'custom-level-marker',
         html: `
-          <div style="position: relative; width: 80px; height: 80px;">
-            <img src="${year.imageUrl || '/default-year-icon.png'}" alt="${year.name}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" />
-            <div style="position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; background-color: red; border-radius: 50%;"></div>
+          <div class="level-circle">
+            <div class="level-number">Level ${index + 1}</div>
+            <div class="level-label">${year.name}</div>
           </div>
         `,
-        iconSize: [80, 80],
-        iconAnchor: [40, 40],
-        popupAnchor: [0, -40]
+        iconSize: [100, 100],
+        iconAnchor: [50, 50]
       });
 
       const marker = L.marker(position, { icon: CustomIcon }).addTo(mapRef.current);
 
-      marker.bindTooltip(year.name, {
-        permanent: false,
-        direction: 'top',
-        offset: [0, -40]
-      });
-
-      // marker.bindPopup(`<b>${year.name}</b><br>${year.nameAr}<br>${year.description || ''}`)
-      //   .on('click', () => {
-      //     window.location.href = `/content/${collegeId}/${year._id}`;
-      //   });
-      marker.bindPopup(`<b>${year.name}</b><br>${year.nameAr}<br>${year.description || ''}`)
-  .on('click', () => {
-    window.location.href = `/content/college/${collegeId}/year/${year._id}`;
-  });
-
+      marker.bindPopup(`
+        <div style="text-align: center; padding: 10px;">
+          <h3 style="margin-bottom: 8px; font-weight: bold;">${year.name}</h3>
+          <p style="margin-bottom: 8px;">${year.description || ''}</p>
+          <button 
+            onclick="window.location.href='/content/college/${collegeId}/year/${year._id}'"
+            style="background: #FF4B4B; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;"
+          >
+            Start Learning
+          </button>
+        </div>
+      `);
     });
 
+    // Add bounds to keep map contained
+    const bounds = [[0, 0], [600, 1200]];
+    mapRef.current.setMaxBounds(bounds);
+    mapRef.current.fitBounds(bounds, { padding: [50, 50] });
+
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
+      document.head.removeChild(styleSheet);
+    };
   }, [academicYears, collegeId]);
 
-  if (loading) return <div>جاري التحميل...</div>;
-  if (error) return <div>{error}</div>;
-  if (academicYears.length === 0) return <div>لم يتم العثور على سنوات دراسية لهذه الكلية.</div>;
+  if (loading) return (
+    <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="text-center p-4 text-red-600">
+      {error}
+    </div>
+  );
+  
+  if (academicYears.length === 0) return (
+    <div className="text-center p-4">
+      No academic years found for this college.
+    </div>
+  );
 
   return (
     <>
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6 text-center">اختر سنتك الدراسية</h1>
-        <div id="map" style={{
-          height: '80vh',
-          width: '100%',
-          border: '2px solid #8D493A',
-          borderRadius: '8px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
-        }}></div>
+        <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">
+          Choose Your Academic Level
+        </h1>
+        <div id="map" style={mapContainerStyle}></div>
       </div>
     </>
   );

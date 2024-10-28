@@ -670,10 +670,235 @@
 
 // export default ContentPage;
 ///////////////////////////////////////////////////////////////////////////////////
+// import { useState, useEffect } from 'react';
+// import { useParams, Link } from 'react-router-dom';
+// import axios from 'axios';
+// import { Input, Button, Card } from '../components/ui/UIComponents';
+
+// const ContentPage = () => {
+//   const { collegeId, academicYearId } = useParams();
+//   const [contents, setContents] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [searchTerm, setSearchTerm] = useState('');
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const itemsPerPage = 9;
+
+//   useEffect(() => {
+//     const fetchContents = async () => {
+//       try {
+//         setLoading(true);
+//         const response = await axios.get(`http://localhost:5000/api/content/college/${collegeId}/year/${academicYearId}`);
+//         setContents(response.data.contents);
+//         setLoading(false);
+//       } catch (error) {
+//         console.error('Error fetching contents:', error);
+//         setError('Failed to load contents. Please try again later.');
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchContents();
+//   }, [collegeId, academicYearId]);
+
+//   const filteredContents = contents.filter(content =>
+//     content.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//     content.author.toLowerCase().includes(searchTerm.toLowerCase())
+//   );
+
+//   const indexOfLastItem = currentPage * itemsPerPage;
+//   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+//   const currentItems = filteredContents.slice(indexOfFirstItem, indexOfLastItem);
+
+//   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+//   if (loading) return <div className="text-center py-10">Loading...</div>;
+//   if (error) return <div className="text-center py-10 text-red-500">{error}</div>;
+
+//   return (
+//     <div className="container mx-auto px-4 py-8" style={{ backgroundColor: '#F8EDE3' }}>
+//       <h1 className="text-4xl font-bold mb-8 text-center text-[#8D493A]">Learning Resources</h1>
+      
+//       <div className="mb-6 flex justify-center">
+//         <div className="relative w-full max-w-xl">
+//           <Input
+//             placeholder="Search for books or authors..."
+//             value={searchTerm}
+//             onChange={(e) => setSearchTerm(e.target.value)}
+//             className="w-full pl-10 pr-4 py-2 rounded-full"
+//           />
+//           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+//             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+//           </svg>
+//         </div>
+//       </div>
+
+//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//         {currentItems.map(content => (
+//           <Card key={content._id} title={content.title}>
+//             <img src={content.cover_image || '/default-image.png'} alt={content.title} className="w-full h-48 object-cover mb-4" />
+//             <p className="text-gray-600 mb-2">Author: {content.author}</p>
+//             <p className="text-gray-600 mb-2">Type: {content.content_type}</p>
+//             <p className="text-gray-700 mb-4 line-clamp-2">{content.description}</p>
+//             <div className="flex justify-between items-center mt-4">
+//               <span className="text-[#8D493A] font-bold">${content.price}</span>
+//               <Link to={`/book/${content._id}`}>
+//                 <Button className="flex items-center">
+//                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+//                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+//                   </svg>
+//                   View Details
+//                 </Button>
+//               </Link>
+//             </div>
+//           </Card>
+//         ))}
+//       </div>
+
+//       {filteredContents.length > itemsPerPage && (
+//         <div className="flex justify-center mt-8">
+//           {[...Array(Math.ceil(filteredContents.length / itemsPerPage))].map((_, index) => (
+//             <Button
+//               key={index}
+//               onClick={() => paginate(index + 1)}
+//               className={`mx-1 ${currentPage === index + 1 ? 'bg-[#8D493A] text-white' : 'bg-[#DFD3C3] text-[#8D493A]'}`}
+//             >
+//               {index + 1}
+//             </Button>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default ContentPage;
+//////////////////////////////////////////////////////////////////////////
+// import { useState, useEffect } from 'react';
+// import { useParams, Link } from 'react-router-dom';
+// import axios from 'axios';
+// import { Input, Button, Card } from '../components/ui/UIComponents';
+
+// const ContentPage = () => {
+//   const { collegeId, academicYearId } = useParams();
+//   const [contents, setContents] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [searchTerm, setSearchTerm] = useState('');
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const itemsPerPage = 9;
+
+//   useEffect(() => {
+//     const fetchContents = async () => {
+//       try {
+//         setLoading(true);
+//         const response = await axios.get(`http://localhost:5000/api/content/college/${collegeId}/year/${academicYearId}`);
+//         setContents(response.data.contents);
+//         setLoading(false);
+//       } catch (error) {
+//         console.error('Error fetching contents:', error);
+//         setError('Failed to load contents. Please try again later.');
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchContents();
+//   }, [collegeId, academicYearId]);
+
+//   const filteredContents = contents.filter(content =>
+//     content.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//     content.author.toLowerCase().includes(searchTerm.toLowerCase())
+//   );
+
+//   const indexOfLastItem = currentPage * itemsPerPage;
+//   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+//   const currentItems = filteredContents.slice(indexOfFirstItem, indexOfLastItem);
+
+//   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+//   if (loading) return <div className="flex justify-center items-center h-screen bg-amber-50"><div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-amber-900"></div></div>;
+//   if (error) return <div className="text-center py-10 text-red-500 bg-amber-50">{error}</div>;
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-amber-100 py-12 px-4 sm:px-6 lg:px-8">
+//       <div className="max-w-7xl mx-auto">
+//         <h1 className="text-5xl font-extrabold mb-8 text-center text-amber-900 drop-shadow-md">
+//           <span className="inline-block transform -rotate-3 hover:rotate-0 transition-transform duration-300">📚</span> Learning Resources
+//         </h1>
+        
+//         <div className="mb-12 max-w-3xl mx-auto">
+//           <div className="relative">
+//             <Input
+//               placeholder="Search for books or authors..."
+//               value={searchTerm}
+//               onChange={(e) => setSearchTerm(e.target.value)}
+//               className="w-full pl-12 pr-4 py-3 rounded-full bg-white border-2 border-amber-300 focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50 shadow-md transition-all duration-300"
+//             />
+//             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute left-4 top-1/2 transform -translate-y-1/2 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+//               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+//             </svg>
+//           </div>
+//         </div>
+
+//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+//           {currentItems.map(content => (
+//             <Card key={content._id} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+//               <div className="relative h-64 overflow-hidden">
+//                 <img src={content.cover_image || '/default-book-cover.jpg'} alt={content.title} className="w-full h-full object-cover transition-transform duration-300 hover:scale-110" />
+//                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+//                 <div className="absolute bottom-0 left-0 right-0 p-4">
+//                   <h3 className="text-xl font-bold text-white mb-1 line-clamp-2">{content.title}</h3>
+//                   <p className="text-sm text-amber-200">By {content.author}</p>
+//                 </div>
+//               </div>
+//               <div className="p-4">
+//                 <p className="text-amber-900 mb-2">{content.content_type}</p>
+//                 <p className="text-gray-600 mb-4 line-clamp-3">{content.description}</p>
+//                 <div className="flex justify-between items-center mt-4">
+//                   <span className="text-2xl font-bold text-amber-600">${content.price}</span>
+//                   <Link to={`/book/${content._id}`}>
+//                     <Button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 flex items-center space-x-2">
+//                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+//                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+//                       </svg>
+//                       <span>View Details</span>
+//                     </Button>
+//                   </Link>
+//                 </div>
+//               </div>
+//             </Card>
+//           ))}
+//         </div>
+
+//         {filteredContents.length > itemsPerPage && (
+//           <div className="flex justify-center mt-12">
+//             {[...Array(Math.ceil(filteredContents.length / itemsPerPage))].map((_, index) => (
+//               <Button
+//                 key={index}
+//                 onClick={() => paginate(index + 1)}
+//                 className={`mx-1 w-10 h-10 rounded-full font-bold ${
+//                   currentPage === index + 1
+//                     ? 'bg-amber-500 text-white'
+//                     : 'bg-white text-amber-500 border border-amber-500 hover:bg-amber-100'
+//                 } transition-colors duration-300`}
+//               >
+//                 {index + 1}
+//               </Button>
+//             ))}
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ContentPage;
+/////////////////////////////////////////////
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Input, Button, Card } from '../components/ui/UIComponents';
+import { ChevronRight } from 'lucide-react';
 
 const ContentPage = () => {
   const { collegeId, academicYearId } = useParams();
@@ -712,62 +937,78 @@ const ContentPage = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  if (loading) return <div className="text-center py-10">Loading...</div>;
-  if (error) return <div className="text-center py-10 text-red-500">{error}</div>;
+  if (loading) return <div className="flex justify-center items-center h-screen bg-[#F8EDE3]"><div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#8D493A]"></div></div>;
+  if (error) return <div className="text-center py-10 text-[#8D493A] bg-[#F8EDE3]">{error}</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8" style={{ backgroundColor: '#F8EDE3' }}>
-      <h1 className="text-4xl font-bold mb-8 text-center text-[#8D493A]">Learning Resources</h1>
-      
-      <div className="mb-6 flex justify-center">
-        <div className="relative w-full max-w-xl">
-          <Input
-            placeholder="Search for books or authors..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-full"
-          />
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+    <div className="min-h-screen bg-[#F8EDE3] py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto  mt-[6rem]">
+        <h1 className="text-5xl font-extrabold mb-8 text-center text-[#8D493A]">
+          <span className="inline-block transform hover:rotate-12 transition-transform duration-300">📚</span> Learning Resources
+        </h1>
+        
+        <div className="mb-12 max-w-3xl mx-auto">
+          <div className="relative">
+            <Input
+              placeholder="Search for books or authors..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 rounded-full bg-white border-2 border-[#D0B8A8] focus:border-[#8D493A] focus:ring focus:ring-[#D0B8A8] focus:ring-opacity-50 shadow-md transition-all duration-300"
+            />
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute left-4 top-1/2 transform -translate-y-1/2 text-[#8D493A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {currentItems.map(content => (
-          <Card key={content._id} title={content.title}>
-            <img src={content.cover_image || '/default-image.png'} alt={content.title} className="w-full h-48 object-cover mb-4" />
-            <p className="text-gray-600 mb-2">Author: {content.author}</p>
-            <p className="text-gray-600 mb-2">Type: {content.content_type}</p>
-            <p className="text-gray-700 mb-4 line-clamp-2">{content.description}</p>
-            <div className="flex justify-between items-center mt-4">
-              <span className="text-[#8D493A] font-bold">${content.price}</span>
-              <Link to={`/book/${content._id}`}>
-                <Button className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                  View Details
-                </Button>
-              </Link>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {currentItems.map(content => (
+            <div key={content._id} className="bg-[#DFD3C3] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group">
+              <div className="relative h-64 overflow-hidden">
+                <img 
+                  src={content.cover_image || '/default-book-cover.jpg'} 
+                  alt={content.title} 
+                  className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-xl font-bold text-[#8D493A] mb-2 line-clamp-1">{content.title}</h3>
+                <p className="text-[#8D493A] mb-2">By {content.author}</p>
+                <p className="text-[#8D493A] mb-2">{content.content_type}</p>
+                <p className="text-[#8D493A] text-sm mb-4 line-clamp-2">{content.description}</p>
+                <div className="flex justify-between items-center mt-4">
+                  <span className="text-2xl font-bold text-[#8D493A]">${content.price}</span>
+                  <Link to={`/book/${content._id}`}>
+                    <Button className="bg-[#8D493A] hover:bg-[#D0B8A8] text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 flex items-center group">
+                      <span>View Details</span>
+                      <ChevronRight className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </div>
-          </Card>
-        ))}
-      </div>
-
-      {filteredContents.length > itemsPerPage && (
-        <div className="flex justify-center mt-8">
-          {[...Array(Math.ceil(filteredContents.length / itemsPerPage))].map((_, index) => (
-            <Button
-              key={index}
-              onClick={() => paginate(index + 1)}
-              className={`mx-1 ${currentPage === index + 1 ? 'bg-[#8D493A] text-white' : 'bg-[#DFD3C3] text-[#8D493A]'}`}
-            >
-              {index + 1}
-            </Button>
           ))}
         </div>
-      )}
+
+        {filteredContents.length > itemsPerPage && (
+          <div className="flex justify-center mt-12">
+            {[...Array(Math.ceil(filteredContents.length / itemsPerPage))].map((_, index) => (
+              <Button
+                key={index}
+                onClick={() => paginate(index + 1)}
+                className={`mx-1 w-10 h-10 rounded-full font-bold ${
+                  currentPage === index + 1
+                    ? 'bg-[#8D493A] text-white'
+                    : 'bg-[#DFD3C3] text-[#8D493A] hover:bg-[#D0B8A8]'
+                } transition-colors duration-300`}
+              >
+                {index + 1}
+              </Button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

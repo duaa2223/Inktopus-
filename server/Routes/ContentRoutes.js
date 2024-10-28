@@ -19,7 +19,7 @@ router.put('/contents/del/:id',auth, contentController.softDeleteContent);
 
 
 // مسار للحصول على تفاصيل كتاب معين
-router.get('/book/:id', contentController.getBookDetails);
+router.get('/book/:id', contentController.getBookDetails);  
 
 // راوت لجلب المحتويات المفلترة باستخدام المسار مع المعلمات
 router.get('/college/:collegeId/year/:yearId', contentController.getFilteredContents);

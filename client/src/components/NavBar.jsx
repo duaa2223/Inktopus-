@@ -820,16 +820,97 @@
 
 // export default Navbar;
 ///////////////////////////////////////////////////////////////////////////////
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
+// import { Link, useNavigate } from 'react-router-dom';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { logout, checkLoginStatus } from '../features/auth/authThunck';
+// import { SiTestinglibrary } from "react-icons/si";
+// import CartIcon from '../components/CartIcon';
+// function Navbar() {
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+//   const { isLoggedIn, role } = useSelector((state) => state.auth);
+
+//   useEffect(() => {
+//     dispatch(checkLoginStatus());
+//   }, [dispatch]);
+
+//   useEffect(() => {
+//     console.log('Is Logged In:', isLoggedIn);
+//     console.log('Current Role:', role);
+//   }, [isLoggedIn, role]);
+
+//   const handleLogout = async () => {
+//     try {
+//       await dispatch(logout()).unwrap();
+//       navigate('/login');
+//     } catch (error) {
+//       console.error('Logout failed:', error);
+//     }
+//   };
+
+
+//   return (
+//     <header id="header" className="bg-[#D0B8A8] header fixed top-0 left-0 right-0 w-full flex items-center bg-opacity-90 transition-colors shadow-md z-50">
+//       <div className="container mx-auto flex items-center justify-between px-4 h-16">
+  
+//         <div className="flex items-center space-x-2 ml-16">
+//           <h1 className="flex items-center text-6xl font-bold">
+//             <SiTestinglibrary className="icon text-[#8D493A]" />
+//           </h1>
+//           <span className='text-4xl text-white'>Inktopus</span>
+//         </div>
+
+//         <nav id="navmenu" className="hidden md:flex space-x-6">
+//           <ul className="flex space-x-6">
+//             <li><Link to="/" className="hover:text-gray-300 text-xl text-white">Home</Link></li>
+//             <li><Link to="/About" className="text-gray-700 hover:text-gray-300 text-xl text-white">Our Story</Link></li>
+//             <li><Link to="/college" className="text-gray-700 hover:text-gray-300 text-xl text-white">College</Link></li>
+//             <li><Link to="/Price" className="text-gray-700 hover:text-gray-300 text-xl text-white">Pricing</Link></li>
+//             <li><Link to="/Contact" className="text-gray-700 hover:text-gray-300 text-xl text-white">Contact</Link></li>
+//             {isLoggedIn && role === 'admin' && (
+//               <li><Link to="/dashboard" className="text-gray-700 hover:text-gray-300 text-xl text-white">Dashboard</Link></li>
+//             )}
+//             {isLoggedIn && role === 'publisher' && (
+//               <li><Link to="/form" className="text-gray-700 hover:text-gray-300 text-xl text-white">Publish</Link></li>
+//             )}
+
+
+//           </ul>
+//         </nav>
+
+//         {isLoggedIn ? (
+//           <button onClick={handleLogout} className="btn-getstarted bg-[#8D493A] text-white py-2 px-4 rounded mr-16 hover:bg-[#A55B4B]">
+//             Log-out
+//           </button>
+//         ) : (
+//           <Link to="/login" className="btn-getstarted bg-[#8D493A] text-white py-2 px-4 rounded mr-16 hover:bg-[#A55B4B]">
+//             Log-in
+//           </Link>
+//         )}
+//       </div>
+//       <div className="hidden sm:ml-6 sm:flex sm:items-center">
+//             <CartIcon />
+//           </div>
+//     </header>
+//   );
+// }
+
+// export default Navbar;
+/////////////////////////////////////////////////////////////////////////////////////
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, checkLoginStatus } from '../features/auth/authThunck';
 import { SiTestinglibrary } from "react-icons/si";
+import CartIcon from '../components/CartIcon';
+import { Menu, X } from 'lucide-react';
 
 function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     dispatch(checkLoginStatus());
@@ -849,44 +930,83 @@ function Navbar() {
     }
   };
 
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <header id="header" className="bg-[#D0B8A8] header fixed top-0 left-0 right-0 w-full flex items-center bg-opacity-90 transition-colors shadow-md z-50">
-      <div className="container mx-auto flex items-center justify-between px-4 h-16">
-  
-        <div className="flex items-center space-x-2 ml-16">
-          <h1 className="flex items-center text-6xl font-bold">
-            <SiTestinglibrary className="icon text-[#8D493A]" />
-          </h1>
-          <span className='text-4xl text-white'>Inktopus</span>
-        </div>
+    <header className="fixed top-0 left-0 right-0 bg-[#F8EDE3] shadow-lg z-50 mb-48">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <h1 className="flex items-center text-4xl font-bold">
+              <SiTestinglibrary className="text-[#8D493A]" />
+            </h1>
+            <span className='text-2xl font-semibold text-[#8D493A]'>Inktopus</span>
+          </div>
 
-        <nav id="navmenu" className="hidden md:flex space-x-6">
-          <ul className="flex space-x-6">
-            <li><Link to="/" className="hover:text-gray-300 text-xl text-white">Home</Link></li>
-            <li><Link to="/About" className="text-gray-700 hover:text-gray-300 text-xl text-white">Our Story</Link></li>
-            <li><Link to="/college" className="text-gray-700 hover:text-gray-300 text-xl text-white">College</Link></li>
-            <li><Link to="/Price" className="text-gray-700 hover:text-gray-300 text-xl text-white">Pricing</Link></li>
-            <li><Link to="/Contact" className="text-gray-700 hover:text-gray-300 text-xl text-white">Contact</Link></li>
+          {/* Desktop Menu */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link to="/" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Home</Link>
+            <Link to="/About" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Our Story</Link>
+            <Link to="/college" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">College</Link>
+            <Link to="/Price" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Pricing</Link>
+            <Link to="/Contact" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Contact</Link>
             {isLoggedIn && role === 'admin' && (
-              <li><Link to="/dashboard" className="text-gray-700 hover:text-gray-300 text-xl text-white">Dashboard</Link></li>
+              <Link to="/dashboard" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Dashboard</Link>
             )}
             {isLoggedIn && role === 'publisher' && (
-              <li><Link to="/form" className="text-gray-700 hover:text-gray-300 text-xl text-white">Publish</Link></li>
+              <Link to="/form" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Publish</Link>
+            )}
+          </nav>
+
+          {/* Right Side Items */}
+          <div className="flex items-center space-x-4">
+            <CartIcon />
+            {isLoggedIn ? (
+              <button 
+                onClick={handleLogout} 
+                className="bg-[#8D493A] text-white px-6 py-2 rounded-lg hover:bg-[#D0B8A8] transition-colors duration-200"
+              >
+                Log-out
+              </button>
+            ) : (
+              <Link 
+                to="/login" 
+                className="bg-[#8D493A] text-white px-6 py-2 rounded-lg hover:bg-[#D0B8A8] transition-colors duration-200"
+              >
+                Log-in
+              </Link>
             )}
 
+            {/* Mobile Menu Button */}
+            <button
+              onClick={toggleMenu}
+              className="md:hidden p-2 text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
 
-          </ul>
-        </nav>
-
-        {isLoggedIn ? (
-          <button onClick={handleLogout} className="btn-getstarted bg-[#8D493A] text-white py-2 px-4 rounded mr-16 hover:bg-[#A55B4B]">
-            Log-out
-          </button>
-        ) : (
-          <Link to="/login" className="btn-getstarted bg-[#8D493A] text-white py-2 px-4 rounded mr-16 hover:bg-[#A55B4B]">
-            Log-in
-          </Link>
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="md:hidden bg-[#F8EDE3] py-4">
+            <nav className="flex flex-col space-y-4">
+              <Link to="/" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Home</Link>
+              <Link to="/About" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Our Story</Link>
+              <Link to="/college" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">College</Link>
+              <Link to="/Price" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Pricing</Link>
+              <Link to="/Contact" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Contact</Link>
+              {isLoggedIn && role === 'admin' && (
+                <Link to="/dashboard" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Dashboard</Link>
+              )}
+              {isLoggedIn && role === 'publisher' && (
+                <Link to="/form" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Publish</Link>
+              )}
+            </nav>
+          </div>
         )}
       </div>
     </header>
