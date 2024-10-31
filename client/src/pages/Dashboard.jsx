@@ -711,9 +711,11 @@
 
 // export default AdminDashboard;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// code work
-import React, { useState, useEffect } from 'react';
-import PublisherApplications from '../components/PublisherAppDash';
-
+import { useState, useEffect } from 'react';
+import PublisherApplications from '../components/tapDash/PublisherAppDash';
+import SpecializationForm from '../components/Form/SpecializationForm';
+import AcademicYearForm from '../components/Form/AcademicYearForm';
+import AcademicSection from '../components/tapDash/AcademicSection';
 // Custom UI Components (keep these as they are)
 const Tab = ({ children, isActive, onClick }) => (
   <button
@@ -758,26 +760,192 @@ const AdminDashboard = () => {
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [showAcademicYearModal, setShowAcademicYearModal] = useState(false);
+  const [collegeData, setCollegeData] = useState({
+    name: '',
+    nameAr: '',
+    imageUrl: '',
+    description: '',
+  });
 
+  const [academicYearData, setAcademicYearData] = useState({
+    name: '',
+    nameAr: '',
+    imageUrl: '',
+    description: '',
+    college: '',
+    order: '',
+  });
+
+  const [showSpecializationModal, setShowSpecializationModal] = useState(false);
+const [specializationData, setSpecializationData] = useState({
+  name: '',
+  nameAr: '',
+  description: '',
+  college: '',
+});
+
+const handleSpecializationChange = (e) => {
+  const { name, value } = e.target;
+  setSpecializationData({ ...specializationData, [name]: value });
+};
+
+
+  const handleAcademicYearChange = (e) => {
+    const { name, value } = e.target;
+    setAcademicYearData({ ...academicYearData, [name]: value });
+  };
+    
+  const handleSpecializationSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5000/api/specializations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(specializationData),
+      });
+      if (response.ok) {
+        const newSpecialization = await response.json();
+        console.log('Specialization added:', newSpecialization);
+        setShowSpecializationModal(false);
+        fetchData(); // تحديث البيانات لعرض التخصص الجديد
+      } else {
+        const errorData = await response.json();
+        console.error('Error adding specialization:', errorData.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
+
+
+
+const handleAcademicYearSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await fetch('http://localhost:5000/api/academic-years', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(academicYearData),
+    });
+    if (response.ok) {
+      const newAcademicYear = await response.json();
+      console.log('Academic year added:', newAcademicYear);
+      setShowAcademicYearModal(false);
+      fetchData(); // تحديث البيانات لعرض السنة الأكاديمية الجديدة
+    } else {
+      const errorData = await response.json();
+      console.error('Error adding academic year:', errorData.message);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCollegeData({ ...collegeData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5000/api/colleges', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(collegeData),
+      });
+      if (response.ok) {
+        const newCollege = await response.json();
+        console.log('College added:', newCollege);
+        // يمكنك تحديث الحالة الخاصة بالكلية هنا أو إغلاق النموذج
+        setShowModal(false);
+        // يمكنك استدعاء fetchData() لجلب البيانات المحدثة
+      } else {
+        const errorData = await response.json();
+        console.error('Error adding college:', errorData.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+
+  
   useEffect(() => {
     fetchData();
   }, []);
 
-  const fetchData = async () => {
-    // Simulating data fetching
-    setTimeout(() => {
-      setUsers([{ _id: 1, username: 'user1', email: 'user1@example.com', role: 'user', isActivated: true }]);
-      setColleges([{ _id: 1, name: 'Engineering College' }]);
-      setAcademicYears([{ _id: 1, name: '2023-2024' }]);
-      setSpecializations([{ _id: 1, name: 'Software Engineering' }]);
-      setContent([{ _id: 1, title: 'Programming Book', content_type: 'book', author: 'John Doe', college: { name: 'Engineering College' } }]);
-      setLoading(false);
-    }, 1000);
-  };
 
-  const handleUserStatusUpdate = (userId, isActive) => {
-    console.log(`Updating user ${userId} status to ${isActive}`);
-    fetchData();
+  const fetchData = async () => {
+    try {
+      // استرجاع المستخدمين من الـ API
+      const usersResponse = await fetch('http://localhost:5000/api/users/users');
+      const usersData = await usersResponse.json();
+      setUsers(usersData); // تحديث حالة المستخدمين بالبيانات المسترجعة
+  
+      // استرجاع الكليات
+      const collegesResponse = await fetch('http://localhost:5000/api/colleges');
+      const collegesData = await collegesResponse.json();
+      setColleges(collegesData); // تحديث حالة الكليات
+  
+      // // استرجاع الأعوام الأكاديمية
+      // const academicYearsResponse = await fetch('http://localhost:5000/api/academicYears');
+      // const academicYearsData = await academicYearsResponse.json();
+      // setAcademicYears(academicYearsData); // تحديث حالة الأعوام الأكاديمية
+  
+      // استرجاع التخصصات
+      const specializationsResponse = await fetch('http://localhost:5000/api/specializations');
+      const specializationsData = await specializationsResponse.json();
+      setSpecializations(specializationsData); // تحديث حالة التخصصات
+  
+      // استرجاع المحتوى
+      const contentResponse = await fetch('http://localhost:5000/api/content/contents');
+      const contentData = await contentResponse.json();
+      setContent(contentData); // تحديث حالة المحتوى
+  
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError("An error occurred while fetching data");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleUserStatusUpdate = async (userId, isActive) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/users/users/${userId}/toggle-activation`,
+        {
+          method: 'GET',
+          credentials: 'include', 
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+  
+      if (!response.ok) {
+        throw new Error('Failed to update user status');
+      }
+  
+      const data = await response.json();
+      console.log('Status update successful:', data);
+      
+      // تحديث البيانات بعد نجاح العملية
+      await fetchData();
+  
+    } catch (error) {
+      console.error('Error updating user status:', error);
+    }
   };
 
   const handleContentDelete = (contentId) => {
@@ -792,7 +960,7 @@ const AdminDashboard = () => {
     switch (activeTab) {
       case 'users':
         return (
-          <Card title="User Management" description="Manage user accounts and roles">
+          <Card title="User Management" description="Manage user accounts and roles ">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -828,35 +996,106 @@ const AdminDashboard = () => {
         );
       case 'publisher-apps':
         return <PublisherApplications />;
-      case 'academic':
-        return (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card title="Colleges" description="Manage colleges">
-              <Button>Add College</Button>
-              <ul className="mt-2">
-                {colleges.map((college) => (
-                  <li key={college._id} className="bg-[#D0B8A8] p-2 rounded mb-1">{college.name}</li>
-                ))}
-              </ul>
-            </Card>
-            <Card title="Academic Years" description="Manage academic years">
-              <Button>Add Academic Year</Button>
-              <ul className="mt-2">
-                {academicYears.map((year) => (
-                  <li key={year._id} className="bg-[#D0B8A8] p-2 rounded mb-1">{year.name}</li>
-                ))}
-              </ul>
-            </Card>
-            <Card title="Specializations" description="Manage specializations">
-              <Button>Add Specialization</Button>
-              <ul className="mt-2">
-                {specializations.map((spec) => (
-                  <li key={spec._id} className="bg-[#D0B8A8] p-2 rounded mb-1">{spec.name}</li>
-                ))}
-              </ul>
-            </Card>
-          </div>
-        );
+        case 'academic':
+          return <AcademicSection />;
+//       case 'academic':
+//         return (
+//           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+//            <Card title="Colleges" description="Manage colleges">
+//         <Button onClick={() => setShowModal(true)}>Add College</Button>
+//         <ul className="mt-2">
+//           {colleges.map((college) => (
+//             <li key={college._id} className="bg-[#D0B8A8] p-2 rounded mb-1">{college.name}</li>
+//           ))}
+//         </ul>
+
+//         {/* نموذج إضافة كلية */}
+//         {showModal && (
+//           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+//             <div className="bg-white rounded-lg p-6">
+//               <h2 className="text-lg font-bold">Add College</h2>
+//               <form onSubmit={handleSubmit}>
+//                 <input
+//                   type="text"
+//                   name="name"
+//                   placeholder="Name En"
+//                   value={collegeData.name}
+//                   onChange={handleInputChange}
+//                   required
+//                   className="border p-2 rounded w-full mb-4"
+//                 />
+//                 <input
+//                   type="text"
+//                   name="nameAr"
+//                   placeholder="Name Ar"
+//                   value={collegeData.nameAr}
+//                   onChange={handleInputChange}
+//                   required
+//                   className="border p-2 rounded w-full mb-4"
+//                 />
+//                 <input
+//                   type="text"
+//                   name="imageUrl"
+//                   placeholder="Img Url"
+//                   value={collegeData.imageUrl}
+//                   onChange={handleInputChange}
+//                   className="border p-2 rounded w-full mb-4"
+//                 />
+//                 <textarea
+//                   name="description"
+//                   placeholder="Description"
+//                   value={collegeData.description}
+//                   onChange={handleInputChange}
+//                   className="border p-2 rounded w-full mb-4"
+//                 />
+//                 <Button type="submit">Add</Button>
+//                 <Button onClick={() => setShowModal(false)}>Close</Button>
+//               </form>
+//             </div>
+//           </div>
+//         )}
+//       </Card>
+//       <Card title="Academic Years" description="Manage academic years">
+//   <Button onClick={() => setShowAcademicYearModal(true)}>Add Academic Year</Button>
+//   <ul className="mt-2">
+//     {academicYears.map((year) => (
+//       <li key={year._id} className="bg-[#D0B8A8] p-2 rounded mb-1">{year.name}</li>
+//     ))}
+//   </ul>
+
+//   {showAcademicYearModal && (
+//     <AcademicYearForm
+//       colleges={colleges}
+//       onClose={() => setShowAcademicYearModal(false)}
+//       onSubmit={() => {
+//         setShowAcademicYearModal(false);
+//         fetchData();
+//       }}
+//     />
+//   )}
+// </Card>
+//             <Card title="Specializations" description="Manage specializations">
+//   <Button onClick={() => setShowSpecializationModal(true)}>Add Specialization</Button>
+//   <ul className="mt-2">
+//     {specializations.map((spec) => (
+//       <li key={spec._id} className="bg-[#D0B8A8] p-2 rounded mb-1">{spec.name}</li>
+//     ))}
+//   </ul>
+
+//   {showSpecializationModal && (
+//     <SpecializationForm
+//       colleges={colleges}
+//       onClose={() => setShowSpecializationModal(false)}
+//       onSubmit={() => {
+//         setShowSpecializationModal(false);
+//         fetchData();
+//       }}
+//     />
+//   )}
+// </Card>
+
+//           </div>
+//         );
       case 'content':
         return (
           <Card title="Content Management" description="Manage books and articles">
@@ -923,10 +1162,10 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#DFD3C3] p-4">
+    <div className="min-h-screen bg-[#DFD3C3] p-4 ">
       <div className="flex">
         {/* Sidebar */}
-        <div className="w-64 bg-[#F8EDE3] rounded-lg p-4 mr-4">
+        <div className="w-64 bg-[#F8EDE3] rounded-lg p-4 mr-4 mt-32">
           <h2 className="text-2xl font-bold text-[#8D493A] mb-4">Dashboard</h2>
           <ul>
             {['users', 'publisher-apps', 'academic', 'content', 'stats'].map((tab) => (
@@ -945,8 +1184,8 @@ const AdminDashboard = () => {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1">
-          <div className="bg-[#F8EDE3] rounded-lg p-4 mb-4">
+        <div className="flex-1 ">
+          <div className="bg-[#F8EDE3] rounded-lg p-4 mb-4 mt-32">
             <h1 className="text-3xl font-bold text-[#8D493A] mb-4">Admin Dashboard</h1>
             {renderContent()}
           </div>

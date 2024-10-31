@@ -1,26 +1,4 @@
-// const College = require('../Models/CollegeModel');
 
-// exports.getAllColleges = async (req, res) => {
-//   try {
-//     const colleges = await College.find();
-//     res.status(200).json(colleges);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-// const AcademicYear = require('../Models/AcademicYearModel');
-
-// exports.getAcademicYearsByCollege = async (req, res) => {
-//   try {
-//     const { collegeId } = req.params;
-//     const academicYears = await AcademicYear.find({ college: collegeId });
-//     res.status(200).json(academicYears);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-////////////////////////////////////////////////////////////////////
 const College = require('../Models/CollegeModel');
 const AcademicYear = require('../Models/AcademicYearModel');
 const Specialization = require('../Models/SpecializationModel'); 
@@ -163,71 +141,6 @@ exports.getAllSpecializations = async (req, res) => {
   }
 };
 
-// exports.getSpecializationsByCollegeAndYear = async (req, res) => {
-//   const { collegeId, yearId } = req.params; // استخدم الكلية والسنة من البارامترات
-
-//   try {
-//     // تحقق من أن الكلية موجودة
-//     const college = await College.findById(collegeId);
-//     if (!college) {
-//       return res.status(404).json({ message: 'Invalid college' });
-//     }
-
-//     // تحقق من أن السنة الأكاديمية موجودة
-//     const academicYear = await AcademicYear.findById(yearId);
-//     if (!academicYear) {
-//       return res.status(404).json({ message: 'Invalid academic year' });
-//     }
-
-//     // البحث باستخدام الفلاتر
-//     const specializations = await Specialization.find({ 
-//       college: collegeId,
-//       academic_year: yearId
-//     })
-//     .populate('college')
-//     .populate('academic_year'); // تضمين معلومات الكلية والسنة الأكاديمية
-
-//     if (!specializations || specializations.length === 0) {
-//       return res.status(404).json({ message: 'No specializations found for the given college and year.' });
-//     }
-
-//     res.status(200).json(specializations);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error fetching specializations', error: error.message });
-//   }
-// };
-// دالة لإرجاع التخصصات بناءً على الكلية والسنة الأكاديمية
-// exports.getSpecializationsByCollegeAndYear = async (req, res) => {
-//   // console.log('Route hit!');
-//   try {
-//     const { collegeId, yearId } = req.params;
-
-//     // تحقق من وجود الكلية والسنة الأكاديمية
-//     // const collegeExists = await College.findById(collegeId);
-//     console.log('collegeId:', collegeId); // للتأكد من أن الـ ID صحيح
-//     const college = await College.findOne({ _id: collegeId });
-//     if (!college) {
-//       console.log('College not found with ID:', collegeId);
-//       return res.status(404).json({ message: 'Invalid college' });
-//     }
-    
-//     const academicYear = await AcademicYear.findOne({ _id: yearId });
-//     if (!academicYear) {
-//       console.log('Academic year not found with ID:', yearId);
-//       return res.status(404).json({ message: 'Invalid academic year' });
-//     }
-    
-//     // استرجاع التخصصات بناءً على الكلية والسنة الأكاديمية
-//     const specializations = await Specialization.find({
-//       college: collegeId,
-//       academic_year: yearId,
-//     });
-
-//     res.status(200).json(specializations);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error fetching specializations', error: error.message });
-//   }
-// };
 exports.getSpecializationsByCollegeAndYear = async (req, res) => {
   const { collegeId, yearId } = req.params;
 
@@ -261,3 +174,29 @@ exports.getSpecializationsByCollegeAndYear = async (req, res) => {
     res.status(500).json({ message: 'Error fetching specializations', error: error.message });
   }
 };
+
+
+exports.getAcademicYearsByCollege = async (req, res) => {
+  const { collegeId } = req.params;
+  
+  try {
+    // تحقق من وجود الكلية
+    const college = await College.findById(collegeId);
+    if (!college) {
+      return res.status(404).json({ message: 'College not found' });
+    }
+
+    // جلب المراحل الدراسية المرتبطة بالكلية
+    const academicYears = await AcademicYear.find({ college: collegeId })
+      .sort({ name: 1 }); // ترتيب حسب الاسم تصاعدياً
+
+    res.status(200).json(academicYears);
+  } catch (error) {
+    console.error('Error fetching academic years:', error);
+    res.status(500).json({ 
+      message: 'Error fetching academic years', 
+      error: error.message 
+    });
+  }
+};
+

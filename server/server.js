@@ -14,6 +14,8 @@ const userRoutes = require('./Routes/UserRoutes')
 const ResourceRoutes = require('./Routes/ResourceRoutes.js'); 
 const cartRoutes = require('./Routes/CartRoutes.js');
 const applicationRoutes = require('./Routes/publisherRoutes.js');
+const paymentRoutes = require('./Routes/PaymentRoutes');
+
 const cors = require('cors'); // استيراد مكتبة cors
 
 
@@ -40,6 +42,7 @@ app.use('/api', ResourceRoutes);
 app.use('/api/review',reviewRoutes)
 app.use('/api/users',userRoutes)  
 app.use('/api/cart',cartRoutes) 
+app.use('/api/payment', paymentRoutes);
 app.use('/api/application',applicationRoutes)
 // بدء الاستماع للطلبات على المنفذ المحدد
 const PORT = process.env.PORT ;

@@ -2910,8 +2910,8 @@ import  { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Pen } from 'lucide-react';
 import axios from 'axios';
-import AddContentForm from '../components/ContentForm';
-import PublishedContent from '../components/PublishedContent';
+import AddContentForm from '../components/Form/ContentForm';
+import PublishedContent from '../components/Puplisher/PublishedContent';
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);

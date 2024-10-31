@@ -903,7 +903,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, checkLoginStatus } from '../features/auth/authThunck';
 import { SiTestinglibrary } from "react-icons/si";
-import CartIcon from '../components/CartIcon';
+import CartIcon from '../components/Cart/CartIcon';
 import { Menu, X } from 'lucide-react';
 
 function Navbar() {

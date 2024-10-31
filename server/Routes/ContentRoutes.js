@@ -7,7 +7,7 @@ const contentController = require('../Controllers/ContentController');
 router.post('/add',auth, contentController.createContent); 
 
 // استعراض جميع المحتويات
-router.get('/contents', contentController.getAllContents);
+router.get('/contents', contentController.getAllContents); 
 
 // تحديث محتوى
 router.put('/contents/:id',auth, contentController.updateContent); 

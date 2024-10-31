@@ -11,13 +11,13 @@ const {
 } = require('../Controllers/publisherController');
 
 // Submit a new publisher application
-router.post('/apply',auth, applyPublisher);  
+router.post('/apply',auth, applyPublisher); 
 
 // Get all publisher applications (admin only)
-router.get('/applications',auth, getAllApplications);
+router.get('/applications',auth, getAllApplications);   
 
 // Update application status (admin only)
-router.patch('/applications/:id', auth, updateApplicationStatus);
+router.put('/applications/:id', auth, updateApplicationStatus);  
 
 
 

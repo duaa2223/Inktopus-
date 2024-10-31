@@ -1,0 +1,49 @@
+/* إعدادات الحاوية الخاصة بـ Swiper */
+.swiper-container {
+    width: 100%;
+    height: 400px; /* ارتفاع الحاوية */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px; /* تباعد من الأعلى */
+   
+  }
+  
+  /* إعدادات السلايدات */
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#DFD3C3;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px #D0B8A8;
+    max-width: 300px; /* عرض البطاقة */
+    height: 350px; /* ارتفاع البطاقة */
+  }
+  
+  /* إعدادات النصوص داخل السلايدات */
+  .swiper-slide h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .swiper-slide p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* تحسين عرض البطاقات الثلاثية الأبعاد */
+  .swiper-slide-active {
+    transform: scale(1.1); /* تكبير البطاقة النشطة */
+  }
+  
+  .swiper-pagination-bullet {
+    background-color: #333; /* لون النقاط الخاصة بالـ pagination */
+  }
+  
+  .swiper-pagination-bullet-active {
+    background-color:#8D493A; /* لون النقاط النشطة في الـ pagination */
+  }
+  
