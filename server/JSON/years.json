@@ -1,0 +1,65 @@
+{
+    "academicYears": [
+      {
+        "_id": "66e8a7647fc320bf96496b10",
+        "name": "Year 1",
+        "imageUrl": "https://example.com/year1_image.jpg",
+        "collegeId": "66e8a7647fc320bf96496b04"
+      },
+      {
+        "_id": "66e8a7647fc320bf96496b11",
+        "name": "Year 2",
+        "imageUrl": "https://example.com/year2_image.jpg",
+        "collegeId": "66e8a7647fc320bf96496b04"
+      },
+      {
+        "_id": "66e8a7647fc320bf96496b12",
+        "name": "Year 1",
+        "imageUrl": "https://example.com/year1_image.jpg",
+        "collegeId": "66e8a7647fc320bf96496b05"
+      },
+      {
+        "_id": "66e8a7647fc320bf96496b13",
+        "name": "Year 2",
+        "imageUrl": "https://example.com/year2_image.jpg",
+        "collegeId": "66e8a7647fc320bf96496b05"
+      },
+      {
+        "_id": "66e8a7647fc320bf96496b14",
+        "name": "Year 1",
+        "imageUrl": "https://example.com/year1_image.jpg",
+        "collegeId": "66e8a7647fc320bf96496b06"
+      },
+      {
+        "_id": "66e8a7647fc320bf96496b15",
+        "name": "Year 2",
+        "imageUrl": "https://example.com/year2_image.jpg",
+        "collegeId": "66e8a7647fc320bf96496b06"
+      },
+      {
+        "_id": "66e8a7647fc320bf96496b16",
+        "name": "Year 1",
+        "imageUrl": "https://example.com/year1_image.jpg",
+        "collegeId": "66e8a7647fc320bf96496b07"
+      },
+      {
+        "_id": "66e8a7647fc320bf96496b17",
+        "name": "Year 2",
+        "imageUrl": "https://example.com/year2_image.jpg",
+        "collegeId": "66e8a7647fc320bf96496b07"
+      },
+      {
+        "_id": "66e8a7647fc320bf96496b18",
+        "name": "Year 1",
+        "imageUrl": "https://example.com/year1_image.jpg",
+        "collegeId": "66e8a7647fc320bf96496b08"
+      },
+      {
+        "_id": "66e8a7647fc320bf96496b19",
+        "name": "Year 2",
+        "imageUrl": "https://example.com/year2_image.jpg",
+        "collegeId": "66e8a7647fc320bf96496b08"
+      }
+    ]
+  }
+  

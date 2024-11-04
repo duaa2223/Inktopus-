@@ -1,0 +1,21 @@
+{
+    "title": "عنوان الكتاب",
+    "titleAr": "عنوان الكتاب بالعربية",
+    "author": "اسم المؤلف",
+    "description": "وصف الكتاب",
+    "cover_image": "http://example.com/cover.jpg",
+    "additional_images": [
+      "http://example.com/image1.jpg",
+      "http://example.com/image2.jpg"
+    ],
+    "promo_videos": [
+      "http://example.com/video1.mp4",
+      "http://example.com/video2.mp4"
+    ],
+    "price": 100,
+    "file_url": "http://example.com/book.pdf",
+    "content_type": "book",
+    "college": "college_id",
+    "academic_year": "academic_year_id",
+    "specialization": "specialization_id"
+  }
