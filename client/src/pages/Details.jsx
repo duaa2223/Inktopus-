@@ -835,10 +835,28 @@ const BookDetails = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   const fetchBookDetails = async () => {
+  //     try {
+  //       const response = await axios.get(`http://localhost:5000/api/content/book/${id}`);
+  //       setBook(response.data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error('Error fetching book details', error);
+  //       setError('Failed to load book details. Please try again later.');
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchBookDetails();
+  // }, [id]);
+
+
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/content/book/${id}`);
+        console.log('Book data received:', response.data); // تحقق من البيانات المستلمة
         setBook(response.data);
         setLoading(false);
       } catch (error) {
@@ -847,7 +865,7 @@ const BookDetails = () => {
         setLoading(false);
       }
     };
-
+  
     fetchBookDetails();
   }, [id]);
 
@@ -922,7 +940,7 @@ const BookDetails = () => {
     return <div className="text-center text-2xl text-[#8D493A] bg-[#F8EDE3] p-8">Book not found</div>;
   }
 
-  const images = [book.cover_image, ...(book.additional_images || [])].filter(Boolean);
+const images = [book.cover_image, ...(book.additional_images || [])].filter(Boolean);
 
   return (
     <div className="min-h-screen bg-[#F8EDE3]">
@@ -962,15 +980,15 @@ const BookDetails = () => {
               )}
             </motion.div>
             {book.promo_videos && book.promo_videos.length > 0 && (
-              <motion.div
-                className="bg-[#DFD3C3] p-6 rounded-lg shadow-md space-y-4"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <h3 className="text-2xl font-semibold text-[#8D493A]">Promotional Videos</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {book.promo_videos.map((videoUrl, index) => (
+  <motion.div
+    className="bg-[#DFD3C3] p-6 rounded-lg shadow-md space-y-4"
+    initial={{ opacity: 0, y: 50 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: 0.2 }}
+  >
+    <h3 className="text-2xl font-semibold text-[#8D493A]">Promotional Videos</h3>
+    <div className="grid grid-cols-2 gap-4">
+      {book.promo_videos.map((videoUrl, index) => (
                     <a
                       key={index}
                       href={videoUrl}

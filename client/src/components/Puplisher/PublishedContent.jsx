@@ -34,33 +34,44 @@ const PublishedContent = () => {
     setEditingContent(item);
   };
 
-//   const handleDelete = async (id) => {
+// const handleDelete = async (id) => {
 //     if (window.confirm('Are you sure you want to delete this content?')) {
-//       try {
-//         await axios.put(`http://localhost:5000/api/content/contents/del/${id}`, { withCredentials: true });
-//         fetchPublisherContent(); // Refresh the content list
-//       } catch (error) {
-//         console.error('Error deleting content:', error);
-//       }
+//         try {
+//             const token = localStorage.getItem('token'); // أو استخدم أي طريقة تحفظ بها التوكن
+//             await axios.put(`http://localhost:5000/api/content/contents/del/${id}`, null, {
+//                 headers: {
+//                     Authorization: `Bearer ${token}`, // تأكد من إرسال التوكن هنا
+//                 },
+//                 withCredentials: true, // تأكد من إضافة هذا الخيار
+//             });
+//             fetchPublisherContent(); // Refresh the content list
+//         } catch (error) {
+//             console.error('Error deleting content:', error);
+//         }
 //     }
-//   };
+// };
 const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this content?')) {
-        try {
-            const token = localStorage.getItem('token'); // أو استخدم أي طريقة تحفظ بها التوكن
-            await axios.put(`http://localhost:5000/api/content/contents/del/${id}`, null, {
-                headers: {
-                    Authorization: `Bearer ${token}`, // تأكد من إرسال التوكن هنا
-                },
-                withCredentials: true, // تأكد من إضافة هذا الخيار
-            });
-            fetchPublisherContent(); // Refresh the content list
-        } catch (error) {
-            console.error('Error deleting content:', error);
-        }
-    }
+  if (window.confirm('Are you sure you want to delete this content?')) {
+      try {
+          const token = localStorage.getItem('token');
+          await axios.delete(`http://localhost:5000/api/content/contents/del/${id}`, {
+              headers: {
+                  Authorization: `Bearer ${token}`,
+              },
+              withCredentials: true,
+          });
+          fetchPublisherContent(); // تحديث القائمة بعد الحذف
+      } catch (error) {
+          console.error('Error deleting content:', error);
+          // إضافة معالجة أفضل للأخطاء
+          if (error.response) {
+              alert(error.response.data.message || 'Error deleting content');
+          } else {
+              alert('Network error occurred');
+          }
+      }
+  }
 };
-
 
   const handleUpdate = async (e) => {
     e.preventDefault();

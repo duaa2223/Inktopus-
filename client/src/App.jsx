@@ -214,7 +214,7 @@ const AppContent = () => {
 
   return (
     <Router>
-      <Navbar />
+      {/* <Navbar /> */}
       <Toaster position="top-center" />
       <Routes>
         <Route path="/" element={<Home />} />

@@ -59,6 +59,6 @@ router.get('/specializations', getAllSpecializations);
 // router.get('/specializations/college/:collegeId/year/:yearId', getSpecializationsByCollegeAndYear);
 
 router.get('/specializations/college/:collegeId/year/:yearId', getSpecializationsByCollegeAndYear);
-console.log('Route hit!');
+// console.log('Route hit!');
 
 module.exports = router;

@@ -1,0 +1,28 @@
+{
+    "title": "Introduction to Psychology",
+    "titleAr": "مقدمة في علم النفس",
+    "author": "John Doe",
+    "author_info": "John Doe is a professor of psychology with over 20 years of experience.",
+    "description": "This book provides a comprehensive overview of psychological concepts.",
+    "price": 29.99,
+    "content_type": "book",
+    "college": "66f6c93a26eba2ec51a20889",
+    "academic_year": "66f6ed9526eba2ec51a2097b",
+    "specialization": "66f9bd96f4f15792cda048e5",
+    "file_url": "https://www.pinterest.com/",
+    "cover_image": "https://i.pinimg.com/564x/ee/eb/d0/eeebd096f2564343b0a9a4abab257d1b.jpg",
+    "additional_images": [
+      "https://i.pinimg.com/236x/53/58/5d/53585df2fdb0d1ea0bd70722a5ef0bfd.jpg",
+      "https://i.pinimg.com/236x/a7/e5/e4/a7e5e45b95e50d07191737087e366f84.jpg"
+    ],
+    "promo_videos": [
+      "https://www.youtube.com/live/fp5SvstUhJw?si=CWlMVtHYIuSZ9JPP",
+      "https://www.youtube.com/live/fp5SvstUhJw?si=CWlMVtHYIuSZ9JPP"
+    ],
+    "publisher": "67016819ed394616e3f47c36",
+    "isDeleted": false,
+    "isActive": true,
+    "downloads": 0,
+    "views": 0
+  }
+  

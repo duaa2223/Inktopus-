@@ -32,7 +32,7 @@ router.get('/users', userController.getAllUsers);
 // مسار لتعديل حالة المستخدم، متاح فقط للمستخدمين الذين لديهم دور "admin"
 // router.put('/users/:userId/toggle-activation', auth, checkRole('admin'), userController.toggleUserActivation);
 
-router.get('/users/:userId/toggle-activation', auth, checkRole('admin'), userController.toggleUserActivation);
+router.get('/users/:userId/toggle-activation', auth, userController.toggleUserActivation);
 
 // المسار الخاص بالتحقق من حالة تسجيل الدخول
 // router.get('/auth/status', authenticateToken, userController.getLoginStatus );

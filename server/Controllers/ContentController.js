@@ -7,7 +7,7 @@ const Specialization = require('../Models/SpecializationModel'); // تأكد م�
 exports.createContent = async (req, res) => {
   try {
     console.log('Request Body:', req.body);  // تصحيح الإخراج
-    const { title, titleAr, author, description, cover_image, price, file_url, content_type, college, academic_year, specialization } = req.body;
+    const { title, titleAr, author, description, cover_image, price, file_url, content_type, college, academic_year, specialization, additional_images,promo_videos } = req.body;
 
     const [collegeExists, academicYearExists] = await Promise.all([
       College.findById(college),
@@ -44,7 +44,9 @@ exports.createContent = async (req, res) => {
       college,
       academic_year,
       specialization,
-      publisher
+      publisher,
+      additional_images,
+      promo_videos      
     });
 
     await newContent.save();
@@ -101,35 +103,65 @@ exports.updateContent = async (req, res) => {
 };
 
 //// يتم التحقق من الدور الادمن والناشر 
-exports.softDeleteContent = async (req, res) => {
+// exports.softDeleteContent = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+    
+//     // العثور على المحتوى بواسطة ID
+//     const content = await Content.findById(id);
+
+//     if (!content) {
+//       return res.status(404).json({ message: 'Content not found' });
+//     }
+
+//     // التحقق مما إذا كان المستخدم هو الناشر أو إذا كان أدمن
+//     if (req.user.id !== content.publisher.toString() && req.user.role !== 'admin') {
+//       return res.status(403).json({ message: 'Unauthorized to delete this content' });
+//     }
+
+//     // حذف المحتوى (soft delete)
+//     const updatedContent = await Content.findByIdAndUpdate(
+//       id, 
+//       { isDeleted: true ,isActive: false}, // تحديث حالة الحذف
+//       { new: true, runValidators: true }
+//     );
+
+//     res.status(200).json({ message: 'Content deleted successfully', updatedContent });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error deleting content', error: error.message });
+//   }
+// };
+
+exports.deleteContent = async (req, res) => {
   try {
     const { id } = req.params;
     
     // العثور على المحتوى بواسطة ID
     const content = await Content.findById(id);
-
+    
     if (!content) {
       return res.status(404).json({ message: 'Content not found' });
     }
-
+    
     // التحقق مما إذا كان المستخدم هو الناشر أو إذا كان أدمن
     if (req.user.id !== content.publisher.toString() && req.user.role !== 'admin') {
       return res.status(403).json({ message: 'Unauthorized to delete this content' });
     }
-
-    // حذف المحتوى (soft delete)
-    const updatedContent = await Content.findByIdAndUpdate(
-      id, 
-      { isDeleted: true ,isActive: false}, // تحديث حالة الحذف
-      { new: true, runValidators: true }
-    );
-
-    res.status(200).json({ message: 'Content deleted successfully', updatedContent });
+    
+    // حذف المحتوى (حذف تام)
+    await Content.findByIdAndDelete(id);
+    
+    res.status(200).json({ 
+      message: 'Content deleted successfully'
+    });
+    
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting content', error: error.message });
+    res.status(500).json({ 
+      message: 'Error deleting content', 
+      error: error.message 
+    });
   }
 };
-
 
 
 exports.getFilteredContents = async (req, res) => {
@@ -168,27 +200,54 @@ exports.getFilteredContents = async (req, res) => {
 
 
 
+// exports.getBookDetails = async (req, res) => {
+//   try {
+//     const { id } = req.params; // الحصول على معرف الكتاب من الرابط
+    
+//     // البحث عن الكتاب بواسطة الـ ID الخاص به
+//     const book = await Content.findById(id)
+//       .populate('college', 'name nameAr') // جلب معلومات الكلية
+//       .populate('academic_year', 'name nameAr') // جلب معلومات السنة الأكاديمية
+//       .select('-isDeleted'); // تجاهل حقل isDeleted
+
+//     // التحقق من وجود الكتاب
+//     if (!book) {
+//       return res.status(404).json({ message: 'Book not found' });
+//     }
+
+//     // إرجاع بيانات الكتاب كاستجابة
+//     res.status(200).json(book);
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error fetching book details', error: error.message });
+//   }
+// };
 exports.getBookDetails = async (req, res) => {
   try {
-    const { id } = req.params; // الحصول على معرف الكتاب من الرابط
+    const { id } = req.params;
     
-    // البحث عن الكتاب بواسطة الـ ID الخاص به
     const book = await Content.findById(id)
-      .populate('college', 'name nameAr') // جلب معلومات الكلية
-      .populate('academic_year', 'name nameAr') // جلب معلومات السنة الأكاديمية
-      .select('-isDeleted'); // تجاهل حقل isDeleted
+      .populate('college', 'name nameAr')
+      .populate('academic_year', 'name nameAr')
+      .select('-isDeleted')
+      .select('title titleAr description author price cover_image additional_images promo_videos content_type author_info'); // تأكد من تضمين جميع الحقول المطلوبة
 
-    // التحقق من وجود الكتاب
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
     }
 
-    // إرجاع بيانات الكتاب كاستجابة
+    // للتحقق من البيانات
+    console.log('Book details:', {
+      additional_images: book.additional_images,
+      promo_videos: book.promo_videos
+    });
+
     res.status(200).json(book);
   } catch (error) {
+    console.error('Error fetching book details:', error);
     res.status(500).json({ message: 'Error fetching book details', error: error.message });
   }
 };
+
 
 //محتوى لناشر معين 
 exports.getPublisherContents = async (req, res) => {
