@@ -23,7 +23,7 @@ const TopPublishersSection = () => {
   };
 
   return (
-    <section className="relative py-20 bg-gradient-to-b from-[#F8EDE3] to-[#DFD3C3]">
+    <section className="relative py-32 bg-[#F8EDE3]">
       {/* زخارف الخلفية */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-10 left-10 w-32 h-32 opacity-10">

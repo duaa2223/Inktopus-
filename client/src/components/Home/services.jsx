@@ -173,7 +173,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 import React from 'react';
 import { School, BookOpen, Filter, Video, ShoppingCart, FileText, Truck, GraduationCap } from 'lucide-react';
-
+import { motion } from 'framer-motion';
 const ProcessStep = ({ number, title, icon, isActive }) => {
   return (
     <div className="flex flex-col items-center group">
@@ -235,10 +235,14 @@ const UserGuide = () => {
   ];
 
   return (
-    <section className="py-20 bg-[#F8EDE3]">
+    <section className="py-32 bg-[#F8EDE3]">
       <div className="container mx-auto px-6">
         <div className="flex flex-col items-center">
-          <h2 className="text-[#8D493A] text-3xl font-bold mb-12">How to Use Our Platform</h2>
+          
+          <h2 className="text-4xl font-serif font-semibold text-[#8D493A] flex items-center justify-center gap-3 mb-16">
+            How to Use Our Platform</h2>
+            
+         
           
           {/* Process Steps */}
           <div className="flex flex-wrap justify-center gap-12 mb-16">

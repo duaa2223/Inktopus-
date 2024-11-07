@@ -85,16 +85,16 @@ const handleDelete = async (id) => {
   };
 
   return (
-    <div className="bg-[#DFD3C3] rounded-lg shadow-lg p-6 mt-6">
+    <div className="  p-6 mt-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold text-[#8D493A]">Published Content</h2>
-        <div className="relative">
+        {/* <h2 className="text-2xl font-bold text-[#8D493A]">Published Content</h2> */}
+        <div className="relative mb-6">
           <input
             type="text"
             placeholder="Search content..."
             value={searchTerm}
             onChange={handleSearch}
-            className="pl-10 pr-4 py-2 border rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-[#8D493A]"
+             className="w-full pl-10 p-2 border rounded-lg bg-[#F8EDE3] focus:outline-none focus:ring-2 focus:ring-[#8D493A]"
           />
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         </div>

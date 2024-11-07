@@ -21,7 +21,12 @@ const {
   updateSpecialization,
   deleteSpecialization,
   getAllSpecializations,
-  getSpecializationsByCollegeAndYear
+  getSpecializationsByCollegeAndYear,
+  deleteCollege,
+  deleteAcademicYear,
+  updateCollege,
+  updateAcademicYear
+
 } = require('../Controllers/ResourceController');
 
 // colleges
@@ -46,10 +51,25 @@ router.post('/specializations', createSpecialization);
 router.put('/specializations/:id', updateSpecialization);
 
 // حذف تخصص
-router.delete('/specializations/:id/', deleteSpecialization);
+router.delete('/specializations/:id/', deleteSpecialization);  
+
+
+//حذف كلية 
+router.delete('/college/:id/', deleteCollege);  
+
+//حذف سنه 
+router.delete('/academic-years/:id', deleteAcademicYear);
 
 // عرض جميع التخصصات
 router.get('/specializations', getAllSpecializations); 
+
+router.put('/colleges/:id', updateCollege);
+
+
+// تحديث مرحلة دراسية
+router.put('/academic-years/:id', updateAcademicYear);
+
+
 // عرض جميع التخصصات
 // router.get('/specializations/:id', getAllSpecializations);
 // جلب التخصصات بناءً على الكلية والسنة الأكاديمية

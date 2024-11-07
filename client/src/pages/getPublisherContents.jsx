@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 
-const PublisherContents = () => {
-  const [contents, setContents] = useState([]);
+// const PublisherContents = () => {
+//   const [contents, setContents] = useState([]);
 
-  useEffect(() => {
-    const fetchContents = async () => {
-      const response = await fetch('/api/publisher/contents');
-      const data = await response.json();
-      setContents(data);
-    };
+//   useEffect(() => {
+//     const fetchContents = async () => {
+//       const response = await fetch('/api/publisher/contents');
+//       const data = await response.json();
+//       setContents(data);
+//     };
 
-    fetchContents();
-  }, []);
+//     fetchContents();
+//   }, []);
 
-  return (
-    <div>
-      <h1>Your Contents</h1>
-      <ul>
-        {contents.map((content) => (
-          <li key={content._id}>
-            {content.title}
-            {/* إضافة زر تعديل */}
-            <button>Edit</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <h1>Your Contents</h1>
+//       <ul>
+//         {contents.map((content) => (
+//           <li key={content._id}>
+//             {content.title}
+//             {/* إضافة زر تعديل */}
+//             <button>Edit</button>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
 
-export default PublisherContents;
+// export default PublisherContents;

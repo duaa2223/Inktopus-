@@ -199,6 +199,7 @@ const getUserProfile = async (req, res) => {
     res.status(200).json({
       username: user.username,
       email: user.email,
+      password: user.password,
       profilePicture: user.profilePicture,
       role: user.role,
       bio: user.bio,
@@ -213,6 +214,42 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+// update password
+const updateUserPassword = async (req, res) => {
+  try {
+    // Check if there is a token in the cookie
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    // Verify the token
+    const verifytoken = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(verifytoken.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update the password
+    const { currentPassword, newPassword } = req.body;
+
+    // Verify the current password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Current password is incorrect' });
+    }
+
+    // Hash the new password and update the user
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Error in updateUserPassword:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 // دالة لاسترجاع جميع المستخدمين
 const getAllUsers = async (req, res) => {
@@ -257,5 +294,6 @@ module.exports = {
     getUserProfile,
     getAllUsers,
     toggleUserActivation,
+    updateUserPassword 
     // refreshToken,
 };

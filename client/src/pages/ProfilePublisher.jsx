@@ -2906,16 +2906,295 @@
 
 // export default ProfilePage;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-import  { useState, useEffect } from 'react';
+// import  { useState, useEffect } from 'react';
+// import { motion } from 'framer-motion';
+// import { Mail, Pen } from 'lucide-react';
+// import axios from 'axios';
+// import AddContentForm from '../components/Form/ContentForm';
+// import PublishedContent from '../components/Puplisher/PublishedContent';
+
+// const ProfilePage = () => {
+//   const [user, setUser] = useState(null);
+//   const [showAddContent, setShowAddContent] = useState(false);
+
+//   useEffect(() => {
+//     const fetchUserProfile = async () => {
+//       try {
+//         const response = await axios.get('http://localhost:5000/api/users/profile', { withCredentials: true });
+//         setUser(response.data);
+//       } catch (error) {
+//         console.error('Error fetching user profile:', error);
+//       }
+//     };
+
+//     fetchUserProfile();
+//   }, []);
+
+//   if (!user) {
+//     return <div className="text-center mt-8">Loading...</div>;
+//   }
+
+//   return (
+//     <div className="container mx-auto p-4 bg-[#F8EDE3] ">
+//       <motion.div
+//         initial={{ opacity: 0, y: 20 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ duration: 0.5 }}
+//         className="bg-[#DFD3C3] rounded-lg shadow-lg p-6 mb-6 mt-[7rem]"
+//       >
+//         <div className="flex items-center justify-between mb-4  ">
+//           <h1 className="text-3xl font-bold text-[#8D493A]">Publisher Profile</h1>
+//           <motion.div
+//             whileHover={{ scale: 1.1 }}
+//             whileTap={{ scale: 0.9 }}
+//             className="bg-[#D0B8A8] rounded-full p-2"
+//           >
+//             {user.profilePicture ? (
+//               <img src={user.profilePicture} alt="Profile" className="w-16 h-16 rounded-full" />
+//             ) : (
+//               <div className="w-16 h-16 rounded-full bg-[#8D493A] flex items-center justify-center text-white text-2xl">
+//                 {user.username.charAt(0).toUpperCase()}
+//               </div>
+//             )}
+//           </motion.div>
+//         </div>
+        
+//         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//           <div className="flex items-center">
+//             <Mail className="mr-2 text-[#8D493A]" />
+//             <span>{user.email}</span>
+//           </div>
+//           <div className="flex items-center">
+//             <Pen className="mr-2 text-[#8D493A]" />
+//             <span>{user.yearsOfExperience} years of experience</span>
+//           </div>
+//         </div>
+        
+//         <div className="mt-4">
+//           <h2 className="text-xl font-semibold text-[#8D493A] mb-2">Bio</h2>
+//           <p>{user.bio || 'No bio available'}</p>
+//         </div>
+//       </motion.div>
+
+//       <motion.div
+//         initial={{ opacity: 0, y: 20 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ duration: 0.5, delay: 0.2 }}
+//         className="mb-6"
+//       >
+//         <div className="flex justify-end mb-4">
+//           <motion.button
+//             whileHover={{ scale: 1.05 }}
+//             whileTap={{ scale: 0.95 }}
+//             className="bg-[#8D493A] text-white px-4 py-2 rounded-lg"
+//             onClick={() => setShowAddContent(true)}
+//           >
+//             Add New Content
+//           </motion.button>
+//         </div>
+        
+//         <PublishedContent />
+//       </motion.div>
+
+//       {showAddContent && (
+//         <AddContentForm onClose={() => setShowAddContent(false)} />
+//       )}
+//     </div>
+//   );
+// };
+
+// export default ProfilePage;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// import { useState, useEffect } from 'react';
+// import { motion } from 'framer-motion';
+// import { Mail, Pen } from 'lucide-react';
+// import axios from 'axios';
+// import AddContentForm from '../components/Form/ContentForm';
+// import PublishedContent from '../components/Puplisher/PublishedContent';
+
+// const ProfilePage = () => {
+//   const [user, setUser] = useState(null);
+//   const [showAddContent, setShowAddContent] = useState(false);
+//   const [showPasswordModal, setShowPasswordModal] = useState(false);
+//   const [currentPassword, setCurrentPassword] = useState('');
+//   const [newPassword, setNewPassword] = useState('');
+
+//   useEffect(() => {
+//     const fetchUserProfile = async () => {
+//       try {
+//         const response = await axios.get('http://localhost:5000/api/users/profile', { withCredentials: true });
+//         setUser(response.data);
+//       } catch (error) {
+//         console.error('Error fetching user profile:', error);
+//       }
+//     };
+
+//     fetchUserProfile();
+//   }, []);
+
+//   const handlePasswordUpdate = async () => {
+//     try {
+//       await axios.put('/api/users/update-password', {
+//         currentPassword,
+//         newPassword,
+//       }, { withCredentials: true });
+//       setCurrentPassword('');
+//       setNewPassword('');
+//       setShowPasswordModal(false);
+//       // You can also add a success message or update the UI in some way
+//     } catch (error) {
+//       console.error('Error updating password:', error);
+//       // You can also add an error message or update the UI in some way
+//     }
+//   };
+
+//   if (!user) {
+//     return <div className="text-center mt-8">Loading...</div>;
+//   }
+
+//   return (
+//     <div className="container mx-auto p-4 bg-[#F8EDE3] ">
+//       <motion.div
+//         initial={{ opacity: 0, y: 20 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ duration: 0.5 }}
+//         className="bg-[#DFD3C3] rounded-lg shadow-lg p-6 mb-6 mt-[7rem]"
+//       >
+//         <div className="flex items-center justify-between mb-4  ">
+//           <h1 className="text-3xl font-bold text-[#8D493A]">Publisher Profile</h1>
+//           <motion.div
+//             whileHover={{ scale: 1.1 }}
+//             whileTap={{ scale: 0.9 }}
+//             className="bg-[#D0B8A8] rounded-full p-2"
+//           >
+//             {user.profilePicture ? (
+//               <img src={user.profilePicture} alt="Profile" className="w-16 h-16 rounded-full" />
+//             ) : (
+//               <div className="w-16 h-16 rounded-full bg-[#8D493A] flex items-center justify-center text-white text-2xl">
+//                 {user.username.charAt(0).toUpperCase()}
+//               </div>
+//             )}
+//           </motion.div>
+//         </div>
+
+//         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//           <div className="flex items-center">
+//             <Mail className="mr-2 text-[#8D493A]" />
+//             <span>{user.email}</span>
+//           </div>
+//           <div className="flex items-center">
+//             <Pen className="mr-2 text-[#8D493A]" />
+//             <span>{user.yearsOfExperience} years of experience</span>
+//           </div>
+//         </div>
+
+//         <div className="mt-4">
+//           <h2 className="text-xl font-semibold text-[#8D493A] mb-2">Bio</h2>
+//           <p>{user.bio || 'No bio available'}</p>
+//         </div>
+        
+//         <div className="mt-6 border-t pt-6">
+//           <h2 className="text-[#8D493A] font-bold text-xl mb-4">Update Password</h2>
+//           <div className="grid grid-cols-1 gap-4">
+//             <div>
+//               <label htmlFor="current-password" className="text-sm text-[#D0B8A8]">
+//                 Current Password
+//               </label>
+//               <input
+//                 type="password"
+//                 id="current-password"
+//                 value={currentPassword}
+//                 onChange={(e) => setCurrentPassword(e.target.value)}
+//                 className="w-full px-4 py-2 bg-[#F8EDE3] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8D493A] focus:border-transparent"
+//               />
+//             </div>
+//             <div>
+//               <label htmlFor="new-password" className="text-sm text-[#D0B8A8]">
+//                 New Password
+//               </label>
+//               <input
+//                 type="password"
+//                 id="new-password"
+//                 value={newPassword}
+//                 onChange={(e) => setNewPassword(e.target.value)}
+//                 className="w-full px-4 py-2 bg-[#F8EDE3] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8D493A] focus:border-transparent"
+//               />
+//             </div>
+//             <button
+//               onClick={handlePasswordUpdate}
+//               className="px-4 py-2 bg-[#8D493A] text-white rounded-lg hover:bg-[#6d3829] transition-colors"
+//             >
+//               Update Password
+//             </button>
+//           </div>
+//         </div>
+
+//       </motion.div>
+
+//       <motion.div
+//         initial={{ opacity: 0, y: 20 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ duration: 0.5, delay: 0.2 }}
+//         className="mb-6"
+//       >
+//         <div className="flex justify-end mb-4">
+//           <motion.button
+//             whileHover={{ scale: 1.05 }}
+//             whileTap={{ scale: 0.95 }}
+//             className="bg-[#8D493A] text-white px-4 py-2 rounded-lg"
+//             onClick={() => setShowAddContent(true)}
+//           >
+//             Add New Content
+//           </motion.button>
+//         </div>
+
+//         <PublishedContent />
+//       </motion.div>
+
+//       {showAddContent && (
+//         <AddContentForm onClose={() => setShowAddContent(false)} />
+//       )}
+
+//     </div>
+//   );
+// };
+
+// export default ProfilePage;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Pen } from 'lucide-react';
+import { Mail, Pen, Coffee, Book, Feather, User, Plus, Search } from 'lucide-react';
 import axios from 'axios';
 import AddContentForm from '../components/Form/ContentForm';
 import PublishedContent from '../components/Puplisher/PublishedContent';
 
+const TabsList = ({ children }) => (
+  <div className="flex bg-white rounded-lg p-1 mb-6 w-fit">
+    {children}
+  </div>
+);
+
+const TabsTrigger = ({ value, active, onClick, children }) => (
+  <button
+    onClick={() => onClick(value)}
+    className={`flex items-center px-6 py-2 rounded-md transition-colors ${
+      active ? 'bg-[#8D493A] text-white' : 'text-gray-600 hover:bg-gray-100'
+    }`}
+  >
+    {children}
+  </button>
+);
+
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [showAddContent, setShowAddContent] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [activeTab, setActiveTab] = useState('profile');
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -2930,75 +3209,188 @@ const ProfilePage = () => {
     fetchUserProfile();
   }, []);
 
+  const handlePasswordUpdate = async () => {
+    try {
+      await axios.put('/api/users/update-password', {
+        currentPassword,
+        newPassword,
+      }, { withCredentials: true });
+      setCurrentPassword('');
+      setNewPassword('');
+    } catch (error) {
+      console.error('Error updating password:', error);
+    }
+  };
+
   if (!user) {
     return <div className="text-center mt-8">Loading...</div>;
   }
 
   return (
-    <div className="container mx-auto p-4 bg-[#F8EDE3] ">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="bg-[#DFD3C3] rounded-lg shadow-lg p-6 mb-6 mt-[7rem]"
-      >
-        <div className="flex items-center justify-between mb-4  ">
-          <h1 className="text-3xl font-bold text-[#8D493A]">Publisher Profile</h1>
-          <motion.div
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="bg-[#D0B8A8] rounded-full p-2"
-          >
-            {user.profilePicture ? (
-              <img src={user.profilePicture} alt="Profile" className="w-16 h-16 rounded-full" />
-            ) : (
-              <div className="w-16 h-16 rounded-full bg-[#8D493A] flex items-center justify-center text-white text-2xl">
-                {user.username.charAt(0).toUpperCase()}
+    <div className="min-h-screen bg-[#F8EDE3]">
+      {/* Hero Banner */}
+      <div className="relative h-48 bg-[#8D493A] overflow-visible">
+        <div className="absolute inset-0 flex items-center justify-center opacity-20">
+          <div className="flex gap-8">
+            <Coffee size={64} color="white" />
+            <Book size={64} color="white" />
+            <Feather size={64} color="white" />
+          </div>
+        </div>
+        <div className="absolute -bottom-12 left-8">
+          <div className="w-24 h-24 bg-[#D0B8A8] rounded-full border-4 border-white flex items-center justify-center">
+            <span className="text-3xl text-white">
+              {user.username ? user.username.charAt(0).toUpperCase() : 'U'}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto p-4 mt-20">
+        <div className="max-w-3xl mx-auto"> {/* Added container for content width */}
+          <TabsList>
+            <TabsTrigger 
+              value="profile" 
+              active={activeTab === 'profile'} 
+              onClick={setActiveTab}
+            >
+              <User className="mr-2" size={18} />
+              Profile
+            </TabsTrigger>
+            <TabsTrigger 
+              value="content" 
+              active={activeTab === 'content'} 
+              onClick={setActiveTab}
+            >
+              <Book className="mr-2" size={18} />
+              Content
+            </TabsTrigger>
+          </TabsList>
+
+          {activeTab === 'profile' && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-lg shadow p-6 mb-6"
+            >
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-2xl font-semibold text-[#8D493A] mb-4">Profile Information</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center">
+                      <Mail className="mr-2 text-[#8D493A]" />
+                      <span className="text-gray-600">{user.email}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Pen className="mr-2 text-[#8D493A]" />
+                      <span className="text-gray-600">{user.yearsOfExperience} years of experience</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h2 className="text-xl font-semibold text-[#8D493A] mb-2">Bio</h2>
+                  <p className="text-gray-600">{user.bio || 'No bio available'}</p>
+                </div>
+                
+                <div className="border-t pt-6">
+                  <h2 className="text-[#8D493A] font-bold text-xl mb-4">Update Password</h2>
+                  <div className="grid grid-cols-1 gap-4 max-w-md">
+                    <div>
+                      <label htmlFor="current-password" className="text-sm text-gray-600">
+                        Current Password
+                      </label>
+                      <input
+                        type="password"
+                        id="current-password"
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        className="w-full px-4 py-2 bg-[#F8EDE3] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8D493A] focus:border-transparent"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="new-password" className="text-sm text-gray-600">
+                        New Password
+                      </label>
+                      <input
+                        type="password"
+                        id="new-password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        className="w-full px-4 py-2 bg-[#F8EDE3] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8D493A] focus:border-transparent"
+                      />
+                    </div>
+                    <button
+                      onClick={handlePasswordUpdate}
+                      className="px-4 py-2 bg-[#8D493A] text-white rounded-lg hover:bg-opacity-90 transition-colors"
+                    >
+                      Update Password
+                    </button>
+                  </div>
+                </div>
               </div>
-            )}
-          </motion.div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex items-center">
-            <Mail className="mr-2 text-[#8D493A]" />
-            <span>{user.email}</span>
-          </div>
-          <div className="flex items-center">
-            <Pen className="mr-2 text-[#8D493A]" />
-            <span>{user.yearsOfExperience} years of experience</span>
-          </div>
-        </div>
-        
-        <div className="mt-4">
-          <h2 className="text-xl font-semibold text-[#8D493A] mb-2">Bio</h2>
-          <p>{user.bio || 'No bio available'}</p>
-        </div>
-      </motion.div>
+            </motion.div>
+          )}
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="mb-6"
+{activeTab === 'content' && (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    className="bg-white rounded-lg shadow p-6 mb-6"
+  >
+    <div className="flex justify-between items-center mb-6">
+      <h2 className="text-2xl font-semibold text-[#8D493A]">Published Content</h2>
+      <button
+        className="bg-[#8D493A] text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-opacity-90 transition-colors"
+        onClick={() => setShowAddContent(true)}
       >
-        <div className="flex justify-end mb-4">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-[#8D493A] text-white px-4 py-2 rounded-lg"
-            onClick={() => setShowAddContent(true)}
-          >
-            Add New Content
-          </motion.button>
-        </div>
-        
-        <PublishedContent />
-      </motion.div>
+        <Plus size={18} />
+        Add New Content
+      </button>
+    </div>
 
-      {showAddContent && (
-        <AddContentForm onClose={() => setShowAddContent(false)} />
-      )}
+    {/* <div className="relative mb-6">
+      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+      <input
+        type="text"
+        placeholder="Search content..."
+        className="w-full pl-10 p-2 border rounded-lg bg-[#F8EDE3] focus:outline-none focus:ring-2 focus:ring-[#8D493A]"
+      />
+    </div> */}
+
+    {/* هنا يتم عرض المحتوى المنشور */}
+    <PublishedContent />
+  </motion.div>
+)}
+
+        </div>
+
+        {showAddContent && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="bg-white rounded-lg w-full max-w-xl" // Changed from max-w-2xl to max-w-xl
+            >
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-2xl font-semibold text-[#8D493A]">Add New Content</h2>
+                  <button 
+                    onClick={() => setShowAddContent(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <AddContentForm onClose={() => setShowAddContent(false)} />
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

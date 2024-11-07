@@ -63,8 +63,8 @@ const Card = () => {
   }, []);
 
   return (
-    <div className="mx-auto my-20 font-sans max-md:max-w-md max-w-7xl">
-      <h1 className="text-4xl font-extrabold text-center text-[#116A7B] my-10 mb-20">
+    <div className="mx-auto my-20 font-sans max-md:max-w-md max-w-7xl py-12">
+      <h1 className="text-4xl font-serif font-semibold text-[#8D493A] flex items-center justify-center gap-3 mb-20">
         Eco Products
       </h1>
 

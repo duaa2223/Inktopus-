@@ -957,8 +957,16 @@ function Navbar() {
               <Link to="/dashboard" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Dashboard</Link>
             )}
             {isLoggedIn && role === 'publisher' && (
-              <Link to="/form" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Publish</Link>
+              <Link to="/form" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Profile</Link>
             )}
+
+           {isLoggedIn && role === 'reader' && (
+             <Link to="/profile" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">
+              Profile
+          </Link>
+            )} 
+
+
           </nav>
 
           {/* Right Side Items */}
@@ -1002,9 +1010,20 @@ function Navbar() {
               {isLoggedIn && role === 'admin' && (
                 <Link to="/dashboard" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Dashboard</Link>
               )}
-              {isLoggedIn && role === 'publisher' && (
-                <Link to="/form" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Publish</Link>
-              )}
+                  
+             {isLoggedIn && role === 'publisher' && (
+             <Link to="/form" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">
+              Profile
+          </Link>
+            )} 
+
+            {isLoggedIn && role === 'reader' && (
+             <Link to="/profile" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">
+              Profile
+            </Link>
+            )} 
+
+
             </nav>
           </div>
         )}

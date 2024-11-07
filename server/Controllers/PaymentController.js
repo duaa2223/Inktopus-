@@ -722,3 +722,30 @@ exports.getOrderById = async (req, res) => {
     res.status(500).json({ message: 'Error fetching order details', error: error.message });
   }
 };
+
+
+
+// دالة لجلب جميع الطلبات الخاصة بمستخدم معين
+exports.getOrdersByUser = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided' });
+    }
+
+    const sure = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = sure.userId;
+
+    const orders = await Order.find({ user: userId }).populate('items.content');
+
+    if (!orders || orders.length === 0) {
+      return res.status(404).json({ message: 'No orders found for this user.' });
+    }
+
+    res.json(orders);
+  } catch (error) {
+    console.error('Error fetching user orders:', error);
+    res.status(500).json({ message: 'Error fetching user orders', error: error.message });
+  }
+};

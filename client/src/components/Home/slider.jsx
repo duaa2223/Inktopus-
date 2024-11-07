@@ -28,12 +28,12 @@ const Slider = () => {
   }, []);
 
   return (
-    <section className="w-full min-h-screen bg-[#F8EDE3] flex flex-col justify-center items-center font-sans text-sm text-black overflow-hidden py-16">
+    <section className="w-full min-h-screen bg-[#F8EDE3] flex flex-col justify-center items-center font-sans text-sm text-black overflow-hidden py-32">
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-3xl font-bold text-center mb-12 text-green-800"
+        className="text-4xl font-serif font-semibold text-[#8D493A] flex items-center justify-center gap-3 mb-12"
       >
         Memorable Moments from Our Tree Planting Campaigns
       </motion.h2>

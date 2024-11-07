@@ -2,7 +2,7 @@
 const College = require('../Models/CollegeModel');
 const AcademicYear = require('../Models/AcademicYearModel');
 const Specialization = require('../Models/SpecializationModel'); 
-
+///////////////////////////////////////////////////////////////////
 exports.getAllColleges = async (req, res) => {
   try {
     const colleges = await College.find({ isActive: true }).sort({ name: 1 });
@@ -11,7 +11,7 @@ exports.getAllColleges = async (req, res) => {
     res.status(500).json({ message: 'Error fetching colleges', error: error.message });
   }
 };
-
+//////////////////////////////////////////////////////////////////////
 exports.getAcademicYearsByCollege = async (req, res) => {
   try {
     const { collegeId } = req.params;
@@ -26,7 +26,7 @@ exports.getAcademicYearsByCollege = async (req, res) => {
   }
 };
 
-// إضافة كلية جديدة
+// إضافة كلية جديدة///////////////////////////////////////////////////
 exports.createCollege = async (req, res) => {
   try {
     const { name, nameAr, imageUrl, description } = req.body;
@@ -37,20 +37,68 @@ exports.createCollege = async (req, res) => {
     res.status(400).json({ message: 'Error creating college', error: error.message });
   }
 };
-
-// إضافة سنة دراسية جديدة
+//اضافة مرحله ///////////////////////////////////////////////////////
 exports.createAcademicYear = async (req, res) => {
   try {
     const { name, nameAr, imageUrl, description, college, order } = req.body;
-    const newAcademicYear = new AcademicYear({ name, nameAr, imageUrl, description, college, order });
-    await newAcademicYear.save();
-    res.status(201).json(newAcademicYear);
+
+    // التحقق من وجود سنة دراسية بنفس الترتيب في نفس الكلية
+    const existingWithOrder = await AcademicYear.findOne({
+      college,
+      order
+    });
+
+    if (existingWithOrder) {
+      return res.status(400).json({
+        success: false,
+        message: `يوجد بالفعل سنة دراسية بالترتيب ${order} في هذه الكلية`
+      });
+    }
+
+    // التحقق من وجود سنة دراسية بنفس الاسم في نفس الكلية
+    const existingWithName = await AcademicYear.findOne({
+      college,
+      $or: [
+        { name: name },
+        { nameAr: nameAr }
+      ]
+    });
+
+    if (existingWithName) {
+      return res.status(400).json({
+        success: false,
+        message: 'يوجد بالفعل سنة دراسية بنفس الاسم في هذه الكلية'
+      });
+    }
+
+    // إنشاء السنة الدراسية الجديدة
+    const academicYear = new AcademicYear({
+      name,
+      nameAr,
+      imageUrl,
+      description,
+      college,
+      order,
+      isActive: true
+    });
+
+    const savedAcademicYear = await academicYear.save();
+
+    res.status(201).json({
+      success: true,
+      data: savedAcademicYear,
+      message: 'تمت إضافة السنة الدراسية بنجاح'
+    });
+
   } catch (error) {
-    res.status(400).json({ message: 'Error creating academic year', error: error.message });
+    console.error('Error in createAcademicYear:', error);
+    res.status(400).json({
+      success: false,
+      message: error.message || 'حدث خطأ أثناء إنشاء السنة الدراسية'
+    });
   }
 };
-
-//////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 // دالة لإضافة تخصص جديد
 exports.createSpecialization = async (req, res) => {
@@ -85,7 +133,7 @@ exports.createSpecialization = async (req, res) => {
 };
 
 
-// دالة لتعديل تخصص
+// دالة لتعديل تخصص/////////////////////////////////////////////////////////////
 exports.updateSpecialization = async (req, res) => {
   try {
     const { id } = req.params;
@@ -113,7 +161,7 @@ exports.updateSpecialization = async (req, res) => {
   }
 };
 
-// دالة لحذف تخصص
+// دالة لحذف تخصص//////////////////////////////////////////////////////////////
 exports.deleteSpecialization = async (req, res) => {
   try {
     const { id } = req.params;
@@ -129,7 +177,7 @@ exports.deleteSpecialization = async (req, res) => {
   }
 };
 
-// دالة لعرض جميع التخصصات
+// دالة لعرض جميع التخصصات///////////////////////////////////////////////////
 exports.getAllSpecializations = async (req, res) => {
   try {
     const specializations = await Specialization.find()
@@ -140,7 +188,7 @@ exports.getAllSpecializations = async (req, res) => {
     res.status(500).json({ message: 'Error fetching specializations', error: error.message });
   }
 };
-
+//جلب تخصص///////////////////////////////////////////////////////////
 exports.getSpecializationsByCollegeAndYear = async (req, res) => {
   const { collegeId, yearId } = req.params;
 
@@ -175,7 +223,7 @@ exports.getSpecializationsByCollegeAndYear = async (req, res) => {
   }
 };
 
-
+//جلب مرحله/////////////////////////////////////////////////////////
 exports.getAcademicYearsByCollege = async (req, res) => {
   const { collegeId } = req.params;
   
@@ -200,3 +248,91 @@ exports.getAcademicYearsByCollege = async (req, res) => {
   }
 };
 
+//حذف كلية////////////////////////////////////////////////////////////
+exports.deleteCollege = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 1. حذف جميع التخصصات المرتبطة بالكلية
+    await Specialization.deleteMany({ college: id });
+
+    // 2. حذف جميع المراحل الدراسية المرتبطة بالكلية
+    await AcademicYear.deleteMany({ college: id });
+
+    // 3. حذف الكلية نفسها
+    const deletedCollege = await College.findByIdAndDelete(id);
+
+    if (!deletedCollege) {
+      return res.status(404).json({ message: 'College not found' });
+    }
+
+    res.status(200).json({ message: 'College deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting college', error: error.message });
+  }
+}
+
+//حذف مرحله////////////////////////////////////////////////////////////////
+
+exports.deleteAcademicYear = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 1. حذف جميع التخصصات المرتبطة بهذه المرحلة الدراسية
+    await Specialization.deleteMany({ academic_year: id });
+
+    // 2. حذف المرحلة الدراسية نفسها
+    const deletedYear = await AcademicYear.findByIdAndDelete(id);
+
+    if (!deletedYear) {
+      return res.status(404).json({ message: 'Academic year not found' });
+    }
+
+    res.status(200).json({ message: 'Academic year deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting academic year', error: error.message });
+  }
+};
+//تحديث كليه//////////////////////////////////////////////////////////
+exports.updateCollege = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, nameAr, imageUrl, description } = req.body;
+
+    // Find the college and update it
+    const updatedCollege = await College.findByIdAndUpdate(
+      id,
+      { name, nameAr, imageUrl, description },
+      { new: true } // This option returns the updated document
+    );
+
+    if (!updatedCollege) {
+      return res.status(404).json({ message: 'College not found' });
+    }
+
+    res.status(200).json(updatedCollege);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating college', error: error.message });
+  }
+};
+//تحديث مرحله////////////////////////////////////////////////////////////
+exports.updateAcademicYear = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, nameAr, imageUrl, description, college, order } = req.body;
+
+    const updatedYear = await AcademicYear.findByIdAndUpdate(
+      id,
+      { name, nameAr, imageUrl, description, college, order },
+      { new: true }
+    );
+
+    if (!updatedYear) {
+      return res.status(404).json({ message: 'Academic year not found' });
+    }
+
+    res.status(200).json(updatedYear);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating academic year', error: error.message });
+  }
+};

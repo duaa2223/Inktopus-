@@ -37,7 +37,7 @@ export const FAQ = () => {
     return (
         <section className="py-20 bg-[#F8EDE3]">
             <div className="container mx-auto px-6">
-                <h1 className="text-5xl font-bold text-center mb-16 text-[#8D493A] flex items-center justify-center gap-4">
+                <h1 className="text-4xl font-serif font-semibold text-[#8D493A] flex items-center justify-center gap-3 mb-8">
                     FAQ <FaQq className="text-4xl" />
                 </h1>
 
@@ -45,7 +45,7 @@ export const FAQ = () => {
                     {faqData.map((faq, index) => (
                         <div
                             key={index}
-                            className="bg-[#DFD3C3] rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+                            className="bg-[#DFD3C3] rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl text-[#8D493A]"
                         >
                             <button
                                 className={`w-full px-8 py-6 text-left flex justify-between items-center transition-colors duration-300 ${

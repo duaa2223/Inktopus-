@@ -34,6 +34,9 @@ router.get('/users', userController.getAllUsers);
 
 router.get('/users/:userId/toggle-activation', auth, userController.toggleUserActivation);
 
+// update password 
+router.put('/users/update-password', userController.updateUserPassword);  
+
 // المسار الخاص بالتحقق من حالة تسجيل الدخول
 // router.get('/auth/status', authenticateToken, userController.getLoginStatus );
 // Route لتسجيل الخروج

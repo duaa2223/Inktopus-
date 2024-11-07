@@ -9,9 +9,10 @@ const {
   updateApplicationStatus,
   getPublisherById
 } = require('../Controllers/publisherController');
+const checkRole = require('../Middleware/checkRole');
 
 // Submit a new publisher application
-router.post('/apply',auth, applyPublisher); 
+router.post('/apply',auth,checkRole('reader') ,applyPublisher); 
 
 // Get all publisher applications (admin only)
 router.get('/applications',auth, getAllApplications);   

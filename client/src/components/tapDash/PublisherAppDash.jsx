@@ -356,6 +356,336 @@
 
 // export default PublisherApplications;
 ////////////////////////////////////////////////////////////////////////////////
+// import { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { motion } from 'framer-motion';
+
+// const PublisherApplications = () => {
+//   const [publisherApps, setPublisherApps] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState('');
+//   const [searchTerm, setSearchTerm] = useState('');
+//   const [statusFilter, setStatusFilter] = useState('all');
+
+//   useEffect(() => {
+//     fetchApplications();
+//   }, []);
+
+//   const fetchApplications = async () => {
+//     setLoading(true);
+//     try {
+//       const response = await axios.get('http://localhost:5000/api/application/applications', {
+//         withCredentials: true,
+//       });
+//       setPublisherApps(response.data);
+//       setError('');
+//     } catch (err) {
+//       setError(err.response?.data?.message || 'Failed to fetch data');
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleStatusUpdate = async (appId, newStatus) => {
+//     try {
+//       const response = await axios.put(
+//         `http://localhost:5000/api/application/applications/${appId}`,
+//         {
+//           status: newStatus,
+//           adminNotes: `Status updated to ${newStatus}`
+//         },
+//         {
+//           withCredentials: true
+//         }
+//       );
+
+//       if (response.data.message === 'Application updated successfully') {
+//         setPublisherApps(prevApps => 
+//           prevApps.map(app => 
+//             app._id === appId 
+//               ? { ...app, status: newStatus } 
+//               : app
+//           )
+//         );
+//       }
+//     } catch (err) {
+//       console.error('Error updating application:', err);
+//       setError(err.response?.data?.message || 'Failed to update status');
+//     }
+//   };
+
+//   const ActionButton = ({ onClick, variant, children }) => {
+//     return (
+//       <motion.button
+//         whileTap={{ scale: 0.95 }}
+//         className="px-4 py-2 rounded-lg bg-[#72392C] text-white hover:bg-[#8D493A] transition-colors"
+//         onClick={onClick}
+//       >
+//         {children}
+//       </motion.button>
+//     );
+//   };
+
+//   const filteredPublisherApps = publisherApps.filter(app => 
+//     (app.user?.username?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+//      app.user?.email?.toLowerCase().includes(searchTerm.toLowerCase())) &&
+//     (statusFilter === 'all' || app.status === statusFilter)
+//   );
+
+//   if (loading) return (
+//     <div className="flex items-center justify-center min-h-screen bg-[#F6EEE6]">
+//       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#72392C]"></div>
+//     </div>
+//   );
+
+//   if (error) return (
+//     <div className="p-4 bg-red-100 text-red-700 rounded-lg"> 
+//       {error}
+//     </div>
+//   );
+
+//   return (
+//     <div className="space-y-6">
+//       <h2 className="text-2xl font-semibold text-[#8D493A] mb-6">Publisher Applications</h2>
+
+//       <div className="flex justify-between mb-6">
+//         <select
+//           value={statusFilter}
+//           onChange={(e) => setStatusFilter(e.target.value)}
+//           className="px-4 py-2 rounded-lg border border-[#CCAB9A] bg-white text-[#72392C] outline-none"
+//         >
+//           <option value="all">All Statuses</option>
+//           <option value="pending">Pending</option>
+//           <option value="approved">Approved</option>
+//           <option value="rejected">Rejected</option>
+//         </select>
+        
+//         <input
+//           type="text"
+//           placeholder="Search by name or email"
+//           value={searchTerm}
+//           onChange={(e) => setSearchTerm(e.target.value)}
+//           className="flex-1 mx-4 px-4 py-2 rounded-lg border border-[#CCAB9A] bg-white text-[#72392C] outline-none"
+//         />
+//       </div>
+
+//       <div className="bg-white rounded-lg shadow overflow-hidden">
+//         <table className="w-full">
+//           <thead>
+//             <tr className="bg-[#EDE1D7] border-b border-[#CCAB9A]">
+//               <th className="px-6 py-3 text-left text-[#72392C] font-medium">NAME</th>
+//               <th className="px-6 py-3 text-left text-[#72392C] font-medium">EMAIL</th>
+//               <th className="px-6 py-3 text-left text-[#72392C] font-medium">EXPERIENCE</th>
+//               <th className="px-6 py-3 text-left text-[#72392C] font-medium">STATUS</th>
+//               <th className="px-6 py-3 text-left text-[#72392C] font-medium">ACTIONS</th>
+//             </tr>
+//           </thead>
+//           <tbody className="divide-y divide-[#EDE1D7]">
+//             {filteredPublisherApps.map((app) => (
+//               <motion.tr 
+//                 key={app._id}
+//                 initial={{ opacity: 0 }}
+//                 animate={{ opacity: 1 }}
+//                 transition={{ duration: 0.3 }}
+//                 className="hover:bg-[#F6EEE6] transition-colors"
+//               >
+//                 <td className="px-6 py-4 text-[#72392C]">{app.user?.username}</td>
+//                 <td className="px-6 py-4 text-[#72392C]">{app.user?.email}</td>
+//                 <td className="px-6 py-4 text-[#72392C]">{app.yearsOfExperience} years</td>
+//                 <td className="px-6 py-4">
+//                   <span className="px-3 py-1 rounded-full text-sm bg-[#EDE1D7] text-[#72392C]">
+//                     {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+//                   </span>
+//                 </td>
+//                 <td className="px-6 py-4">
+//                   <ActionButton 
+//                     variant={app.status === 'approved' ? 'reject' : 'approve'}
+//                     onClick={() => handleStatusUpdate(app._id, app.status === 'approved' ? 'rejected' : 'approved')}
+//                   >
+//                     {app.status === 'approved' ? 'Reject' : 'Approve'}
+//                   </ActionButton>
+//                 </td>
+//               </motion.tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PublisherApplications;
+/////////////////////////////////////////////////////////////////////
+// import { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { motion } from 'framer-motion';
+
+// const PublisherApplications = () => {
+//   const [publisherApps, setPublisherApps] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState('');
+//   const [searchTerm, setSearchTerm] = useState('');
+//   const [statusFilter, setStatusFilter] = useState('all');
+
+//   useEffect(() => {
+//     fetchApplications();
+//   }, []);
+
+//   const fetchApplications = async () => {
+//     setLoading(true);
+//     try {
+//       const response = await axios.get('http://localhost:5000/api/application/applications', {
+//         withCredentials: true,
+//       });
+//       setPublisherApps(response.data);
+//       setError('');
+//     } catch (err) {
+//       setError(err.response?.data?.message || 'Failed to fetch data');
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleStatusUpdate = async (appId, newStatus) => {
+//     try {
+//       const response = await axios.put(
+//         `http://localhost:5000/api/application/applications/${appId}`,
+//         {
+//           status: newStatus,
+//           adminNotes: `Status updated to ${newStatus}`
+//         },
+//         {
+//           withCredentials: true
+//         }
+//       );
+
+//       if (response.data.message === 'Application updated successfully') {
+//         setPublisherApps(prevApps => 
+//           prevApps.map(app => 
+//             app._id === appId 
+//               ? { ...app, status: newStatus } 
+//               : app
+//           )
+//         );
+//       }
+//     } catch (err) {
+//       console.error('Error updating application:', err);
+//       setError(err.response?.data?.message || 'Failed to update status');
+//     }
+//   };
+
+//   const ActionButton = ({ onClick, variant, children }) => {
+//     return (
+//       <motion.button
+//         whileTap={{ scale: 0.95 }}
+//         className={`px-4 py-2 rounded-lg text-white transition-colors ${
+//           children === 'Approve' 
+//             ? 'bg-green-600 hover:bg-green-700' 
+//             : 'bg-red-600 hover:bg-red-700'
+//         }`}
+//         onClick={onClick}
+//       >
+//         {children}
+//       </motion.button>
+//     );
+//   };
+
+//   const filteredPublisherApps = publisherApps.filter(app => 
+//     (app.user?.username?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+//      app.user?.email?.toLowerCase().includes(searchTerm.toLowerCase())) &&
+//     (statusFilter === 'all' || app.status === statusFilter)
+//   );
+
+//   if (loading) return (
+//     <div className="flex items-center justify-center min-h-screen bg-[#F6EEE6]">
+//       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#72392C]"></div>
+//     </div>
+//   );
+
+//   if (error) return (
+//     <div className="p-4 bg-red-100 text-red-700 rounded-lg"> 
+//       {error}
+//     </div>
+//   );
+
+//   return (
+//     <div className="space-y-6">
+//       <h2 className="text-2xl font-semibold text-[#8D493A] mb-6">Publisher Applications</h2>
+
+//       <div className="flex justify-between mb-6">
+//         <select
+//           value={statusFilter}
+//           onChange={(e) => setStatusFilter(e.target.value)}
+//           className="px-4 py-2 rounded-lg border border-[#CCAB9A] bg-white text-[#72392C] outline-none"
+//         >
+//           <option value="all">All Statuses</option>
+//           <option value="pending">Pending</option>
+//           <option value="approved">Approved</option>
+//           <option value="rejected">Rejected</option>
+//         </select>
+        
+//         <input
+//           type="text"
+//           placeholder="Search by name or email"
+//           value={searchTerm}
+//           onChange={(e) => setSearchTerm(e.target.value)}
+//           className="flex-1 mx-4 px-4 py-2 rounded-lg border border-[#CCAB9A] bg-white text-[#72392C] outline-none"
+//         />
+//       </div>
+
+//       <div className="bg-white rounded-lg shadow overflow-hidden">
+//         <table className="w-full">
+//           <thead>
+//             <tr className="bg-[#EDE1D7] border-b border-[#CCAB9A]">
+//               <th className="px-6 py-3 text-left text-[#72392C] font-medium">NAME</th>
+//               <th className="px-6 py-3 text-left text-[#72392C] font-medium">EMAIL</th>
+//               <th className="px-6 py-3 text-left text-[#72392C] font-medium">EXPERIENCE</th>
+//               <th className="px-6 py-3 text-left text-[#72392C] font-medium">STATUS</th>
+//               <th className="px-6 py-3 text-left text-[#72392C] font-medium">ACTIONS</th>
+//             </tr>
+//           </thead>
+//           <tbody className="divide-y divide-[#EDE1D7]">
+//             {filteredPublisherApps.map((app) => (
+//               <motion.tr 
+//                 key={app._id}
+//                 initial={{ opacity: 0 }}
+//                 animate={{ opacity: 1 }}
+//                 transition={{ duration: 0.3 }}
+//                 className="hover:bg-[#F6EEE6] transition-colors"
+//               >
+//                 <td className="px-6 py-4 text-[#72392C]">{app.user?.username}</td>
+//                 <td className="px-6 py-4 text-[#72392C]">{app.user?.email}</td>
+//                 <td className="px-6 py-4 text-[#72392C]">{app.yearsOfExperience} years</td>
+//                 <td className="px-6 py-4">
+//                   <span className={`px-3 py-1 rounded-full text-sm ${
+//                     app.status === 'approved'
+//                       ? 'bg-green-100 text-green-800'
+//                       : app.status === 'rejected'
+//                       ? 'bg-red-100 text-red-800'
+//                       : 'bg-yellow-100 text-yellow-800'
+//                   }`}>
+//                     {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+//                   </span>
+//                 </td>
+//                 <td className="px-6 py-4">
+//                   <ActionButton 
+//                     variant={app.status === 'approved' ? 'reject' : 'approve'}
+//                     onClick={() => handleStatusUpdate(app._id, app.status === 'approved' ? 'rejected' : 'approved')}
+//                   >
+//                     {app.status === 'approved' ? 'Reject' : 'Approve'}
+//                   </ActionButton>
+//                 </td>
+//               </motion.tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PublisherApplications;
+////////////////////////////////////////////////////////////////////////////////////////////////////
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -366,6 +696,9 @@ const PublisherApplications = () => {
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [appsPerPage] = useState(5); // عدد التطبيقات لكل صفحة
+  const totalPages = Math.ceil(publisherApps.length / appsPerPage); // حساب إجمالي الصفحات
 
   useEffect(() => {
     fetchApplications();
@@ -400,6 +733,7 @@ const PublisherApplications = () => {
       );
 
       if (response.data.message === 'Application updated successfully') {
+        // تحديث الحالة فقط للعنصر المحدد
         setPublisherApps(prevApps => 
           prevApps.map(app => 
             app._id === appId 
@@ -418,7 +752,11 @@ const PublisherApplications = () => {
     return (
       <motion.button
         whileTap={{ scale: 0.95 }}
-        className="px-4 py-2 rounded-lg bg-[#72392C] text-white hover:bg-[#8D493A] transition-colors"
+        className={`px-4 py-2 rounded-lg text-white transition-colors ${
+          children === 'Approve' 
+            ? 'bg-green-600 hover:bg-green-700' 
+            : 'bg-red-600 hover:bg-red-700'
+        }`}
         onClick={onClick}
       >
         {children}
@@ -432,6 +770,11 @@ const PublisherApplications = () => {
     (statusFilter === 'all' || app.status === statusFilter)
   );
 
+  // تحديد التطبيقات الحالية بناءً على الصفحة الحالية
+  const indexOfLastApp = currentPage * appsPerPage;
+  const indexOfFirstApp = indexOfLastApp - appsPerPage;
+  const currentApps = filteredPublisherApps.slice(indexOfFirstApp, indexOfLastApp);
+
   if (loading) return (
     <div className="flex items-center justify-center min-h-screen bg-[#F6EEE6]">
       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#72392C]"></div>
@@ -439,7 +782,7 @@ const PublisherApplications = () => {
   );
 
   if (error) return (
-    <div className="p-4 bg-red-100 text-red-700 rounded-lg">
+    <div className="p-4 bg-red-100 text-red-700 rounded-lg"> 
       {error}
     </div>
   );
@@ -481,7 +824,7 @@ const PublisherApplications = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-[#EDE1D7]">
-            {filteredPublisherApps.map((app) => (
+            {currentApps.map((app) => (
               <motion.tr 
                 key={app._id}
                 initial={{ opacity: 0 }}
@@ -493,7 +836,13 @@ const PublisherApplications = () => {
                 <td className="px-6 py-4 text-[#72392C]">{app.user?.email}</td>
                 <td className="px-6 py-4 text-[#72392C]">{app.yearsOfExperience} years</td>
                 <td className="px-6 py-4">
-                  <span className="px-3 py-1 rounded-full text-sm bg-[#EDE1D7] text-[#72392C]">
+                  <span className={`px-3 py-1 rounded-full text-sm ${
+                    app.status === 'approved'
+                      ? 'bg-green-100 text-green-800'
+                      : app.status === 'rejected'
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-yellow-100 text-yellow-800'
+                  }`}>
                     {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
                   </span>
                 </td>
@@ -510,8 +859,55 @@ const PublisherApplications = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center space-x-2 mt-4">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded-lg ${
+              currentPage === 1
+                ? 'bg-[#EDE1D7] text-[#72392C] cursor-not-allowed'
+                : 'bg-[#72392C] text-white hover:bg-[#8D493A]'
+            } transition-colors`}
+          >
+            Previous
+          </button>
+
+          {[...Array(totalPages)].map((_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+              className={`px-4 py-2 rounded-lg ${
+                currentPage === index + 1
+                  ? 'bg-[#72392C] text-white'
+                  : 'bg-[#EDE1D7] text-[#72392C] hover:bg-[#CCAB9A]'
+              } transition-colors`}
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded-lg ${
+              currentPage === totalPages
+                ? 'bg-[#EDE1D7] text-[#72392C] cursor-not-allowed'
+                : 'bg-[#72392C] text-white hover:bg-[#8D493A]'
+            } transition-colors`}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
+
+  function handlePageChange(pageNumber) {
+    setCurrentPage(pageNumber);
+  }
 };
 
 export default PublisherApplications;

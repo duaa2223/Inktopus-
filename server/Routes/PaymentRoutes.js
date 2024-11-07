@@ -105,6 +105,7 @@ const auth = require('../Middleware/auth');
 router.post('/orders', auth, orderController.createOrder);
 router.get('/orders/:orderId',  orderController.getOrderById); 
 // router.post('/orders', orderController.createOrder); 
+router.get('/user-orders', orderController.getOrdersByUser);
 router.post('/payment/paypal/capture',auth, orderController.capturePayPalPayment);
 
 module.exports = router;

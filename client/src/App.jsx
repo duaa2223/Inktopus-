@@ -197,12 +197,13 @@ import BookDetails from './pages/Details';
 import CartPage from './pages/Cart';
 import UploadContentForm from './pages/ProfilePublisher';
 import AdminDashboard from './pages/Dashboard';
-import Navbar from './components/NavBar';
-import { Toaster } from 'react-hot-toast';
+// import { Toaster } from 'react-hot-toast';
 import CheckoutPage from './pages/Checkout';
 // import { CartProvider } from './context/cartContext';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import OrderConfirmationPage from './pages/OrderConfermation';
+import { ToastContainer } from 'react-toastify';
+import UserProfilePage from './pages/Profile';
 import './index.css'; 
 
 const AppContent = () => {
@@ -215,22 +216,86 @@ const AppContent = () => {
   return (
     <Router>
       {/* <Navbar /> */}
-      <Toaster position="top-center" />
+      {/* <Toaster position="top-center" /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/level/:collegeId" element={<Level />} />
         <Route path="/content/college/:collegeId/year/:academicYearId" element={<Catalogpage />} />
-        <Route path="/book" element={<ProtectedRoute><Book /></ProtectedRoute>} />
+        {/* <Route path="/book" element={<ProtectedRoute><Book /></ProtectedRoute>} /> */}
         <Route path="/college" element={<Resource />} />
-        <Route path="/book/:id" element={<BookDetails />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/form" element={<UploadContentForm />} />
-        <Route path="/dashboard" element={<AdminDashboard />} />
+        {/* <Route path="/book/:id" element={<BookDetails />} /> */}
+        {/* book details */}
+        <Route
+        path="/book/:id"
+        element={
+          <ProtectedRoute allowedRoles={['reader','admin','publisher']}>
+           <BookDetails />
+          </ProtectedRoute>
+        }
+      />
+        {/* cart page */}
+       <Route
+        path="/cart"
+        element={
+          <ProtectedRoute allowedRoles={['reader','admin','publisher']}>
+        <CartPage />
+          </ProtectedRoute>
+        }
+      />
+
+        {/* <Route path="/cart" element={<CartPage />} /> */}
+        <Route path="/form" element={
+           <ProtectedRoute allowedRoles={['publisher']}>
+          <UploadContentForm /> 
+          </ProtectedRoute>} />
+          
+        {/* puplisher profile */}
+        
+        {/* <Route
+      //   path="/form"
+      //   element={
+      //     <ProtectedRoute allowedRoles={['publisher']}>
+      //     <UploadContentForm />
+      //     </ProtectedRoute>
+      //   }
+      // /> */}
+
+      {/* dashboard */}
+        <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AdminDashboard />
+            </ProtectedRoute>
+        }
+      />
+      {/* User profile */}
+
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute allowedRoles={['reader']}>
+            <UserProfilePage />
+            </ProtectedRoute>
+        }
+      />
+
+
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
+     
       </Routes>
+<ToastContainer
+  position="top-center"
+  autoClose={false}
+  hideProgressBar={false}
+  closeOnClick
+  pauseOnHover
+  draggable
+  closeButton
+/>
     </Router>
   );
 };
@@ -238,6 +303,7 @@ const AppContent = () => {
 const App = () => {
   return (
     <Provider store={store}>
+      
       <PayPalScriptProvider options={{ 
         "client-id": "AeGkSQtckEfbce4ePNU-LKCRMeO2BG7l9bvpLKABfwaPw3OaxSFu2NtEJRnkZ5IUZQ-SW2yMFkqejvs8",
         currency: "USD"
