@@ -7,17 +7,17 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 
 const imagePaths = [
-  "/images/ballon.jpeg",
-  "/images/ballon.jpeg",
-  "/images/ballon.jpeg",
-  "/images/ballon.jpeg",
-  "/images/ballon.jpeg",
-  "/images/ballon.jpeg",
-  "/images/ballon.jpeg",
-  "/images/ballon.jpeg",
-  "/images/ballon.jpeg",
-  "/images/ballon.jpeg",
-  "/images/ballon.jpeg",
+  "../../../assets/college/Pink Rose Watercolor Organic Creative Project Presentation.svg",
+  "../../../assets/college/Pink Rose Watercolor Organic Creative Project Presentation (1).svg",
+  "../../../assets/college/Pink Rose Watercolor Organic Creative Project Presentation (2).svg",
+  "../../../assets/college/Pink Rose Watercolor Organic Creative Project Presentation (3).svg",
+  "../../../assets/college/3.svg",
+  "../../../assets/college/Green Water color Page Border A3 Poster.svg",
+  "../../../assets/college/1.svg",
+  "../../../assets/college/2.svg",
+  "../../../assets/college/4.svg",
+  "../../../assets/college/5.svg",
+  "../../../assets/college/6.svg",
 ];
 
 const Slider = () => {
@@ -33,9 +33,9 @@ const Slider = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-4xl font-serif font-semibold text-[#8D493A] flex items-center justify-center gap-3 mb-12"
+        className="text-4xl font-serif font-semibold text-[#8D493A] flex items-center justify-center gap-3 "
       >
-        Memorable Moments from Our Tree Planting Campaigns
+        Discover Colleges with Customized Learning Resources for Every Field
       </motion.h2>
 
       <style>

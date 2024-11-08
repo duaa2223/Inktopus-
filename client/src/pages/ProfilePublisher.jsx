@@ -3163,8 +3163,6 @@
 // export default ProfilePage;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Pen, Coffee, Book, Feather, User, Plus, Search } from 'lucide-react';

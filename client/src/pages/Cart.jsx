@@ -1161,7 +1161,7 @@ const CartPage = () => {
             <h2 className="text-2xl font-bold text-[#8D493A] mb-4">Your Shopping Cart is Empty</h2>
             <p className="text-[#D0B8A8] mb-8">You have not added any books to the shopping cart yet.</p>
             <Link 
-              to="/books" 
+              to="/college" 
               className="inline-flex items-center gap-2 bg-[#8D493A] text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition duration-300"
             >
               <ArrowLeft className="h-5 w-5" />
