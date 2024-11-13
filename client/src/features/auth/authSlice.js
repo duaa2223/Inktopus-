@@ -1,8 +1,9 @@
+//authSlice
 import { createSlice } from '@reduxjs/toolkit';
 import { login, register, verifyOTP, logout, checkLoginStatus } from './authThunck';
 
 const initialState = {
-  role: null,
+  role: localStorage.getItem('role') || null, // قراءة الدور من localStorage عند التهيئة
   user: null,
   token: null,
   isLoading: false,
@@ -18,6 +19,10 @@ export const authSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
+    setRole: (state, action) => {
+      state.role = action.payload;
+      localStorage.setItem('role', action.payload);
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -44,10 +49,23 @@ export const authSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
+      //هنا تم التعديل الاخير
+      // .addCase(register.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.user = action.payload.user;
+      //   state.token = action.payload.token;
+      //   state.isLoggedIn = true;
+      //   state.error = null;
+      // })
+
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        if (action.payload.role) {
+          state.role = action.payload.role;
+          localStorage.setItem('role', action.payload.role); // تخزين الدور في localStorage
+        }
         state.isLoggedIn = true;
         state.error = null;
       })

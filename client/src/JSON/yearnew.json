@@ -1,0 +1,57 @@
+[
+{
+    
+    "name": "First Year - Technology",
+    "nameAr": "السنة الأولى - تكنولوجيا",
+    "imageUrl": "https://i.pinimg.com/736x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Foundational year covering basic technology and computing concepts",
+    "college": "672febf46791cb21c24a834b",
+    "order": 1,
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  },
+  
+  {
+ 
+    "name": "Second Year - Technology",
+    "nameAr": "السنة الثانية - تكنولوجيا",
+    "imageUrl": "https://i.pinimg.com/736x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Intermediate level focusing on programming and system design",
+    "college": "672febf46791cb21c24a834b",
+    "order": 2,
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  },
+  
+  {
+  
+    "name": "Third Year - Technology",
+    "nameAr": "السنة الثالثة - تكنولوجيا",
+    "imageUrl": "https://i.pinimg.com/736x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Advanced studies in specialized technology areas",
+    "college": "672febf46791cb21c24a834b",
+    "order": 3,
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  },
+  
+  {
+   
+    "name": "Fourth Year - Technology",
+    "nameAr": "السنة الرابعة - تكنولوجيا",
+    "imageUrl": "https://i.pinimg.com/736x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Final year with focus on projects and specialization",
+    "college": "672febf46791cb21c24a834b",
+    "order": 4,
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  }
+]

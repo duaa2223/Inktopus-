@@ -826,7 +826,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../features/cart/cartThunck';
 import { motion } from 'framer-motion';
-
+import Navbar from '../components/NavBar';
 const BookDetails = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
@@ -944,6 +944,7 @@ const images = [book.cover_image, ...(book.additional_images || [])].filter(Bool
 
   return (
     <div className="min-h-screen bg-[#F8EDE3]">
+      <Navbar />
       <div className="max-w-7xl mx-auto p-8 ">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-[6rem]">
           <div className="space-y-8">

@@ -1,0 +1,176 @@
+
+[
+{
+    
+    "title": "Introduction to Computer Science",
+    "titleAr": "مقدمة في علوم الحاسوب",
+    "author": "Dr. John Smith",
+    "author_info": "Professor of Computer Science at MIT",
+    "description": "A comprehensive introduction to computer science fundamentals, covering programming basics, algorithms, and data structures",
+    "cover_image": "https://images.springer.com/sgw/books/medium/9783030427719.jpg",
+    "additional_images": [
+      "https://m.media-amazon.com/images/I/61yLKeiRKtL._AC_UF1000,1000_QL80_.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQR-yB3UX7UQP1cg7uCw9Lp_Z9ZBBGqL6vRIA&usqp=CAU"
+    ],
+    "promo_videos": [
+      "https://www.youtube.com/watch?v=zOjov-2OZ0E",
+      "https://www.youtube.com/watch?v=4NfFFsQC77M"
+    ],
+    "price": 45,
+    "file_url": "https://example.com/intro-cs-book.pdf",
+    "content_type": "book",
+    "college":"672febf46791cb21c24a834b",
+    "academic_year": "672ff1b5928650fee7c3f22d",
+    "specialization":"672ff2c5928650fee7c3f230",
+    "publisher":"67213bd2b8ed374f18359b46",
+    "isDeleted": false,
+    "isActive": true,
+    "downloads": 245,
+    "views": 1820
+  },
+  
+  {
+    
+    "title": "Fundamentals of Programming with Python",
+    "titleAr": "أساسيات البرمجة بلغة بايثون",
+    "author": "Dr. Sarah Johnson",
+    "author_info": "Lead Software Engineer at Google",
+    "description": "Learn Python programming from scratch with practical examples and hands-on exercises",
+    "cover_image": "https://m.media-amazon.com/images/I/71RmJdXxkbL._AC_UF1000,1000_QL80_.jpg",
+    "additional_images": [
+      "https://pythonbooks.org/img/book-python-basics.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ5-3tF-Ix6AkCtg_1DiG5BGwxf_FWQVXmiA&usqp=CAU"
+    ],
+    "promo_videos": [
+      "https://www.youtube.com/watch?v=rfscVS0vtbw",
+      "https://www.youtube.com/watch?v=kqtD5dpn9C8"
+    ],
+    "price": 35,
+    "file_url": "https://example.com/python-basics.pdf",
+    "content_type": "book",
+    "college": "672febf46791cb21c24a834b",
+    "academic_year":"672ff1b5928650fee7c3f22d",
+    "specialization":"672ff2c5928650fee7c3f230",
+    "publisher": "672ff3d5928650fee7c3f235",
+    "isDeleted": false,
+    "isActive": true,
+    "downloads": 312,
+    "views": 2150
+  },
+  
+  {
+   
+    "title": "Digital Logic Design",
+    "titleAr": "تصميم المنطق الرقمي",
+    "author": "Dr. Michael Brown",
+    "author_info": "Professor of Electronic Engineering at Stanford",
+    "description": "Introduction to digital logic, boolean algebra, and basic circuit design principles",
+    "cover_image": "https://m.media-amazon.com/images/I/51GxW8imriL._AC_UF1000,1000_QL80_.jpg",
+    "additional_images": [
+      "https://www.engineeringbookspdf.com/wp-content/uploads/2021/03/Digital-Logic-Design-PDF.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmZF5GwJ5JN6-Qx5X5yFDX5pJ8n-mZ2v_RHw&usqp=CAU"
+    ],
+    "promo_videos": [
+      "https://www.youtube.com/watch?v=9P07YpxYQ-k",
+      "https://www.youtube.com/watch?v=M0mx8S05v60"
+    ],
+    "price": 40,
+    "file_url": "https://example.com/digital-logic.pdf",
+    "content_type": "book",
+    "college": "672febf46791cb21c24a834b",
+    "academic_year":"672ff1b5928650fee7c3f22d",
+    "specialization": "672ff2c5928650fee7c3f230",
+    "publisher":"672ff3d5928650fee7c3f235",
+    "isDeleted": false,
+    "isActive": true,
+    "downloads": 178,
+    "views": 1456
+  },
+  
+  {
+    
+    "title": "Mathematics for Computer Science",
+    "titleAr": "الرياضيات لعلوم الحاسوب",
+    "author": "Dr. Robert Wilson",
+    "author_info": "Mathematics Professor at Cambridge University",
+    "description": "Essential mathematics concepts for computer science students including discrete mathematics and probability",
+    "cover_image": "https://m.media-amazon.com/images/I/61u3tG5GkQL._AC_UF1000,1000_QL80_.jpg",
+    "additional_images": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ7yZ8tG7R-SpD8mxqbgwlwO8t4HJEm9porQ&usqp=CAU",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKY9zBhqOw9NzR9qvgzfR9vqN-HtNWxL_LPA&usqp=CAU"
+    ],
+    "promo_videos": [
+      "https://www.youtube.com/watch?v=L3LMbpZIKhQ",
+      "https://www.youtube.com/watch?v=DxmGxkhhluU"
+    ],
+    "price": 50,
+    "file_url": "https://example.com/math-cs.pdf",
+    "content_type": "book",
+    "college": "672febf46791cb21c24a834b",
+    "academic_year": "672ff1b5928650fee7c3f22d",
+    "specialization":"672ff2c5928650fee7c3f230",
+    "publisher":"672ff3d5928650fee7c3f235",
+    "isDeleted": false,
+    "isActive": true,
+    "downloads": 289,
+    "views": 1980
+  },
+  
+  {
+   
+    "title": "Introduction to Web Technologies",
+    "titleAr": "مقدمة في تقنيات الويب",
+    "author": "Dr. Emily Chen",
+    "author_info": "Senior Web Developer at Amazon",
+    "description": "Learn the basics of web development including HTML, CSS, and JavaScript",
+    "cover_image": "https://m.media-amazon.com/images/I/61HTxx7nU6L._AC_UF1000,1000_QL80_.jpg",
+    "additional_images": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ5JGXgn-pi9-BTNzV-RNT7TN9wnq-jYIxCA&usqp=CAU",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5K8CUZJz9YOaKvUEQJ8Y_-4K3nxfDDXVY_A&usqp=CAU"
+    ],
+    "promo_videos": [
+      "https://www.youtube.com/watch?v=qz0aGYrrlhU",
+      "https://www.youtube.com/watch?v=pQN-pnXPaVg"
+    ],
+    "price": 38,
+    "file_url": "https://example.com/web-tech.pdf",
+    "content_type": "book",
+    "college":"672febf46791cb21c24a834b",
+    "academic_year": "672ff1b5928650fee7c3f22d",
+    "specialization": "672ff2c5928650fee7c3f230",
+    "publisher": "672ff3d5928650fee7c3f235",
+    "isDeleted": false,
+    "isActive": true,
+    "downloads": 267,
+    "views": 1890
+  },
+  
+  {
+    
+    "title": "Computer Networks Fundamentals",
+    "titleAr": "أساسيات شبكات الحاسوب",
+    "author": "Dr. David Miller",
+    "author_info": "Network Engineer at Cisco Systems",
+    "description": "Introduction to computer networking concepts, protocols, and architecture",
+    "cover_image": "https://m.media-amazon.com/images/I/51vT3X2tdtL._AC_UF1000,1000_QL80_.jpg",
+    "additional_images": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZJ5rN8wQHjs8vhTEGd8xNIP9ZP5DBJXzK_w&usqp=CAU",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzrT7Z7XHj8JyHMNR-_0bqG9q8JtvN4J_EPQ&usqp=CAU"
+    ],
+    "promo_videos": [
+      "https://www.youtube.com/watch?v=qiQR5rTSshw",
+      "https://www.youtube.com/watch?v=QKfk7YFILws"
+    ],
+    "price": 42,
+    "file_url": "https://example.com/networks.pdf",
+    "content_type": "book",
+    "college": "672febf46791cb21c24a834b",
+    "academic_year": "672ff1b5928650fee7c3f22d",
+    "specialization":"672ff2c5928650fee7c3f230",
+    "publisher": "672ff3d5928650fee7c3f235",
+    "isDeleted": false,
+    "isActive": true,
+    "downloads": 198,
+    "views": 1670
+  }
+]

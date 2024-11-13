@@ -1,0 +1,53 @@
+[
+    {
+   
+    "name": "Faculty of Medicine",
+    "nameAr": "كلية الطب",
+    "imageUrl": "https://i.pinimg.com/474x/17/e0/cf/17e0cf471cf9ec9bbd1569a87455c4aa.jpg",
+    "description": "Description of the Faculty of Medicine",
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  
+  },
+  
+  {
+   
+    "name": "Faculty of Technology",
+    "nameAr": "كلية التكنولوجيا",
+    "imageUrl": "https://i.pinimg.com/474x/0f/30/d5/0f30d57d378ba89d9317b7222baa79f8.jpg",
+    "description": "Description of the Faculty of Technology",
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+    
+  },
+  
+  {
+
+    "name": "Faculty of Engineering",
+    "nameAr": "كلية الهندسة",
+    "imageUrl": "https://i.pinimg.com/474x/a9/58/50/a9585046f14a2fa1233ecef1f611a953.jpg",
+    "description": "Description of the Faculty of Engineering",
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+ 
+  },
+  
+  {
+   
+    "name": "Faculty of Science",
+    "nameAr": "كلية العلوم",
+    "imageUrl": "https://i.pinimg.com/474x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Description of the Faculty of Science",
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  
+  }
+]

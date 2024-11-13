@@ -20,18 +20,38 @@ export const login = createAsyncThunk(
   }
 );
 
-// دالة التسجيل
+// دالة التسجيل هنا تم التعديل الاخير 
+// export const register = createAsyncThunk(
+//   'auth/register',
+//   async (userData, { rejectWithValue }) => {
+//     try {
+//       const data = await registerApi(userData);
+//       return data;
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data?.message || error.message);
+//     }
+//   }
+// );
 export const register = createAsyncThunk(
   'auth/register',
   async (userData, { rejectWithValue }) => {
     try {
       const data = await registerApi(userData);
-      return data;
+      console.log('Register Thunk Data:', data); // للتحقق من البيانات
+      if (data.role) {
+        localStorage.setItem('role', data.role); // تخزين الدور مباشرة إذا كان موجوداً
+      }
+      return {
+        user: data.user,
+        token: data.token,
+        role: data.role || 'reader' // تعيين قيمة افتراضية إذا لم يكن الدور موجوداً
+      };
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
+
 
 // دالة التحقق من الـ OTP
 export const verifyOTP = createAsyncThunk(

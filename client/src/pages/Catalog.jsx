@@ -899,7 +899,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Input, Button, Card } from '../components/ui/UIComponents';
 import { ChevronRight } from 'lucide-react';
-
+import Navbar from '../components/NavBar';
 const ContentPage = () => {
   const { collegeId, academicYearId } = useParams();
   const [contents, setContents] = useState([]);
@@ -942,6 +942,7 @@ const ContentPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F8EDE3] py-12 px-4 sm:px-6 lg:px-8">
+      <Navbar />
       <div className="max-w-7xl mx-auto  mt-[6rem]">
         <h1 className="text-5xl font-extrabold mb-8 text-center text-[#8D493A]">
           <span className="inline-block transform hover:rotate-12 transition-transform duration-300">📚</span> Learning Resources

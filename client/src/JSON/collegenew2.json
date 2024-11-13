@@ -1,0 +1,85 @@
+[
+{
+   
+    "name": "Faculty of Islamic Law",
+    "nameAr": "كلية الشريعة",
+    "imageUrl": "https://i.pinimg.com/736x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Description of the Faculty of Islamic Law",
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  },
+  
+  {
+    
+    "name": "Faculty of Physical Education",
+    "nameAr": "كلية التربية الرياضية",
+    "imageUrl": "https://i.pinimg.com/736x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Description of the Faculty of Physical Education",
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  },
+  
+  {
+ 
+    "name": "Faculty of Law",
+    "nameAr": "كلية القانون",
+    "imageUrl": "https://i.pinimg.com/736x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Description of the Faculty of Law",
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  },
+  
+  {
+  
+    "name": "Faculty of Economics",
+    "nameAr": "كلية الاقتصاد",
+    "imageUrl": "https://i.pinimg.com/736x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Description of the Faculty of Economics",
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  },
+  
+  {
+    
+    "name": "Faculty of Agriculture",
+    "nameAr": "كلية الزراعة",
+    "imageUrl": "https://i.pinimg.com/736x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Description of the Faculty of Agriculture",
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  },
+  
+  {
+   
+    "name": "Faculty of Pharmacy",
+    "nameAr": "كلية الصيدلة",
+    "imageUrl": "https://i.pinimg.com/736x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Description of the Faculty of Pharmacy",
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  },
+  
+  {
+    
+    "name": "Faculty of Arts",
+    "nameAr": "كلية الفنون",
+    "imageUrl": "https://i.pinimg.com/736x/94/de/28/94de28ca0a4ba2cc80dd6ee4c35c8e1f.jpg",
+    "description": "Description of the Faculty of Arts",
+    "isActive": true,
+    "createdAt": "2024-09-27T15:03:22.697+00:00",
+    "updatedAt": "2024-11-08T22:24:34.023+00:00",
+    "__v": 0
+  }
+]

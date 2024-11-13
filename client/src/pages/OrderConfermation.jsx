@@ -159,7 +159,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BookOpen, Download, CheckCircle, Package, CreditCard, Calendar } from 'lucide-react';
 import axios from 'axios';
-
+import Navbar from '../components/NavBar';
 const OrderConfirmationPage = () => {
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -269,7 +269,8 @@ const OrderConfirmationPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F8EDE3] to-white py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto mt-24">
+      <Navbar />
+      <div className="max-w-4xl mx-auto mt-16 ">
         <div className="text-center mb-8">
           <div className="inline-block p-4 rounded-full bg-green-100 mb-4">
             <CheckCircle className="h-12 w-12 text-green-500" />

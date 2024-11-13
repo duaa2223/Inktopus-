@@ -188,7 +188,7 @@ import { store } from './app/store';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import SignUp from './pages/Register';
-import Book from './pages/Book';
+// import Book from './pages/Book';
 import Resource from './pages/College';
 import ProtectedRoute from './components/ProtectedRoute';
 import Level from './pages/Levels';
@@ -200,7 +200,7 @@ import AdminDashboard from './pages/Dashboard';
 // import { Toaster } from 'react-hot-toast';
 import CheckoutPage from './pages/Checkout';
 // import { CartProvider } from './context/cartContext';
-import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+// import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import OrderConfirmationPage from './pages/OrderConfermation';
 import { ToastContainer } from 'react-toastify';
 import UserProfilePage from './pages/Profile';
@@ -304,12 +304,12 @@ const App = () => {
   return (
     <Provider store={store}>
       
-      <PayPalScriptProvider options={{ 
+      {/* <PayPalScriptProvider options={{ 
         "client-id": "AeGkSQtckEfbce4ePNU-LKCRMeO2BG7l9bvpLKABfwaPw3OaxSFu2NtEJRnkZ5IUZQ-SW2yMFkqejvs8",
         currency: "USD"
-      }}>
+      }}> */}
         <AppContent />
-      </PayPalScriptProvider>
+      {/* </PayPalScriptProvider> */}
     </Provider>
   );
 };

@@ -1,4 +1,4 @@
-
+//authActins
 import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api/users';
@@ -11,6 +11,15 @@ export const loginApi = async (username, password) => {
   const response = await axios.post(`${API_URL}/login`, { username, password }, config);
   return response.data;
 };
+//هنا تم التعديل الاخير
+// export const registerApi = async (userData) => {
+//   const config = {
+//     headers: { 'Content-Type': 'application/json' },
+//     withCredentials: true,
+//   };
+//   const response = await axios.post(`${API_URL}/register`, userData, config);
+//   return response.data;
+// };
 
 export const registerApi = async (userData) => {
   const config = {
@@ -18,6 +27,8 @@ export const registerApi = async (userData) => {
     withCredentials: true,
   };
   const response = await axios.post(`${API_URL}/register`, userData, config);
+  // تأكد من طباعة البيانات المستلمة للتحقق
+  console.log('Register Response:', response.data);
   return response.data;
 };
 
