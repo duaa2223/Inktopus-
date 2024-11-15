@@ -4,26 +4,107 @@ const User = require('../Models/User');
 const sendOTPEmail = require('../utils/sendOTPEmail');
 const users = {}; // يمكنك استخدام قاعدة بيانات لتخزين معلومات المستخدمين
 
+// const registerUser = async (req, res) => {
+//   const { username, email, password } = req.body;
+//   // تحقق من الحقول المطلوبة
+//   if (!username || !email || !password) {
+//       return res.status(400).json({ message: 'Username, email, and password are required' });
+//   }
+
+//   // توليد OTP وصلاحيته
+//   const otp = Math.floor(100000 + Math.random() * 900000).toString();
+//   const otpExpiry = Date.now() + 10 * 60 * 1000; // 10 دقائق
+
+//   // تخزين بيانات المستخدم مع الـ OTP
+//   const newUser = new User({ username, email, password: await bcrypt.hash(password, 10), otp, otpExpiry });
+//   await newUser.save(); // حفظ المستخدم في قاعدة البيانات
+
+//   // إرسال OTP إلى البريد الإلكتروني
+//   await sendOTPEmail(email, otp);
+//   res.status(200).json({ message: 'OTP sent successfully. Please check your email.' });
+// };
+
 const registerUser = async (req, res) => {
-  const { username, email, password } = req.body;
-  // تحقق من الحقول المطلوبة
-  if (!username || !email || !password) {
-      return res.status(400).json({ message: 'Username, email, and password are required' });
+  try {
+    const { username, email, password } = req.body;
+    
+    // Check required fields
+    if (!username || !email || !password) {
+      return res.status(400).json({ 
+        status: 'error',
+        error: 'required_fields',
+        message: 'Username, email, and password are required' 
+      });
+    }
+
+    // Check for existing email
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({
+        status: 'error',
+        error: 'duplicate_email',
+        message: 'Email is already registered, please use a different email'
+      });
+    }
+
+    // Check for existing username
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return res.status(400).json({
+        status: 'error',
+        error: 'duplicate_username',
+        message: 'Username is already taken, please choose another one'
+      });
+    }
+
+    // Generate OTP and expiry
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+    // Create new user
+    const newUser = new User({
+      username,
+      email,
+      password: await bcrypt.hash(password, 10),
+      otp,
+      otpExpiry
+    });
+
+    await newUser.save();
+    await sendOTPEmail(email, otp);
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'OTP sent successfully. Please check your email.'
+    });
+
+  } catch (error) {
+    console.error('Error in register:', error);
+    // Check if this is a MongoDB duplicate key error
+    if (error.code === 11000) {
+      if (error.keyPattern.email) {
+        return res.status(400).json({
+          status: 'error',
+          error: 'duplicate_email',
+          message: 'Email is already registered, please use a different email'
+        });
+      }
+      if (error.keyPattern.username) {
+        return res.status(400).json({
+          status: 'error',
+          error: 'duplicate_username',
+          message: 'Username is already taken, please choose another one'
+        });
+      }
+    }
+
+    return res.status(500).json({
+      status: 'error',
+      error: 'server_error',
+      message: 'Registration failed. Please try again later.'
+    });
   }
-
-  // توليد OTP وصلاحيته
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  const otpExpiry = Date.now() + 10 * 60 * 1000; // 10 دقائق
-
-  // تخزين بيانات المستخدم مع الـ OTP
-  const newUser = new User({ username, email, password: await bcrypt.hash(password, 10), otp, otpExpiry });
-  await newUser.save(); // حفظ المستخدم في قاعدة البيانات
-
-  // إرسال OTP إلى البريد الإلكتروني
-  await sendOTPEmail(email, otp);
-  res.status(200).json({ message: 'OTP sent successfully. Please check your email.' });
 };
-
 const verifyOTP = async (req, res) => {
   const { email, otp } = req.body;
   console.log("Received email:", email);

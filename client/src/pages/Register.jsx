@@ -337,20 +337,56 @@ const Register = () => {
     return '';
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+    
+  //   if (!isOtpSent) {
+  //     // Reset validation error
+  //     setValidationError('');
+
+  //     // Validate password
+  //     const passwordError = validatePassword(password);
+  //     if (passwordError) {
+  //       setValidationError(passwordError);
+  //       return;
+  //     }
+
+  //     try {
+  //       await dispatch(register({ username, email, password })).unwrap();
+  //       setIsOtpSent(true);
+  //     } catch (err) {
+  //       // Handle specific error types
+  //       if (err.response?.data?.error === 'duplicate_username') {
+  //         setValidationError('Username is already taken, please choose another one');
+  //       } else if (err.response?.data?.error === 'duplicate_email') {
+  //         setValidationError('Email is already registered, please use a different email');
+  //       } else {
+  //         console.error('Registration failed:', err);
+  //       }
+  //     }
+  //   } else {
+  //     try {
+  //       await dispatch(verifyOTP({ email, otp })).unwrap();
+  //       navigate('/');
+  //     } catch (err) {
+  //       console.error('OTP verification failed:', err);
+  //     }
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!isOtpSent) {
       // Reset validation error
       setValidationError('');
-
+  
       // Validate password
       const passwordError = validatePassword(password);
       if (passwordError) {
         setValidationError(passwordError);
         return;
       }
-
+  
       try {
         await dispatch(register({ username, email, password })).unwrap();
         setIsOtpSent(true);
@@ -360,8 +396,14 @@ const Register = () => {
           setValidationError('Username is already taken, please choose another one');
         } else if (err.response?.data?.error === 'duplicate_email') {
           setValidationError('Email is already registered, please use a different email');
+        } else if (err.response?.data?.error === 'required_fields') {
+          setValidationError('All fields are required');
+        } else if (err.response?.data?.message) {
+          setValidationError(err.response.data.message);
         } else {
           console.error('Registration failed:', err);
+          setValidationError('Username or Email is already taken, please choose another one');
+          
         }
       }
     } else {
@@ -369,11 +411,15 @@ const Register = () => {
         await dispatch(verifyOTP({ email, otp })).unwrap();
         navigate('/');
       } catch (err) {
-        console.error('OTP verification failed:', err);
+        if (err.response?.data?.message) {
+          setValidationError(err.response.data.message);
+        } else {
+          console.error('OTP verification failed:', err);
+          setValidationError('OTP verification failed. Please try again.');
+        }
       }
     }
   };
-
   return (
     <motion.section
       className="min-h-screen flex justify-center items-center bg-[#F8EDE3] pt-16 pb-8 px-4"

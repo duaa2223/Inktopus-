@@ -732,12 +732,13 @@ const HeroSection = () => {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
   
   const pageImages = [
-    "../../assets/ballon.jpeg",
-    "../../assets/store.jpeg",
-    "../../assets/time.jpeg",
-    "../../assets/My 15 Surreal Art Pieces.jpeg",
-    "../../assets/book.jpeg",
-    "../../assets/world.jpeg"
+    "https://i.pinimg.com/474x/5f/c9/47/5fc947b953b26b4faabf94b2fdef9dc7.jpg",
+    "https://i.pinimg.com/474x/1f/9a/5f/1f9a5f6bac30ed7a749050b7a343746d.jpg",
+    "https://i.pinimg.com/236x/18/88/2b/18882ba3838c34cddf792e7f39a6f12d.jpg",
+    "https://i.pinimg.com/236x/79/f9/ee/79f9ee847b5644643cc998165a1841ce.jpg",
+    "https://i.pinimg.com/736x/1d/80/cb/1d80cbc8fde398d89e8afd75b073e015.jpg",
+    "https://i.pinimg.com/236x/b6/59/61/b659610d98f9398e5d361a2e6370c1d4.jpg",
+    
   ];
 
   const nextPage = () => {

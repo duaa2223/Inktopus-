@@ -160,6 +160,11 @@ const contentSchema = new mongoose.Schema({
     default: 0,
     min: 0
   },
+  purchaseCount: {
+    type: Number,
+    default: 0,
+    min: 0
+  },
   promo_videos: [{
     type: String,
     validate: {

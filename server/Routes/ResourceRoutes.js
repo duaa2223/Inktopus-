@@ -78,7 +78,7 @@ router.put('/academic-years/:id', updateAcademicYear);
 // جلب التخصصات بناءً على الكلية والسنة الأكاديمية
 // router.get('/specializations/college/:collegeId/year/:yearId', getSpecializationsByCollegeAndYear);
 
-router.get('/specializations/college/:collegeId/year/:yearId', getSpecializationsByCollegeAndYear);
+router.get('/specializations/college/:collegeId/year/:yearId', getSpecializationsByCollegeAndYear);  
 // console.log('Route hit!');
 
 module.exports = router;

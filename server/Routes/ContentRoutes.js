@@ -29,7 +29,14 @@ router.get('/college/:collegeId/year/:yearId', contentController.getFilteredCont
 // الراوت لجلب المحتويات الخاصة بناشر معين
 router.get('/publisher', auth, contentController.getPublisherContents); 
 
+// في ملف ContentRoutes.js
+router.get('/top-selling', contentController.getTopSellingContent); 
 
+
+// مسار لزيادة عدد مرات الشراء بناءً على معرف المحتوى
+router.patch('/content/:contentId/increment-purchase', contentController.incrementPurchaseCount);
+
+router.get('/content/:contentId/purchase-count', contentController.getPurchaseCount);
 
 
 module.exports = router;

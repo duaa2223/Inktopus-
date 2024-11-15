@@ -1095,11 +1095,12 @@ const images = [book.cover_image, ...(book.additional_images || [])].filter(Bool
             <div>
               <h3 className="text-2xl font-semibold mb-4 text-[#8D493A]">Book Details</h3>
               <ul className="space-y-2">
-                <li><span className="font-semibold">College:</span> {book.college?.name || 'N/A'}</li>
-                <li><span className="font-semibold">Academic Year:</span> {book.academic_year?.name || 'N/A'}</li>
-                {/* <li><span className="font-semibold">Specialization:</span> {book.specialization?.name || 'N/A'}</li> */}
-                <li><span className="font-semibold">Downloads:</span> {book.downloads || 0}</li>
-                <li><span className="font-semibold">Views:</span> {book.views || 0}</li>
+                <li><span className=" text-[#8D493A] mb-2 font-semibold">College:</span> <span className=" text-[#8D493A] mb-2 ">{book.college?.name || 'N/A'} </span> </li>
+                <li><span className=" text-[#8D493A] mb-2 font-semibold">Academic Year:</span> <span  className=" text-[#8D493A] mb-2 ">{book.academic_year?.name || 'N/A'}</span></li>
+                <li><span className=" text-[#8D493A] mb-2 font-semibold">Specialization:</span> <span className=" text-[#8D493A] mb-2 ">{book.specializations?.name || 'N/A'}</span></li>
+                <p className="text-[#8D493A] mb-2  font-semibold">Purchased :<span  className=" text-[#8D493A] mb-2 "> {book.purchaseCount || 0} times</span></p>
+                {/* <li><span className="font-semibold">Downloads:</span> {book.downloads || 0}</li>
+                <li><span className="font-semibold">Views:</span> {book.views || 0}</li> */}
               </ul>
             </div>
           </div>

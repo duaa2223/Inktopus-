@@ -229,17 +229,18 @@ exports.getBookDetails = async (req, res) => {
       .populate('college', 'name nameAr')
       .populate('academic_year', 'name nameAr')
       .select('-isDeleted')
-      .select('title titleAr description author price cover_image additional_images promo_videos content_type author_info'); // تأكد من تضمين جميع الحقول المطلوبة
+      .select('title titleAr description author price cover_image additional_images promo_videos content_type author_info purchaseCount'); // تأكد من تضمين جميع الحقول المطلوبة
 
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
     }
 
     // للتحقق من البيانات
-    console.log('Book details:', {
-      additional_images: book.additional_images,
-      promo_videos: book.promo_videos
-    });
+    // console.log('Book details:', {
+    //   additional_images: book.additional_images,
+    //   promo_videos: book.promo_videos,
+    //   purchaseCount: book.purchaseCount
+    // });
 
     res.status(200).json(book);
   } catch (error) {
@@ -266,5 +267,84 @@ exports.getPublisherContents = async (req, res) => {
     res.status(200).json(contents);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching publisher contents', error: error.message });
+  }
+};
+
+
+exports.updatePurchaseCount = async (contentId) => {
+  try {
+    const content = await Content.findById(contentId);
+    if (!content) {
+      throw new Error('Content not found');
+    }
+    content.purchaseCount += 1;
+    await content.save();
+    return content.purchaseCount;
+  } catch (error) {
+    console.error('Error updating purchase count:', error);
+    throw error;
+  }
+};
+
+
+
+exports.incrementPurchaseCount = async (req, res) => {
+  try {
+    const { contentId } = req.params;
+    const newPurchaseCount = await exports.updatePurchaseCount(contentId);
+    
+    res.status(200).json({ 
+      message: 'Purchase count updated successfully', 
+      purchaseCount: newPurchaseCount 
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error updating purchase count', 
+      error: error.message 
+    });
+  }
+};
+
+
+
+exports.getPurchaseCount = async (req, res) => {
+  try {
+    const { contentId } = req.params;
+    const content = await Content.findById(contentId).select('purchaseCount');
+
+    if (!content) {
+      return res.status(404).json({ message: 'Content not found' });
+    }
+
+    res.status(200).json({ 
+      message: 'Purchase count retrieved successfully', 
+      purchaseCount: content.purchaseCount 
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error fetching purchase count', 
+      error: error.message 
+    });
+  }
+};
+
+
+
+// دالة جديدة للحصول على المحتوى الأكثر مبيعاً
+exports.getTopSellingContent = async (req, res) => {
+  try {
+    const topContent = await Content.find({ isDeleted: false, isActive: true })
+      .sort({ purchaseCount: -1 })
+      .limit(10)
+      .populate('college', 'name nameAr')
+      .populate('academic_year', 'name nameAr')
+      .select('-file_url');
+
+    res.status(200).json(topContent);
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error fetching top selling content', 
+      error: error.message 
+    });
   }
 };

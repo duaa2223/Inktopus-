@@ -15,10 +15,10 @@ const ResourceRoutes = require('./Routes/ResourceRoutes.js');
 const cartRoutes = require('./Routes/CartRoutes.js');
 const applicationRoutes = require('./Routes/publisherRoutes.js');
 const paymentRoutes = require('./Routes/PaymentRoutes');
-
+const contactRoute = require('./Routes/ContactUsRoutes.js');
 const cors = require('cors'); // استيراد مكتبة cors
 const auth = require('./Middleware/auth.js');
-const checkRole = require('./Middleware/checkRole');
+// const checkRole = require('./Middleware/checkRole');
 
 app.use(bodyParser.json()); 
 app.use(cookieParser())
@@ -35,16 +35,16 @@ app.use(express.json()); // لتمكين معالجة JSON
 
 // Connect to MongoDB
 connectDB(); // الاتصال بقاعدة البيانات
-app.use('/dashboard', auth, checkRole('admin'));
+// app.use('/dashboard', auth, checkRole('admin'));
 // Routes
-app.use('/api/habits', habitday); // استخدام المسارات الخاصة بالـ habits
 app.use('/api/content',contentRoutes); 
 app.use('/api', ResourceRoutes);
-app.use('/api/review',reviewRoutes)
+// app.use('/api/review',reviewRoutes)
 app.use('/api/users',userRoutes)  
 app.use('/api/cart',cartRoutes) 
 app.use('/api/payment',auth, paymentRoutes);
 app.use('/api/application',auth,applicationRoutes)
+app.use('/api/contact',contactRoute)
 // بدء الاستماع للطلبات على المنفذ المحدد
 const PORT = process.env.PORT ;
 // const PORT = process.env.PORT || 4000;

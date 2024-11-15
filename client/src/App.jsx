@@ -204,6 +204,8 @@ import CheckoutPage from './pages/Checkout';
 import OrderConfirmationPage from './pages/OrderConfermation';
 import { ToastContainer } from 'react-toastify';
 import UserProfilePage from './pages/Profile';
+import ContactPage from './pages/ContactUser';
+import ContactNonUser from './pages/ContactUs';
 import './index.css'; 
 
 const AppContent = () => {
@@ -223,9 +225,9 @@ const AppContent = () => {
         <Route path="/register" element={<SignUp />} />
         <Route path="/level/:collegeId" element={<Level />} />
         <Route path="/content/college/:collegeId/year/:academicYearId" element={<Catalogpage />} />
-        {/* <Route path="/book" element={<ProtectedRoute><Book /></ProtectedRoute>} /> */}
-        <Route path="/college" element={<Resource />} />
-        {/* <Route path="/book/:id" element={<BookDetails />} /> */}
+        <Route path="/contact" element={<ContactPage  />} />
+        <Route path="/college" element={<Resource />} />  
+        <Route path="/contact/nonUser" element={< ContactNonUser />} />
         {/* book details */}
         <Route
         path="/book/:id"

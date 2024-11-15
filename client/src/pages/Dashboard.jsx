@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import PublisherApplications from '../components/tapDash/PublisherAppDash';
 import AcademicSection from '../components/tapDash/AcademicSection';
-import { Users, BookOpen, School, Layout, BarChart2, FileText } from 'lucide-react';
+import { Users, BookOpen, School, Layout, BarChart2, FileText, ShoppingBag,Mail } from 'lucide-react';
 import ContentManagementTab  from '../components/tapDash/ContentTap'
 import StatsDashboardTab from '../components/tapDash/StatsTab'
 import UserManagementTab from '../components/tapDash/UserTab'
+import OrdersManagementTab from '../components/tapDash/OrderTap'
+import MessagesTab from '../components/tapDash/Massages';
+
 const Tab = ({ children, isActive, onClick }) => (
   <button
     className={`px-4 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 ${
@@ -278,57 +281,16 @@ const handleAcademicYearSubmit = async (e) => {
     'publisher-apps': <FileText className="w-5 h-5" />,
     academic: <School className="w-5 h-5" />,
     content: <BookOpen className="w-5 h-5" />,
-    stats: <BarChart2 className="w-5 h-5" />
+    stats: <BarChart2 className="w-5 h-5" />,
+    orders: <ShoppingBag className="w-5 h-5" /> ,
+    messages: <Mail className="w-5 h-5" />,
   };
 
   const renderContent = () => {
     switch (activeTab) {
       case 'users':
         return <UserManagementTab users={users} onStatusUpdate={handleUserStatusUpdate} />;
-        // return (
-        //   <Card title="User Management" description="Manage user accounts and roles">
-        //     <div className="overflow-x-auto rounded-lg">
-        //       <table className="w-full">
-        //         <thead>
-        //           <tr className="bg-[#D0B8A8]/50">
-        //             <th className="p-3 text-left text-[#8D493A]">Username</th>
-        //             <th className="p-3 text-left text-[#8D493A]">Email</th>
-        //             <th className="p-3 text-left text-[#8D493A]">Role</th>
-        //             <th className="p-3 text-left text-[#8D493A]">Status</th>
-        //             <th className="p-3 text-left text-[#8D493A]">Actions</th>
-        //           </tr>
-        //         </thead>
-        //         <tbody className="divide-y divide-[#D0B8A8]/30">
-        //           {users.map((user) => (
-        //             <tr key={user._id} className="hover:bg-[#DFD3C3]/20 transition-colors">
-        //               <td className="p-3">{user.username}</td>
-        //               <td className="p-3">{user.email}</td>
-        //               <td className="p-3">{user.role}</td>
-        //               <td className="p-3">
-        //                 <span className={`px-2 py-1 rounded-full text-xs ${
-        //                   user.isActivated 
-        //                     ? 'bg-green-100 text-green-800' 
-        //                     : 'bg-red-100 text-red-800'
-        //                 }`}>
-        //                   {user.isActivated ? 'Active' : 'Inactive'}
-        //                 </span>
-        //               </td>
-        //               <td className="p-3">
-        //                 <Button
-        //                   onClick={() => handleUserStatusUpdate(user._id, !user.isActivated)}
-        //                   variant={user.isActivated ? "destructive" : "default"}
-        //                   className="text-sm"
-        //                 >
-        //                   {user.isActivated ? 'Deactivate' : 'Activate'}
-        //                 </Button>
-        //               </td>
-        //             </tr>
-        //           ))}
-        //         </tbody>
-        //       </table>
-        //     </div>
-        //   </Card>
-        // );
+       
       case 'publisher-apps':
         return <PublisherApplications />;
         case 'academic':
@@ -340,71 +302,12 @@ const handleAcademicYearSubmit = async (e) => {
           case 'stats':
             return <StatsDashboardTab stats={{ users, content, colleges }} />;
 
-      // case 'content':
-      //   return (
-      //     <Card title="Content Management" description="Manage books and articles">
-      //       <div className="overflow-x-auto">
-      //         <table className="w-full">
-      //           <thead>
-      //             <tr className="bg-[#D0B8A8] text-[#8D493A]">
-      //               <th className="p-2">Title</th>
-      //               <th className="p-2">Type</th>
-      //               <th className="p-2">Author</th>
-      //               <th className="p-2">College</th>
-      //               <th className="p-2">Actions</th>
-      //             </tr>
-      //           </thead>
-      //           <tbody>
-      //             {content.map((item) => (
-      //               <tr key={item._id} className="border-b border-[#D0B8A8]">
-      //                 <td className="p-2">{item.title}</td>
-      //                 <td className="p-2">{item.content_type}</td>
-      //                 <td className="p-2">{item.author}</td>
-      //                 <td className="p-2">{item.college.name}</td>
-      //                 <td className="p-2">
-      //                   <Button
-      //                     onClick={() => handleContentDelete(item._id)}
-      //                     variant="destructive"
-      //                   >
-      //                     Delete
-      //                   </Button>
-      //                 </td>
-      //               </tr>
-      //             ))}
-      //           </tbody>
-      //         </table>
-      //       </div>
-      //     </Card>
-      //   );
-        // case 'stats':
-        //   return (
-        //     <div className="space-y-6">
-        //       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        //         <Card className="text-center">
-        //           <Users className="w-8 h-8 text-[#8D493A] mx-auto mb-2" />
-        //           <div className="text-3xl font-bold text-[#8D493A]">{users.length}</div>
-        //           <div className="text-[#8D493A]/70">Total Users</div>
-        //         </Card>
-        //         <Card className="text-center">
-        //           <BookOpen className="w-8 h-8 text-[#8D493A] mx-auto mb-2" />
-        //           <div className="text-3xl font-bold text-[#8D493A]">{content.length}</div>
-        //           <div className="text-[#8D493A]/70">Total Content</div>
-        //         </Card>
-        //         <Card className="text-center">
-        //           <School className="w-8 h-8 text-[#8D493A] mx-auto mb-2" />
-        //           <div className="text-3xl font-bold text-[#8D493A]">{colleges.length}</div>
-        //           <div className="text-[#8D493A]/70">Total Colleges</div>
-        //         </Card>
-        //         <Card className="text-center">
-        //           <Layout className="w-8 h-8 text-[#8D493A] mx-auto mb-2" />
-        //           <div className="text-3xl font-bold text-[#8D493A]">
-        //             {content.filter(item => item.content_type === 'book').length}
-        //           </div>
-        //           <div className="text-[#8D493A]/70">Total Books</div>
-        //         </Card>
-        //       </div>
-        //     </div>
-        //   );
+            case 'orders': // إضافة حالة الطلبات
+            return <OrdersManagementTab />;
+      
+            case 'messages':
+            return <MessagesTab />;
+
         default:
           return null;
       }

@@ -1,0 +1,140 @@
+[
+    {
+      "title": "Introduction to Computer Networks",
+      "titleAr": "مقدمة في شبكات الحاسوب",
+      "author": "Andrew Tanenbaum",
+      "author_info": "Professor of Computer Science, Vrije Universiteit Amsterdam",
+      "description": "This book provides a comprehensive introduction to the field of computer networking, covering topics such as network architectures, protocols, and applications.",
+      "cover_image": "https://example.com/intro-to-computer-networks-cover.jpg",
+      "additional_images": [
+        "https://example.com/computer-networks-image1.jpg",
+        "https://example.com/computer-networks-image2.jpg"
+      ],
+      "promo_videos": [
+        "https://example.com/computer-networks-video1.mp4",
+        "https://example.com/computer-networks-video2.mp4"
+      ],
+      "price": 50,
+      "file_url": "https://example.com/intro-to-computer-networks.pdf",
+      "content_type": "book",
+      "college": "672febf46791cb21c24a834b",
+      "academic_year": "672ff1b5928650fee7c3f22d",
+      "specialization": "67349887f3760182367e54c1",
+      "publisher": "6273a9b0f2e4c6c0b8c4f2a1"
+    },
+    {
+      "title": "Principles of Information Security",
+      "titleAr": "مبادئ أمن المعلومات",
+      "author": "Michael E. Whitman",
+      "author_info": "Professor of Information Security, Kennesaw State University",
+      "description": "This book covers the fundamental principles and practices of information security, including risk management, access control, and cryptography.",
+      "cover_image": "https://example.com/info-security-cover.jpg",
+      "additional_images": [
+        "https://example.com/info-security-image1.jpg",
+        "https://example.com/info-security-image2.jpg"
+      ],
+      "promo_videos": [
+        "https://example.com/info-security-video1.mp4",
+        "https://example.com/info-security-video2.mp4"
+      ],
+      "price": 60,
+      "file_url": "https://example.com/principles-of-info-security.pdf",
+      "content_type": "book",
+      "college": "672febf46791cb21c24a834b",
+      "academic_year": "672ff1b5928650fee7c3f22d",
+      "specialization": "673498a4f3760182367e54cc",
+      "publisher": "6273a9b0f2e4c6c0b8c4f2a1"
+    },
+    {
+      "title": "Introduction to Computer Science",
+      "titleAr": "مقدمة في علوم الحاسوب",
+      "author": "John Zelle",
+      "author_info": "Professor of Computer Science, Wartburg College",
+      "description": "This book provides a broad introduction to the field of computer science, covering topics such as algorithms, data structures, and programming languages.",
+      "cover_image": "https://example.com/intro-to-cs-cover.jpg",
+      "additional_images": [
+        "https://example.com/intro-to-cs-image1.jpg",
+        "https://example.com/intro-to-cs-image2.jpg"
+      ],
+      "promo_videos": [
+        "https://example.com/intro-to-cs-video1.mp4",
+        "https://example.com/intro-to-cs-video2.mp4"
+      ],
+      "price": 45,
+      "file_url": "https://example.com/intro-to-computer-science.pdf",
+      "content_type": "book",
+      "college": "672febf46791cb21c24a834b",
+      "academic_year": "672ff1b5928650fee7c3f22d",
+      "specialization": "67349308e92d896a2e2ad721",
+      "publisher": "6273a9b0f2e4c6c0b8c4f2a1"
+    },
+    {
+      "title": "Management Information Systems",
+      "titleAr": "نظم المعلومات الإدارية",
+      "author": "Kenneth C. Laudon",
+      "author_info": "Professor of Information Systems, New York University",
+      "description": "This book provides an overview of the role of information systems in business management, including topics such as decision support, enterprise systems, and e-commerce.",
+      "cover_image": "https://example.com/mis-cover.jpg",
+      "additional_images": [
+        "https://example.com/mis-image1.jpg",
+        "https://example.com/mis-image2.jpg"
+      ],
+      "promo_videos": [
+        "https://example.com/mis-video1.mp4",
+        "https://example.com/mis-video2.mp4"
+      ],
+      "price": 55,
+      "file_url": "https://example.com/management-information-systems.pdf",
+      "content_type": "book",
+      "college": "672febf46791cb21c24a834b",
+      "academic_year": "672ff1b5928650fee7c3f22d",
+      "specialization": "67349872f3760182367e54b6",
+      "publisher": "6273a9b0f2e4c6c0b8c4f2a1"
+    },
+    {
+      "title": "Data Structures and Algorithms",
+      "titleAr": "هياكل البيانات والخوارزميات",
+      "author": "Thomas H. Cormen",
+      "author_info": "Professor of Computer Science, Dartmouth College",
+      "description": "This book provides a comprehensive introduction to the fundamental concepts of data structures and algorithms, including topics such as sorting, searching, and graph theory.",
+      "cover_image": "https://example.com/data-structures-cover.jpg",
+      "additional_images": [
+        "https://example.com/data-structures-image1.jpg",
+        "https://example.com/data-structures-image2.jpg"
+      ],
+      "promo_videos": [
+        "https://example.com/data-structures-video1.mp4",
+        "https://example.com/data-structures-video2.mp4"
+      ],
+      "price": 65,
+      "file_url": "https://example.com/data-structures-and-algorithms.pdf",
+      "content_type": "book",
+      "college": "672febf46791cb21c24a834b",
+      "academic_year": "672ff1b5928650fee7c3f22d",
+      "specialization": "67349308e92d896a2e2ad721",
+      "publisher": "6273a9b0f2e4c6c0b8c4f2a1"
+    },
+    {
+      "title": "Fundamentals of Database Systems",
+      "titleAr": "أساسيات نظم قواعد البيانات",
+      "author": "Ramez Elmasri",
+      "author_info": "Professor of Computer Science and Engineering, University of Texas at Arlington",
+      "description": "This book covers the fundamental concepts and techniques of database systems, including topics such as data modeling, query processing, and transaction management.",
+      "cover_image": "https://example.com/database-systems-cover.jpg",
+      "additional_images": [
+        "https://example.com/database-systems-image1.jpg",
+        "https://example.com/database-systems-image2.jpg"
+      ],
+      "promo_videos": [
+        "https://example.com/database-systems-video1.mp4",
+        "https://example.com/database-systems-video2.mp4"
+      ],
+      "price": 70,
+      "file_url": "https://example.com/fundamentals-of-database-systems.pdf",
+      "content_type": "book",
+      "college": "672febf46791cb21c24a834b",
+      "academic_year": "672ff1b5928650fee7c3f22d",
+      "specialization": "67349308e92d896a2e2ad721",
+      "publisher": "6273a9b0f2e4c6c0b8c4f2a1"
+    }
+  ]

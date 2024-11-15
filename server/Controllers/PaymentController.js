@@ -656,6 +656,21 @@
 const Order = require('../Models/OrderModel');
 const Cart = require('../Models/CartModel');
 const jwt = require('jsonwebtoken');
+const Content = require('../Models/AddContentModel')
+const updatePurchaseCount = async (contentId) => {
+  try {
+    const content = await Content.findById(contentId);
+    if (!content) {
+      throw new Error('Content not found');
+    }
+    content.purchaseCount += 1;
+    await content.save();
+    return content.purchaseCount;
+  } catch (error) {
+    console.error('Error updating purchase count:', error);
+    throw error;
+  }
+};
 
 exports.createOrder = async (req, res) => {
   try {
@@ -682,6 +697,10 @@ exports.createOrder = async (req, res) => {
 
       await order.save();
       await Cart.findOneAndDelete({ user: userId });
+
+      for (const item of items) {
+        await updatePurchaseCount(item.content); // item.content يجب أن يكون هو الـ ID الخاص بالمحتوى
+      }
 
       res.status(201).json(order);
   } catch (error) {
@@ -747,5 +766,38 @@ exports.getOrdersByUser = async (req, res) => {
   } catch (error) {
     console.error('Error fetching user orders:', error);
     res.status(500).json({ message: 'Error fetching user orders', error: error.message });
+  }
+};
+
+///////////////////
+exports.getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate('user', 'name email')
+      .sort({ createdAt: -1 });
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching orders' });
+  }
+};
+
+exports.updateOrderStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    
+    const order = await Order.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+    
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+    
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating order status' });
   }
 };

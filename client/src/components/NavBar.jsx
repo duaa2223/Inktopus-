@@ -949,10 +949,24 @@ function Navbar() {
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Home</Link>
-            <Link to="/About" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Our Story</Link>
+            {/* <Link to="/About" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Our Story</Link> */}
             <Link to="/college" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">College</Link>
-            <Link to="/Price" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Pricing</Link>
-            <Link to="/Contact" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Contact</Link>
+          
+            {!isLoggedIn  && (
+             <Link to="/contact/nonUser" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Contact</Link>
+            )}
+
+
+            {isLoggedIn && role === 'reader' && (
+             <Link to="/contact" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Contact</Link>
+            )}
+            
+            {isLoggedIn && role === 'publisher' && (
+             <Link to="/contact" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Contact</Link>
+            )}
+            
+            
+            
             {isLoggedIn && role === 'admin' && (
               <Link to="/dashboard" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Dashboard</Link>
             )}

@@ -535,15 +535,15 @@
 
 // export default SpecializationForm;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { Button, FormGroup, FormLabel, FormInput, FormSelect, FormTextarea, FormModal } from '../SharedFormComponant/Forms';
 
 const SpecializationForm = ({ colleges, onClose, onSubmit, editData }) => {
   // تبسيط إدارة الحالة الأولية
   const [formData, setFormData] = useState({
     name: '',
-    nameAr: '',
-    description: '',
+    // nameAr: '',
+    // description: '',
     college: '',
     academic_year: ''
   });
@@ -622,7 +622,7 @@ const SpecializationForm = ({ colleges, onClose, onSubmit, editData }) => {
             required
           />
         </FormGroup>
-
+{/* 
         <FormGroup>
           <FormLabel required>Name (Arabic):</FormLabel>
           <FormInput
@@ -632,7 +632,7 @@ const SpecializationForm = ({ colleges, onClose, onSubmit, editData }) => {
             onChange={handleChange}
             required
           />
-        </FormGroup>
+        </FormGroup> */}
 
         <FormGroup>
           <FormLabel required>College:</FormLabel>
@@ -669,7 +669,7 @@ const SpecializationForm = ({ colleges, onClose, onSubmit, editData }) => {
           </FormSelect>
         </FormGroup>
 
-        <FormGroup>
+        {/* <FormGroup>
           <FormLabel>Description:</FormLabel>
           <FormTextarea
             name="description"
@@ -677,7 +677,7 @@ const SpecializationForm = ({ colleges, onClose, onSubmit, editData }) => {
             onChange={handleChange}
             rows="3"
           />
-        </FormGroup>
+        </FormGroup> */}
 
         <div className="flex justify-end space-x-2 pt-4">
           <Button type="button" onClick={onClose} variant="secondary">

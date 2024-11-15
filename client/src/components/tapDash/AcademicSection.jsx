@@ -2103,6 +2103,28 @@ const AcademicSection = () => {
     }
   };
 
+  // const fetchAcademicYears = async (collegeId) => {
+  //   if (!collegeId) return;
+    
+  //   setLoading(prev => ({ ...prev, years: true }));
+  //   try {
+  //     const response = await axios.get(`http://localhost:5000/api/academic-years/${collegeId}`);
+      
+  //     setAcademicYears(prevYears => ({
+  //       ...prevYears,
+  //       [collegeId]: Array.isArray(response.data) ? response.data : []
+  //     }));
+  //     setError(prev => ({ ...prev, years: null }));
+  //   } catch (error) {
+  //     console.error('Error fetching academic years:', error);
+  //     const errorMessage = error.response?.data?.message || 'Failed to fetch academic years';
+  //     setError(prev => ({ ...prev, years: errorMessage }));
+  //     setAcademicYears(prev => ({ ...prev, [collegeId]: [] }));
+  //   } finally {
+  //     setLoading(prev => ({ ...prev, years: false }));
+  //   }
+  // };
+
   const fetchAcademicYears = async (collegeId) => {
     if (!collegeId) return;
     
@@ -2110,9 +2132,14 @@ const AcademicSection = () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/academic-years/${collegeId}`);
       
+      // Sort the academic years by order before setting state
+      const sortedYears = Array.isArray(response.data) 
+        ? [...response.data].sort((a, b) => a.order - b.order)
+        : [];
+      
       setAcademicYears(prevYears => ({
         ...prevYears,
-        [collegeId]: Array.isArray(response.data) ? response.data : []
+        [collegeId]: sortedYears
       }));
       setError(prev => ({ ...prev, years: null }));
     } catch (error) {
@@ -2448,6 +2475,20 @@ const AcademicSection = () => {
   //   ));
   // };
 
+  // const renderAcademicYears = (collegeId) => {
+  //   const years = academicYears[collegeId] || [];
+
+  //   if (loading.years) {
+  //     return <div className="text-[#72392C] p-4">Loading academic years...</div>;
+  //   }
+
+  //   if (!years || years.length === 0) {
+  //     return <div className="text-[#72392C] p-4">There are no years of study</div>;
+  //   }
+
+  //   if (error.years) {
+  //     return <div className="text-red-600 p-4">Error loading academic years. Please try again.</div>;
+  //   }
   const renderAcademicYears = (collegeId) => {
     const years = academicYears[collegeId] || [];
 
@@ -2462,7 +2503,6 @@ const AcademicSection = () => {
     if (error.years) {
       return <div className="text-red-600 p-4">Error loading academic years. Please try again.</div>;
     }
-
     return years.map(year => (
       <div key={year._id} className="bg-[#F6EEE6] rounded-lg mb-2">
         <div className="flex items-center justify-between p-3">
