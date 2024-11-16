@@ -914,11 +914,16 @@ const images = [book.cover_image, ...(book.additional_images || [])].filter(Bool
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <img
+              {/* <img
                 src={images[currentImageIndex]}
                 alt={`${book.title} - Image ${currentImageIndex + 1}`}
                 className="w-full h-[600px] object-cover"
-              />
+              /> */}
+              <img
+  src={images[currentImageIndex]}
+  alt={`${book.title} - Image ${currentImageIndex + 1}`}
+  className="w-full h-auto md:h-[600px] object-contain md:object-cover"
+/>
               {images.length > 1 && (
                 <>
                   <motion.button
@@ -1059,7 +1064,7 @@ const images = [book.cover_image, ...(book.additional_images || [])].filter(Bool
           </div>
         </motion.div>
       </div>
-      <BookAnimation />
+      {/* <BookAnimation /> */}
     </div>
   );
 };

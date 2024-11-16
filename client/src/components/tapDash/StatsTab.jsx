@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from '../../components/ui/UIComponents';
 import { Users, BookOpen, School, Layout } from 'lucide-react';
-
+import SalesDashboardTab from './SalesTap';
 const StatsDashboardTab = ({ stats }) => {
   const { users, content, colleges } = stats;
   
@@ -63,6 +63,7 @@ const StatsDashboardTab = ({ stats }) => {
             </div>
           ))}
         </div>
+        <SalesDashboardTab />
    
     </div>
   );

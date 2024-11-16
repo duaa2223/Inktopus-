@@ -801,3 +801,47 @@ exports.updateOrderStatus = async (req, res) => {
     res.status(500).json({ message: 'Error updating order status' });
   }
 };
+
+exports.getTotalSales = async (req, res) => {
+  try {
+    // احصل على جميع الطلبات المكتملة فقط
+    const orders = await Order.find({
+      status: { $in: ['shipped', 'delivered', 'processing'] }
+    });
+
+    // احسب إجمالي المبيعات
+    const totalSales = orders.reduce((total, order) => total + (order.total || 0), 0);
+
+    // احسب عدد الطلبات
+    const totalOrders = orders.length;
+
+    // احسب متوسط قيمة الطلب
+    const averageOrderValue = totalOrders > 0 ? totalSales / totalOrders : 0;
+
+    // إحصائيات حسب حالة الطلب
+    const ordersByStatus = await Order.aggregate([
+      {
+        $group: {
+          _id: "$status",
+          count: { $sum: 1 },
+          totalAmount: { $sum: "$total" }
+        }
+      }
+    ]);
+
+    res.json({
+      totalSales: totalSales,
+      totalOrders: totalOrders,
+      averageOrderValue: averageOrderValue,
+      ordersByStatus: ordersByStatus,
+      currency: "$" // أو أي عملة تستخدمها
+    });
+
+  } catch (error) {
+    console.error('Error calculating total sales:', error);
+    res.status(500).json({ 
+      message: 'Error calculating total sales', 
+      error: error.message 
+    });
+  }
+};
