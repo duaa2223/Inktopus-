@@ -1946,7 +1946,7 @@ import { motion } from 'framer-motion';
 import { Mail, Book, Coffee, Download, User, BookOpen } from 'lucide-react';
 import axios from 'axios';
 import OrderStatusTracker from '../components/OrderTracker';
-
+import Navbar from '../components/NavBar';
 const TabsList = ({ children }) => (
   <div className="flex bg-white rounded-lg p-1 mb-6 w-fit">
     {children}
@@ -2089,8 +2089,9 @@ const UserProfilePage = () => {
 
   return (
     <div className="min-h-screen bg-[#F8EDE3]">
+      <Navbar />
       {/* Hero Banner */}
-      <div className="relative h-48 bg-[#8D493A] overflow-visible">
+      <div className="relative h-48 bg-[#8D493A] overflow-visible mt-20">
         <div className="absolute inset-0 flex items-center justify-center opacity-20">
           <div className="flex gap-8">
             <Coffee size={64} color="white" />

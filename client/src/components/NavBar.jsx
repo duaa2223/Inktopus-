@@ -948,8 +948,8 @@ function Navbar() {
 
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center space-x-8">
+            
             <Link to="/" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Home</Link>
-            {/* <Link to="/About" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Our Story</Link> */}
             <Link to="/college" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">College</Link>
           
             {!isLoggedIn  && (
@@ -985,7 +985,9 @@ function Navbar() {
 
           {/* Right Side Items */}
           <div className="flex items-center space-x-4">
-            <CartIcon />
+          <div className="hidden md:block">
+              <CartIcon />
+            </div>
             {isLoggedIn ? (
               <button 
                 onClick={handleLogout} 
@@ -1016,27 +1018,40 @@ function Navbar() {
         {isOpen && (
           <div className="md:hidden bg-[#F8EDE3] py-4">
             <nav className="flex flex-col space-y-4">
-              <Link to="/" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Home</Link>
-              <Link to="/About" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Our Story</Link>
-              <Link to="/college" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">College</Link>
-              <Link to="/Price" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Pricing</Link>
-              <Link to="/Contact" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Contact</Link>
-              {isLoggedIn && role === 'admin' && (
-                <Link to="/dashboard" className="text-[#8D493A] hover:text-[#D0B8A8] px-4 py-2 transition-colors duration-200">Dashboard</Link>
-              )}
-                  
-             {isLoggedIn && role === 'publisher' && (
-             <Link to="/form" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">
+            <div className="flex items-center space-x-2 text-[#8D493A] px-2">
+                <CartIcon />
+                <span>Cart</span>
+              </div>
+            <Link to="/" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Home</Link>
+            <Link to="/college" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">College</Link>
+          
+            {!isLoggedIn  && (
+             <Link to="/contact/nonUser" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Contact</Link>
+            )}
+
+
+            {isLoggedIn && role === 'reader' && (
+             <Link to="/contact" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Contact</Link>
+            )}
+            
+            {isLoggedIn && role === 'publisher' && (
+             <Link to="/contact" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Contact</Link>
+            )}
+            
+            
+            
+            {isLoggedIn && role === 'admin' && (
+              <Link to="/dashboard" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Dashboard</Link>
+            )}
+            {isLoggedIn && role === 'publisher' && (
+              <Link to="/form" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">Profile</Link>
+            )}
+
+           {isLoggedIn && role === 'reader' && (
+             <Link to="/profile" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">
               Profile
           </Link>
             )} 
-
-            {isLoggedIn && role === 'reader' && (
-             <Link to="/profile" className="text-[#8D493A] hover:text-[#D0B8A8] transition-colors duration-200">
-              Profile
-            </Link>
-            )} 
-
 
             </nav>
           </div>

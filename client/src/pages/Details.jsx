@@ -835,28 +835,11 @@ const BookDetails = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const fetchBookDetails = async () => {
-  //     try {
-  //       const response = await axios.get(`http://localhost:5000/api/content/book/${id}`);
-  //       setBook(response.data);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error('Error fetching book details', error);
-  //       setError('Failed to load book details. Please try again later.');
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchBookDetails();
-  // }, [id]);
-
-
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/content/book/${id}`);
-        console.log('Book data received:', response.data); // تحقق من البيانات المستلمة
+        // console.log('Book data received:', response.data);
         setBook(response.data);
         setLoading(false);
       } catch (error) {
@@ -868,29 +851,6 @@ const BookDetails = () => {
   
     fetchBookDetails();
   }, [id]);
-
-  // const handleAddToCart = () => {
-  //   if (book) {
-  //     console.log('Adding to cart:', book);
-  //     dispatch({ 
-  //       type: 'ADD_TO_CART', 
-  //       payload: { 
-  //         id: book._id, 
-  //         title: book.title, 
-  //         price: book.price, 
-  //         cover_image: book.cover_image
-  //       } 
-  //     });
-  //   }
-  // };
-
-
-  // const handleAddToCart = () => {
-  //   if (book) {
-  //     console.log('Adding to cart:', book);
-  //     dispatch(addToCart({ bookId: book._id, quantity: 1 }));
-  //   }
-  // };
 
   const handleAddToCart = () => {
     if (book) {
@@ -1014,17 +974,12 @@ const images = [book.cover_image, ...(book.additional_images || [])].filter(Bool
             {book.titleAr && (
               <h2 className="text-3xl font-semibold text-[#8D493A]">{book.titleAr}</h2>
             )}
-            <div className="flex items-center space-x-2">
-              {/* <span className="text-yellow-400">★</span> */}
-              {/* <span className="text-lg font-semibold">{book.rating || 'N/A'}</span> */}
-              {/* <span className="text-[#8D493A]">({book.reviews || 0} reviews)</span> */}
-            </div>
-            <p className="text-xl">{book.description}</p>
+            
+            <p className="text-xl text-[#8D493A]">{book.description}</p>
             <div className="space-y-2">
-              <p className="text-lg"><span className="font-semibold">Author:</span> {book.author}</p>
+              <p className="text-lg"><span className="font-semibold text-[#8D493A]"> Author: </span><span className=" text-[#8D493A]">{book.author}</span> </p>
               {book.author_info && <p className="text-md italic">{book.author_info}</p>}
-              {/* <p className="text-lg"><span className="font-semibold">Publisher:</span> {book.publisher?.name || 'Unknown'}</p> */}
-              <p className="text-lg"><span className="font-semibold">Type:</span> {book.content_type}</p>
+              <p className="text-lg"><span className="font-semibold text-[#8D493A]">Type:</span><span className=" text-[#8D493A]"> {book.content_type}</span></p>
             </div>
             <div className="flex items-center space-x-4">
               {typeof book.price === 'number' ? (
@@ -1097,10 +1052,8 @@ const images = [book.cover_image, ...(book.additional_images || [])].filter(Bool
               <ul className="space-y-2">
                 <li><span className=" text-[#8D493A] mb-2 font-semibold">College:</span> <span className=" text-[#8D493A] mb-2 ">{book.college?.name || 'N/A'} </span> </li>
                 <li><span className=" text-[#8D493A] mb-2 font-semibold">Academic Year:</span> <span  className=" text-[#8D493A] mb-2 ">{book.academic_year?.name || 'N/A'}</span></li>
-                <li><span className=" text-[#8D493A] mb-2 font-semibold">Specialization:</span> <span className=" text-[#8D493A] mb-2 ">{book.specializations?.name || 'N/A'}</span></li>
                 <p className="text-[#8D493A] mb-2  font-semibold">Purchased :<span  className=" text-[#8D493A] mb-2 "> {book.purchaseCount || 0} times</span></p>
-                {/* <li><span className="font-semibold">Downloads:</span> {book.downloads || 0}</li>
-                <li><span className="font-semibold">Views:</span> {book.views || 0}</li> */}
+               
               </ul>
             </div>
           </div>

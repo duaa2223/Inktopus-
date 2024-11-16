@@ -3405,8 +3405,24 @@ import PublishedContent from '../components/Puplisher/PublishedContent';
 import Navbar from '../components/NavBar';
 import OrderStatusTracker from '../components/OrderTracker';
 
+// const TabsList = ({ children }) => (
+//   <div className="flex bg-white rounded-lg p-1 mb-6 w-fit">
+//     {children}
+//   </div>
+// );
+
+// const TabsTrigger = ({ value, active, onClick, children }) => (
+//   <button
+//     onClick={() => onClick(value)}
+//     className={`flex items-center px-6 py-2 rounded-md transition-colors ${
+//       active ? 'bg-[#8D493A] text-white' : 'text-gray-600 hover:bg-gray-100'
+//     }`}
+//   >
+//     {children}
+//   </button>
+// );
 const TabsList = ({ children }) => (
-  <div className="flex bg-white rounded-lg p-1 mb-6 w-fit">
+  <div className="flex flex-wrap bg-white rounded-lg p-1 mb-6 w-full md:w-fit">
     {children}
   </div>
 );
@@ -3414,14 +3430,13 @@ const TabsList = ({ children }) => (
 const TabsTrigger = ({ value, active, onClick, children }) => (
   <button
     onClick={() => onClick(value)}
-    className={`flex items-center px-6 py-2 rounded-md transition-colors ${
+    className={`flex items-center px-3 md:px-6 py-2 rounded-md transition-colors flex-1 md:flex-initial justify-center ${
       active ? 'bg-[#8D493A] text-white' : 'text-gray-600 hover:bg-gray-100'
     }`}
   >
     {children}
   </button>
 );
-
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [showAddContent, setShowAddContent] = useState(false);
@@ -3458,7 +3473,7 @@ const ProfilePage = () => {
 
   const handlePasswordUpdate = async () => {
     try {
-      await axios.put('/api/users/update-password', {
+      await axios.put('/api/users/users/update-password', {
         currentPassword,
         newPassword,
       }, { withCredentials: true });
@@ -3519,7 +3534,7 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      <div className="container mx-auto p-4 mt-20">
+      {/* <div className="container mx-auto p-4 mt-20">
         <div className="max-w-3xl mx-auto">
           <TabsList>
             <TabsTrigger 
@@ -3546,15 +3561,56 @@ const ProfilePage = () => {
               <BookOpen className="mr-2" size={18} />
               Orders
             </TabsTrigger>
-          </TabsList>
+          </TabsList> */}
 
-          {activeTab === 'profile' && (
+          {/* {activeTab === 'profile' && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="bg-white rounded-lg shadow p-6 mb-6"
+            > */}
+            <div className="container mx-auto p-2 md:p-4 mt-20">
+        <div className="max-w-3xl mx-auto">
+          <TabsList>
+            <TabsTrigger 
+              value="profile" 
+              active={activeTab === 'profile'} 
+              onClick={setActiveTab}
             >
+              <User className="md:mr-2" size={18} />
+              <span className="hidden md:inline">Profile</span>
+              <span className="inline md:hidden">Profile</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="content" 
+              active={activeTab === 'content'} 
+              onClick={setActiveTab}
+            >
+              <Book className="md:mr-2" size={18} />
+              <span className="hidden md:inline">Content</span>
+              <span className="inline md:hidden">Content</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="orders" 
+              active={activeTab === 'orders'} 
+              onClick={setActiveTab}
+            >
+              <BookOpen className="md:mr-2" size={18} />
+              <span className="hidden md:inline">Orders</span>
+              <span className="inline md:hidden">Orders</span>
+            </TabsTrigger>
+          </TabsList>
+
+          {/* Tab Panels */}
+          <div className="px-2 md:px-0">
+            {activeTab === 'profile' && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white rounded-lg shadow p-4 md:p-6 mb-6"
+              >
               <div className="space-y-6">
                 <div>
                   <h2 className="text-2xl font-semibold text-[#8D493A] mb-4">Profile Information</h2>
@@ -3613,14 +3669,21 @@ const ProfilePage = () => {
               </div>
             </motion.div>
           )}
-
+{/* 
           {activeTab === 'content' && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="bg-white rounded-lg shadow p-6 mb-6"
-            >
+            > */}
+             {activeTab === 'content' && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white rounded-lg shadow p-4 md:p-6 mb-6"
+              >
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-semibold text-[#8D493A]">Published Content</h2>
                 <button
@@ -3636,7 +3699,7 @@ const ProfilePage = () => {
             </motion.div>
           )}
 
-{activeTab === 'orders' && (
+{/* {activeTab === 'orders' && (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -3722,8 +3785,97 @@ const ProfilePage = () => {
     </div>
   </motion.div>
 )}
-</div>
+</div> */}
+{activeTab === 'orders' && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white rounded-lg shadow p-4 md:p-6 mb-6"
+              >
+                <h2 className="text-xl md:text-2xl font-semibold text-[#8D493A] mb-6">Past Orders</h2>
+                <div className="space-y-4 md:space-y-6">
+                  {orders.length > 0 ? (
+                    orders.map((order, index) => (
+                      <div key={index} className="bg-[#F8EDE3] rounded-lg p-3 md:p-6">
+                        <div className="space-y-3 md:space-y-4">
+                          <div className="flex flex-col md:flex-row md:justify-between md:items-start border-b border-[#D0B8A8] pb-4">
+                            <div className="mb-3 md:mb-0">
+                              <h3 className="font-semibold text-base md:text-lg text-[#8D493A] mb-1">
+                                Order {formatOrderId(order._id)}
+                              </h3>
+                              <p className="text-xs md:text-sm text-gray-600">
+                                Placed on {new Date(order.createdAt).toLocaleDateString()}
+                              </p>
+                              <p className="text-xs md:text-sm text-gray-600 mt-2">
+                                Status: {getOrderStatusDisplay(order.status)}
+                              </p>
+                            </div>
+                            <div className="text-left md:text-right">
+                              <p className="text-base md:text-lg font-medium text-[#8D493A]">
+                                Total: ${order.total?.toFixed(2) || '0.00'}
+                              </p>
+                            </div>
+                          </div>
+
+                          <OrderStatusTracker currentStatus={order.status} />
+
+                          <div className="space-y-3 md:space-y-4">
+                            {order.items?.map((item, itemIndex) => (
+                              item?.content && (
+                                <div key={itemIndex} className="bg-white rounded-lg p-3 md:p-4 flex flex-col md:flex-row justify-between items-start md:items-center">
+                                  <div className="flex items-start gap-3 md:gap-4 mb-3 md:mb-0">
+                                    <BookOpen className="h-6 w-6 md:h-8 md:w-8 text-[#8D493A] mt-1" />
+                                    <div>
+                                      <p className="font-medium text-[#8D493A] text-base md:text-lg mb-1">
+                                        {item.content.title || 'Untitled Content'}
+                                      </p>
+                                      <div className="space-y-1">
+                                        <p className="text-xs md:text-sm text-gray-600">
+                                          Quantity: {item.quantity || 1}
+                                        </p>
+                                        <p className="text-xs md:text-sm text-gray-600">
+                                          Price: ${item.price?.toFixed(2) || '0.00'}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  {item.content.file_url && (
+                                    <a
+                                      href={item.content.file_url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-[#8D493A] text-white rounded-lg hover:bg-opacity-90 transition-colors w-full md:w-auto justify-center"
+                                    >
+                                      <Download className="h-4 w-4" />
+                                      Download
+                                    </a>
+                                  )}
+                                </div>
+                              )
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-8 md:py-12 bg-[#F8EDE3] rounded-lg">
+                      <Book className="h-12 w-12 md:h-16 md:w-16 text-[#8D493A] mb-4 opacity-50" />
+                      <p className="text-base md:text-lg text-gray-600 text-center">
+                        No orders found yet.
+                      </p>
+                      <p className="text-xs md:text-sm text-gray-500 text-center mt-2">
+                        Your past orders will appear here after you make a purchase.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </div>
         {showAddContent && (
+          // <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}

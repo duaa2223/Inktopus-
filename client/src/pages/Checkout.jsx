@@ -2435,7 +2435,7 @@ const CheckoutPage = () => {
 
   return (
     <div className="min-h-screen bg-[#FDF5F1] py-12">
-      <Navbar />
+    
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-center text-2xl font-semibold text-[#8D493A] mb-8">✧ Eco-Friendly Checkout</h1>
         
@@ -2549,9 +2549,9 @@ const CheckoutPage = () => {
                       className="w-full px-4 py-2 rounded-lg border border-[#F8EDE3] focus:outline-none focus:border-[#8D493A]"
                     >
                       <option value="">Select Country</option>
-                      <option value="US">United States</option>
-                      <option value="CA">Canada</option>
-                      <option value="GB">United Kingdom</option>
+                      <option value="US">Jordan</option>
+                      {/* <option value="CA">Canada</option>
+                      <option value="GB">United Kingdom</option> */}
                     </select>
                   </div>
                   <button

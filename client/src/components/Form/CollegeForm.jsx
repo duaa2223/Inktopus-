@@ -24,7 +24,7 @@ const CollageForm  = ({ onClose, onSubmit, editData = null }) => {
   return (
     <FormModal onClose={onClose}>
       <h2 className="text-lg font-bold text-[#8D493A] mb-4">
-        {editData ? 'Edit Item' : 'Add New Item'}
+        {editData ? 'Edit College' : 'Add New College'}
       </h2>
       
       <form onSubmit={handleSubmit} className="space-y-3">

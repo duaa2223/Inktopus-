@@ -2053,13 +2053,13 @@
 
 // export default AcademicSection;
 ////////////////////////////////////////////////////////////////////////////////////////////////
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight, Edit, Trash, Plus, School, BookOpen, GraduationCap } from 'lucide-react';
 import axios from 'axios';
 import SpecializationForm from '../Form/SpecializationForm';
 import AcademicYearForm from '../Form/AcademicYearForm';
 import CollageForm from '../Form/CollegeForm';
-
+import Swal from 'sweetalert2';
 const AcademicSection = () => {
   const [expandedCollege, setExpandedCollege] = useState(null);
   const [expandedYear, setExpandedYear] = useState(null);
@@ -2195,34 +2195,89 @@ const AcademicSection = () => {
     }
   }, [expandedCollege, expandedYear]);
 
-  const handleSpecializationSubmit = async (formData) => { 
-    try {
-      const url = `http://localhost:5000/api/specializations${editMode.type === 'specialization' ? `/${editMode.id}` : ''}`;
-      const method = editMode.type === 'specialization' ? 'put' : 'post';
+  // const handleSpecializationSubmit = async (formData) => { 
+  //   try {
+  //     const url = `http://localhost:5000/api/specializations${editMode.type === 'specialization' ? `/${editMode.id}` : ''}`;
+  //     const method = editMode.type === 'specialization' ? 'put' : 'post';
       
-      await axios({
-        method,
-        url,
-        data: formData
-      });
+  //     await axios({
+  //       method,
+  //       url,
+  //       data: formData
+  //     });
       
-      if (expandedCollege && expandedYear) {
-        await fetchSpecializations(expandedCollege, expandedYear);
-      }
+  //     if (expandedCollege && expandedYear) {
+  //       await fetchSpecializations(expandedCollege, expandedYear);
+  //     }
       
-      setShowSpecModal(false);
-      setEditMode({ type: null, id: null, data: null });
-    } catch (error) {
-      console.error('Error saving specialization:', error);
-      alert(error.response?.data?.message || 'Failed to save specialization. Please try again.');
-    }
-  };
+  //     setShowSpecModal(false);
+  //     setEditMode({ type: null, id: null, data: null });
+  //   } catch (error) {
+  //     console.error('Error saving specialization:', error);
+  //     alert(error.response?.data?.message || 'Failed to save specialization. Please try again.');
+  //   }
+  // };
+
+  // const handleCollegeSubmit = async (formData) => {
+  //   try {
+  //     const url = `http://localhost:5000/api/colleges${editMode.type === 'college' ? `/${editMode.id}` : ''}`;
+  //     const method = editMode.type === 'college' ? 'PUT' : 'POST';
+      
+  //     const response = await fetch(url, {
+  //       method,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(formData),
+  //     });
+      
+  //     if (!response.ok) {
+  //       throw new Error('Failed to save college');
+  //     }
+      
+  //     await fetchColleges();
+  //     setShowCollegeModal(false);
+  //     setEditMode({ type: null, id: null, data: null });
+  //   } catch (error) {
+  //     console.error('Error saving college:', error);
+  //     alert('Failed to save college. Please try again.');
+  //   }
+  // };
+
+  // const handleYearSubmit = async (formData) => {
+  //   try {
+  //     const url = `http://localhost:5000/api/academic-years${editMode.type === 'year' ? `/${editMode.id}` : ''}`;
+  //     const method = editMode.type === 'year' ? 'PUT' : 'POST';
+      
+  //     const response = await fetch(url, {
+  //       method,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(formData),
+  //     });
+      
+  //     if (!response.ok) {
+  //       throw new Error('Failed to save academic year');
+  //     }
+      
+  //     if (expandedCollege) {
+  //       await fetchAcademicYears(expandedCollege);
+  //     }
+      
+  //     setShowYearModal(false);
+  //     setEditMode({ type: null, id: null, data: null });
+  //   } catch (error) {
+  //     console.error('Error saving academic year:', error);
+  //     alert('Failed to save academic year. Please try again.');
+  //   }
+  // };
 
   const handleCollegeSubmit = async (formData) => {
     try {
       const url = `http://localhost:5000/api/colleges${editMode.type === 'college' ? `/${editMode.id}` : ''}`;
       const method = editMode.type === 'college' ? 'PUT' : 'POST';
-      
+  
       const response = await fetch(url, {
         method,
         headers: {
@@ -2230,25 +2285,36 @@ const AcademicSection = () => {
         },
         body: JSON.stringify(formData),
       });
-      
+  
       if (!response.ok) {
         throw new Error('Failed to save college');
       }
-      
+  
+      await Swal.fire({
+        title: `College ${editMode.type === 'college' ? 'updated' : 'created'}!`,
+        icon: 'success',
+        confirmButtonColor: '#72392C',
+      });
+  
       await fetchColleges();
       setShowCollegeModal(false);
       setEditMode({ type: null, id: null, data: null });
     } catch (error) {
       console.error('Error saving college:', error);
-      alert('Failed to save college. Please try again.');
+      await Swal.fire({
+        title: 'Error',
+        text: 'Failed to save college. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#72392C',
+      });
     }
   };
-
+  
   const handleYearSubmit = async (formData) => {
     try {
       const url = `http://localhost:5000/api/academic-years${editMode.type === 'year' ? `/${editMode.id}` : ''}`;
       const method = editMode.type === 'year' ? 'PUT' : 'POST';
-      
+  
       const response = await fetch(url, {
         method,
         headers: {
@@ -2256,41 +2322,131 @@ const AcademicSection = () => {
         },
         body: JSON.stringify(formData),
       });
-      
+  
       if (!response.ok) {
         throw new Error('Failed to save academic year');
       }
-      
+  
+      await Swal.fire({
+        title: `Academic year ${editMode.type === 'year' ? 'updated' : 'created'}!`,
+        icon: 'success',
+        confirmButtonColor: '#72392C',
+      });
+  
       if (expandedCollege) {
         await fetchAcademicYears(expandedCollege);
       }
-      
+  
       setShowYearModal(false);
       setEditMode({ type: null, id: null, data: null });
     } catch (error) {
       console.error('Error saving academic year:', error);
-      alert('Failed to save academic year. Please try again.');
+      await Swal.fire({
+        title: 'Error',
+        text: 'Failed to save academic year. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#72392C',
+      });
+    }
+  };
+  
+  const handleSpecializationSubmit = async (formData) => {
+    try {
+      const url = `http://localhost:5000/api/specializations${editMode.type === 'specialization' ? `/${editMode.id}` : ''}`;
+      const method = editMode.type === 'specialization' ? 'PUT' : 'POST';
+  
+      await axios({
+        method,
+        url,
+        data: formData
+      });
+  
+      await Swal.fire({
+        title: `Specialization ${editMode.type === 'specialization' ? 'updated' : 'created'}!`,
+        icon: 'success',
+        confirmButtonColor: '#72392C',
+      });
+  
+      if (expandedCollege && expandedYear) {
+        await fetchSpecializations(expandedCollege, expandedYear);
+      }
+  
+      setShowSpecModal(false);
+      setEditMode({ type: null, id: null, data: null });
+    } catch (error) {
+      console.error('Error saving specialization:', error);
+      await Swal.fire({
+        title: 'Error',
+        text: 'Failed to save specialization. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#72392C',
+      });
     }
   };
 
-  const handleDelete = async (type, id) => {
-    if (!window.confirm(`Are you sure you want to delete this ${type}?`)) return;
+  // const handleDelete = async (type, id) => {
+  //   if (!window.confirm(`Are you sure you want to delete this ${type}?`)) return;
 
+  //   try {
+  //     const endpoint = type === 'college' 
+  //       ? `college/${id}`
+  //       : type === 'year'
+  //         ? `academic-years/${id}`   
+  //         : `specializations/${id}`;
+
+  //     const response = await fetch(`http://localhost:5000/api/${endpoint}`, {
+  //       method: 'DELETE',
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error(`Failed to delete ${type}`);
+  //     }
+
+  //     if (type === 'college') {
+  //       await fetchColleges();
+  //     } else if (type === 'year' && expandedCollege) {
+  //       await fetchAcademicYears(expandedCollege);
+  //     } else if (type === 'specialization' && expandedCollege && expandedYear) {
+  //       await fetchSpecializations(expandedCollege, expandedYear);
+  //     }
+  //   } catch (error) {
+  //     console.error(`Error deleting ${type}:`, error);
+  //     alert(`Failed to delete ${type}. Please try again.`);
+  //   }
+  // };
+  const handleDelete = async (type, id) => {
     try {
-      const endpoint = type === 'college' 
+      await Swal.fire({
+        title: `Are you sure you want to delete this ${type}?`,
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#72392C',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      });
+  
+      const endpoint = type === 'college'
         ? `college/${id}`
         : type === 'year'
-          ? `academic-years/${id}`   
+          ? `academic-years/${id}`
           : `specializations/${id}`;
-
+  
       const response = await fetch(`http://localhost:5000/api/${endpoint}`, {
         method: 'DELETE',
       });
-
+  
       if (!response.ok) {
         throw new Error(`Failed to delete ${type}`);
       }
-
+  
+      await Swal.fire({
+        title: `${type} deleted!`,
+        text: 'The item has been deleted.',
+        icon: 'success',
+        confirmButtonColor: '#72392C',
+      });
+  
       if (type === 'college') {
         await fetchColleges();
       } else if (type === 'year' && expandedCollege) {
@@ -2300,10 +2456,14 @@ const AcademicSection = () => {
       }
     } catch (error) {
       console.error(`Error deleting ${type}:`, error);
-      alert(`Failed to delete ${type}. Please try again.`);
+      await Swal.fire({
+        title: `Failed to delete ${type}`,
+        text: 'Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#72392C',
+      });
     }
   };
-
   const handleAddSpecialization = (college, year) => {
     setSelectedCollege(college);
     setSelectedYear(year);
@@ -2359,306 +2519,539 @@ const AcademicSection = () => {
   //     </div>
   //   );
   // };
-  const renderSpecializations = (collegeId, yearId) => {
-    const key = `${collegeId}-${yearId}`;
-    const specializations = specializationsMap[key] || [];
+//   const renderSpecializations = (collegeId, yearId) => {
+//     const key = `${collegeId}-${yearId}`;
+//     const specializations = specializationsMap[key] || [];
 
-    if (loading.specializations) {
-      return <div className="text-[#72392C] p-4">Loading specializations...</div>;
-    }
+//     if (loading.specializations) {
+//       return <div className="text-[#72392C] p-4">Loading specializations...</div>;
+//     }
 
-    if (!Array.isArray(specializations) || specializations.length === 0) {
-      return <div className="text-[#72392C] p-4">There are no specializations</div>;
-    }
+//     if (!Array.isArray(specializations) || specializations.length === 0) {
+//       return <div className="text-[#72392C] p-4">There are no specializations</div>;
+//     }
 
-    if (error.specializations) {
-      return <div className="text-red-600 p-4">Error loading specializations. Please try again.</div>;
-    }
+//     if (error.specializations) {
+//       return <div className="text-red-600 p-4">Error loading specializations. Please try again.</div>;
+//     }
 
-    return (
-      <div className="ml-8 p-4 border-l-2 border-[#CCAB9A]">
-        {specializations.map(spec => (
-          <div key={spec._id} className="bg-white rounded-lg p-3 mb-2 flex items-center justify-between hover:bg-[#F6EEE6] transition-colors">
-            <div className="flex items-center gap-2">
-              <GraduationCap size={20} className="text-[#72392C]" />
-              <span className="text-[#72392C]">{spec.name}</span>
-              {spec.nameAr && <span className="text-sm text-[#72392C]">({spec.nameAr})</span>}
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => {
-                  setEditMode({ 
-                    type: 'specialization', 
-                    id: spec._id, 
-                    data: {
-                      ...spec,
-                      college: collegeId,
-                      academic_year: yearId
-                    }
-                  });
-                  setSelectedCollege(colleges.find(c => c._id === collegeId));
-                  setSelectedYear({ _id: yearId });
-                  setShowSpecModal(true);
-                }}
-                className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
-              >
-                <Edit size={18} className="text-[#72392C]" />
-              </button>
-              <button
-                onClick={() => handleDelete('specialization', spec._id)}
-                className="p-2 hover:bg-[#EDE1D7] rounded text-red-600 transition-colors"
-              >
-                <Trash size={18} />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  };
+//     return (
+//       <div className="ml-8 p-4 border-l-2 border-[#CCAB9A]">
+//         {specializations.map(spec => (
+//           <div key={spec._id} className="bg-white rounded-lg p-3 mb-2 flex items-center justify-between hover:bg-[#F6EEE6] transition-colors">
+//             <div className="flex items-center gap-2">
+//               <GraduationCap size={20} className="text-[#72392C]" />
+//               <span className="text-[#72392C]">{spec.name}</span>
+//               {spec.nameAr && <span className="text-sm text-[#72392C]">({spec.nameAr})</span>}
+//             </div>
+//             <div className="flex items-center gap-2">
+//               <button
+//                 onClick={() => {
+//                   setEditMode({ 
+//                     type: 'specialization', 
+//                     id: spec._id, 
+//                     data: {
+//                       ...spec,
+//                       college: collegeId,
+//                       academic_year: yearId
+//                     }
+//                   });
+//                   setSelectedCollege(colleges.find(c => c._id === collegeId));
+//                   setSelectedYear({ _id: yearId });
+//                   setShowSpecModal(true);
+//                 }}
+//                 className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+//               >
+//                 <Edit size={18} className="text-[#72392C]" />
+//               </button>
+//               <button
+//                 onClick={() => handleDelete('specialization', spec._id)}
+//                 className="p-2 hover:bg-[#EDE1D7] rounded text-red-600 transition-colors"
+//               >
+//                 <Trash size={18} />
+//               </button>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     );
+//   };
 
-  // const renderAcademicYears = (collegeId) => {
-  //   const years = academicYears[collegeId] || [];
+//   // const renderAcademicYears = (collegeId) => {
+//   //   const years = academicYears[collegeId] || [];
 
-  //   if (loading.years) {
-  //     return <div className="text-[#72392C] p-4">Loading academic years...</div>;
-  //   }
+//   //   if (loading.years) {
+//   //     return <div className="text-[#72392C] p-4">Loading academic years...</div>;
+//   //   }
 
    
 
-  //   if (!years || years.length === 0) {
-  //     return <div className="text-[#72392C] p-4">There are no years of study</div>;
-  //   }
+//   //   if (!years || years.length === 0) {
+//   //     return <div className="text-[#72392C] p-4">There are no years of study</div>;
+//   //   }
 
-  //   if (error.years) {
-  //     return <div className="text-red-600 p-4">Error loading academic years. Please try again.</div>;
-  //   }
+//   //   if (error.years) {
+//   //     return <div className="text-red-600 p-4">Error loading academic years. Please try again.</div>;
+//   //   }
 
-  //   return years.map(year => (
-  //     <div key={year._id} className="bg-[#F6EEE6] rounded-lg mb-2">
-  //       <div className="flex items-center justify-between p-3">
-  //         <div className="flex items-center gap-2">
-  //           <button onClick={() => setExpandedYear(expandedYear === year._id ? null : year._id)}>
-  //             {expandedYear === year._id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
-  //           </button>
-  //           <BookOpen size={20} className="text-[#72392C]" />
-  //           <span className="text-[#72392C]">{year.name}</span>
-  //           {year.nameAr && <span className="text-sm text-[#72392C]">({year.nameAr})</span>}
-  //         </div>
-  //         <div className="flex items-center gap-2">
-  //           <button
-  //             onClick={() => handleAddSpecialization(colleges.find(c => c._id === collegeId), year)}
-  //             className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
-  //             title=" Add Specialization"
-  //           >
-  //             <Plus size={18} className="text-[#72392C]" />
-  //           </button>
-  //           <button
-  //             onClick={() => {
-  //               setEditMode({ type: 'year', id: year._id, data: year });
-  //               setShowYearModal(true);
-  //             }}
-  //             className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
-  //           >
-  //             <Edit size={18} className="text-[#72392C]" />
-  //           </button>
-  //           <button
-  //             onClick={() => handleDelete('year', year._id)}
-  //             className="p-2 hover:bg-[#EDE1D7] rounded text-red-600 transition-colors"
-  //           >
-  //             <Trash size={18} />
-  //           </button>
-  //         </div>
-  //       </div>
-  //       {expandedYear === year._id && renderSpecializations(collegeId, year._id)}
-  //     </div>
-  //   ));
-  // };
+//   //   return years.map(year => (
+//   //     <div key={year._id} className="bg-[#F6EEE6] rounded-lg mb-2">
+//   //       <div className="flex items-center justify-between p-3">
+//   //         <div className="flex items-center gap-2">
+//   //           <button onClick={() => setExpandedYear(expandedYear === year._id ? null : year._id)}>
+//   //             {expandedYear === year._id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+//   //           </button>
+//   //           <BookOpen size={20} className="text-[#72392C]" />
+//   //           <span className="text-[#72392C]">{year.name}</span>
+//   //           {year.nameAr && <span className="text-sm text-[#72392C]">({year.nameAr})</span>}
+//   //         </div>
+//   //         <div className="flex items-center gap-2">
+//   //           <button
+//   //             onClick={() => handleAddSpecialization(colleges.find(c => c._id === collegeId), year)}
+//   //             className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+//   //             title=" Add Specialization"
+//   //           >
+//   //             <Plus size={18} className="text-[#72392C]" />
+//   //           </button>
+//   //           <button
+//   //             onClick={() => {
+//   //               setEditMode({ type: 'year', id: year._id, data: year });
+//   //               setShowYearModal(true);
+//   //             }}
+//   //             className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+//   //           >
+//   //             <Edit size={18} className="text-[#72392C]" />
+//   //           </button>
+//   //           <button
+//   //             onClick={() => handleDelete('year', year._id)}
+//   //             className="p-2 hover:bg-[#EDE1D7] rounded text-red-600 transition-colors"
+//   //           >
+//   //             <Trash size={18} />
+//   //           </button>
+//   //         </div>
+//   //       </div>
+//   //       {expandedYear === year._id && renderSpecializations(collegeId, year._id)}
+//   //     </div>
+//   //   ));
+//   // };
 
-  // const renderAcademicYears = (collegeId) => {
-  //   const years = academicYears[collegeId] || [];
+//   // const renderAcademicYears = (collegeId) => {
+//   //   const years = academicYears[collegeId] || [];
 
-  //   if (loading.years) {
-  //     return <div className="text-[#72392C] p-4">Loading academic years...</div>;
-  //   }
+//   //   if (loading.years) {
+//   //     return <div className="text-[#72392C] p-4">Loading academic years...</div>;
+//   //   }
 
-  //   if (!years || years.length === 0) {
-  //     return <div className="text-[#72392C] p-4">There are no years of study</div>;
-  //   }
+//   //   if (!years || years.length === 0) {
+//   //     return <div className="text-[#72392C] p-4">There are no years of study</div>;
+//   //   }
 
-  //   if (error.years) {
-  //     return <div className="text-red-600 p-4">Error loading academic years. Please try again.</div>;
-  //   }
-  const renderAcademicYears = (collegeId) => {
-    const years = academicYears[collegeId] || [];
+//   //   if (error.years) {
+//   //     return <div className="text-red-600 p-4">Error loading academic years. Please try again.</div>;
+//   //   }
+//   const renderAcademicYears = (collegeId) => {
+//     const years = academicYears[collegeId] || [];
 
-    if (loading.years) {
-      return <div className="text-[#72392C] p-4">Loading academic years...</div>;
-    }
+//     if (loading.years) {
+//       return <div className="text-[#72392C] p-4">Loading academic years...</div>;
+//     }
 
-    if (!years || years.length === 0) {
-      return <div className="text-[#72392C] p-4">There are no years of study</div>;
-    }
+//     if (!years || years.length === 0) {
+//       return <div className="text-[#72392C] p-4">There are no years of study</div>;
+//     }
 
-    if (error.years) {
-      return <div className="text-red-600 p-4">Error loading academic years. Please try again.</div>;
-    }
-    return years.map(year => (
-      <div key={year._id} className="bg-[#F6EEE6] rounded-lg mb-2">
-        <div className="flex items-center justify-between p-3">
-          <div className="flex items-center gap-2">
-            <button onClick={() => setExpandedYear(expandedYear === year._id ? null : year._id)}>
-              {expandedYear === year._id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
-            </button>
-            <BookOpen size={20} className="text-[#72392C]" />
-            <span className="text-[#72392C]">{year.name}</span>
-            {year.nameAr && <span className="text-sm text-[#72392C]">({year.nameAr})</span>}
+//     if (error.years) {
+//       return <div className="text-red-600 p-4">Error loading academic years. Please try again.</div>;
+//     }
+//     return years.map(year => (
+//       <div key={year._id} className="bg-[#F6EEE6] rounded-lg mb-2">
+//         <div className="flex items-center justify-between p-3">
+//           <div className="flex items-center gap-2">
+//             <button onClick={() => setExpandedYear(expandedYear === year._id ? null : year._id)}>
+//               {expandedYear === year._id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+//             </button>
+//             <BookOpen size={20} className="text-[#72392C]" />
+//             <span className="text-[#72392C]">{year.name}</span>
+//             {year.nameAr && <span className="text-sm text-[#72392C]">({year.nameAr})</span>}
+//           </div>
+//           <div className="flex items-center gap-2">
+//             <button
+//               onClick={() => handleAddSpecialization(colleges.find(c => c._id === collegeId), year)}
+//               className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+//               title="Add Specialization"
+//             >
+//               <Plus size={18} className="text-[#72392C]" />
+//             </button>
+//             <button
+//               onClick={() => {
+//                 setEditMode({
+//                   type: 'year',
+//                   id: year._id,
+//                   data: {
+//                     ...year,
+//                     college: collegeId // Explicitly include the college ID
+//                   }
+//                 });
+//                 setSelectedCollege(colleges.find(c => c._id === collegeId));
+//                 setShowYearModal(true);
+//               }}
+//               className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+//             >
+//               <Edit size={18} className="text-[#72392C]" />
+//             </button>
+//             <button
+//               onClick={() => handleDelete('year', year._id)}
+//               className="p-2 hover:bg-[#EDE1D7] rounded text-red-600 transition-colors"
+//             >
+//               <Trash size={18} />
+//             </button>
+//           </div>
+//         </div>
+//         {expandedYear === year._id && renderSpecializations(collegeId, year._id)}
+//       </div>
+//     ));
+//   };
+
+
+//   return (
+//     <div className="space-y-6">
+//       <h2 className="text-2xl font-semibold text-[#8D493A] mb-6">Academic department management</h2>
+
+//       <button
+//         className="w-full mb-4 p-3 bg-[#72392C] text-white rounded-lg flex items-center justify-center gap-2 hover:bg-[#8D493A] transition-colors"
+//         onClick={() => setShowCollegeModal(true)}
+//       >
+//         <Plus size={20} />
+//         Add new college
+//       </button>
+
+//       {loading.colleges ? (
+//         <div className="text-[#72392C] p-4">Loading colleges...</div>
+//       ) : error.colleges ? (
+//         <div className="text-red-600 p-4">Error loading colleges. Please try again.</div>
+//       ) : colleges.length === 0 ? (
+//         <div className="text-[#72392C] p-4">There are no colleges</div>
+//       ) : (
+//         colleges.map(college => (
+//           <div key={college._id} className="bg-white rounded-lg shadow">
+//             <div className="flex items-center justify-between p-4 hover:bg-[#F6EEE6] transition-colors">
+//               <div className="flex items-center gap-2">
+//                 <button onClick={() => setExpandedCollege(expandedCollege === college._id ? null : college._id)}>
+//                   {expandedCollege === college._id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+//                 </button>
+//                 <School size={20} className="text-[#72392C]" />
+//                 <span className="font-medium text-[#72392C]">{college.name}</span>
+//                 {college.nameAr && <span className="text-sm text-[#72392C]">({college.nameAr})</span>}
+//               </div>
+//               <div className="flex items-center gap-2">
+//                 <button
+//                   onClick={() => {
+//                     setSelectedCollege(college);
+//                     setShowYearModal(true);
+//                   }}
+//                   className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+//                   title="Add an academic year"
+//                 >
+//                   <Plus size={18} className="text-[#72392C]" />
+//                 </button>
+//                 <button
+//                   onClick={() => {
+//                     setEditMode({ type: 'college', id: college._id, data: college });
+//                     setShowCollegeModal(true);
+//                   }}
+//                   className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+//                 >
+//                   <Edit size={18} className="text-[#72392C]" />
+//                 </button>
+//                 <button
+//                   onClick={() => handleDelete('college', college._id)}
+//                   className="p-2 hover:bg-[#EDE1D7] rounded text-red-600 transition-colors"
+//                 >
+//                   <Trash size={18} />
+//                 </button>
+//               </div>
+//             </div>
+
+//             {expandedCollege === college._id && (
+//               <div className="ml-8 p-4 border-l-2 border-[#CCAB9A]">
+//                 {renderAcademicYears(college._id)}
+//               </div>
+//             )}
+//           </div>
+//         ))
+//       )}
+
+//       {showCollegeModal && (
+//         <CollageForm 
+//           onClose={() => {
+//             setShowCollegeModal(false);
+//             setEditMode({ type: null, id: null, data: null });
+//           }}
+//           onSubmit={handleCollegeSubmit}
+//           editData={editMode.type === 'college' ? editMode.data : null}
+//         />
+//       )}
+// {/*       
+//       {showYearModal && selectedCollege && (
+//         <AcademicYearForm
+//           colleges={[selectedCollege]}
+//           editData={editMode.type === 'year' ? editMode.data : null}
+//           onClose={() => {
+//             setShowYearModal(false);
+//             setSelectedCollege(null);
+//             setEditMode({ type: null, id: null, data: null });
+//           }}
+//           onSubmit={handleYearSubmit}
+//         />
+//       )} */}
+
+// {showYearModal && selectedCollege && (
+//         <AcademicYearForm
+//           colleges={[selectedCollege]}
+//           editData={editMode.type === 'year' ? editMode.data : null}
+//           onClose={() => {
+//             setShowYearModal(false);
+//             setSelectedCollege(null);
+//             setEditMode({ type: null, id: null, data: null });
+//           }}
+//           onSubmit={handleYearSubmit}
+//         />
+//       )}
+
+//  {showSpecModal && selectedCollege && (
+//       <SpecializationForm
+//         colleges={[selectedCollege]}
+//         editData={editMode.type === 'specialization' ? editMode.data : null}
+//         onClose={() => {
+//           setShowSpecModal(false);
+//           setSelectedCollege(null);
+//           setSelectedYear(null);
+//           setEditMode({ type: null, id: null, data: null });
+//         }}
+//         onSubmit={handleSpecializationSubmit}
+//       />
+//     )}
+//     </div>
+//   );
+// };
+
+// export default AcademicSection;
+const renderSpecializations = (collegeId, yearId) => {
+  const key = `${collegeId}-${yearId}`;
+  const specializations = specializationsMap[key] || [];
+
+  if (loading.specializations) {
+    return <div className="text-[#72392C] p-2 sm:p-4">Loading specializations...</div>;
+  }
+
+  if (!Array.isArray(specializations) || specializations.length === 0) {
+    return <div className="text-[#72392C] p-2 sm:p-4">There are no specializations</div>;
+  }
+
+  if (error.specializations) {
+    return <div className="text-red-600 p-2 sm:p-4">Error loading specializations. Please try again.</div>;
+  }
+
+  return (
+    <div className="ml-2 sm:ml-8 p-2 sm:p-4 border-l-2 border-[#CCAB9A]">
+      {specializations.map(spec => (
+        <div key={spec._id} className="bg-white rounded-lg p-2 sm:p-3 mb-2 flex flex-col sm:flex-row items-start sm:items-center justify-between hover:bg-[#F6EEE6] transition-colors gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <GraduationCap size={20} className="text-[#72392C] min-w-[20px]" />
+            <span className="text-[#72392C] text-sm sm:text-base break-words">{spec.name}</span>
+            {spec.nameAr && <span className="text-xs sm:text-sm text-[#72392C] break-words">({spec.nameAr})</span>}
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => handleAddSpecialization(colleges.find(c => c._id === collegeId), year)}
-              className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
-              title="Add Specialization"
-            >
-              <Plus size={18} className="text-[#72392C]" />
-            </button>
+          <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
             <button
               onClick={() => {
-                setEditMode({
-                  type: 'year',
-                  id: year._id,
+                setEditMode({ 
+                  type: 'specialization', 
+                  id: spec._id, 
                   data: {
-                    ...year,
-                    college: collegeId // Explicitly include the college ID
+                    ...spec,
+                    college: collegeId,
+                    academic_year: yearId
                   }
                 });
                 setSelectedCollege(colleges.find(c => c._id === collegeId));
-                setShowYearModal(true);
+                setSelectedYear({ _id: yearId });
+                setShowSpecModal(true);
               }}
-              className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+              className="p-1 sm:p-2 hover:bg-[#EDE1D7] rounded transition-colors"
             >
-              <Edit size={18} className="text-[#72392C]" />
+              <Edit size={16} sm={18} className="text-[#72392C]" />
             </button>
             <button
-              onClick={() => handleDelete('year', year._id)}
-              className="p-2 hover:bg-[#EDE1D7] rounded text-red-600 transition-colors"
+              onClick={() => handleDelete('specialization', spec._id)}
+              className="p-1 sm:p-2 hover:bg-[#EDE1D7] rounded text-red-600 transition-colors"
             >
-              <Trash size={18} />
+              <Trash size={16} sm={18} />
             </button>
           </div>
         </div>
-        {expandedYear === year._id && renderSpecializations(collegeId, year._id)}
+      ))}
+    </div>
+  );
+};
+
+const renderAcademicYears = (collegeId) => {
+  const years = academicYears[collegeId] || [];
+
+  if (loading.years) {
+    return <div className="text-[#72392C] p-2 sm:p-4">Loading academic years...</div>;
+  }
+
+  if (!years || years.length === 0) {
+    return <div className="text-[#72392C] p-2 sm:p-4">There are no years of study</div>;
+  }
+
+  if (error.years) {
+    return <div className="text-red-600 p-2 sm:p-4">Error loading academic years. Please try again.</div>;
+  }
+
+  return years.map(year => (
+    <div key={year._id} className="bg-[#F6EEE6] rounded-lg mb-2">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-2 sm:p-3 gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <button onClick={() => setExpandedYear(expandedYear === year._id ? null : year._id)}>
+            {expandedYear === year._id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+          </button>
+          <BookOpen size={20} className="text-[#72392C]" />
+          <span className="text-[#72392C] text-sm sm:text-base break-words">{year.name}</span>
+          {year.nameAr && <span className="text-xs sm:text-sm text-[#72392C] break-words">({year.nameAr})</span>}
+        </div>
+        <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <button
+            onClick={() => handleAddSpecialization(colleges.find(c => c._id === collegeId), year)}
+            className="p-1 sm:p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+            title="Add Specialization"
+          >
+            <Plus size={16} sm={18} className="text-[#72392C]" />
+          </button>
+          <button
+            onClick={() => {
+              setEditMode({
+                type: 'year',
+                id: year._id,
+                data: {
+                  ...year,
+                  college: collegeId
+                }
+              });
+              setSelectedCollege(colleges.find(c => c._id === collegeId));
+              setShowYearModal(true);
+            }}
+            className="p-1 sm:p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+          >
+            <Edit size={16} sm={18} className="text-[#72392C]" />
+          </button>
+          <button
+            onClick={() => handleDelete('year', year._id)}
+            className="p-1 sm:p-2 hover:bg-[#EDE1D7] rounded text-red-600 transition-colors"
+          >
+            <Trash size={16} sm={18} />
+          </button>
+        </div>
       </div>
-    ));
-  };
+      {expandedYear === year._id && renderSpecializations(collegeId, year._id)}
+    </div>
+  ));
+};
 
+return (
+  <div className="space-y-4 sm:space-y-6 p-2 sm:p-4">
+    <h2 className="text-xl sm:text-2xl font-semibold text-[#8D493A] mb-4 sm:mb-6">Academic department management</h2>
 
-  return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-semibold text-[#8D493A] mb-6">Academic department management</h2>
+    <button
+      className="w-full mb-2 sm:mb-4 p-2 sm:p-3 bg-[#72392C] text-white rounded-lg flex items-center justify-center gap-2 hover:bg-[#8D493A] transition-colors text-sm sm:text-base"
+      onClick={() => setShowCollegeModal(true)}
+    >
+      <Plus size={18} sm={20} />
+      Add new college
+    </button>
 
-      <button
-        className="w-full mb-4 p-3 bg-[#72392C] text-white rounded-lg flex items-center justify-center gap-2 hover:bg-[#8D493A] transition-colors"
-        onClick={() => setShowCollegeModal(true)}
-      >
-        <Plus size={20} />
-        Add new college
-      </button>
-
-      {loading.colleges ? (
-        <div className="text-[#72392C] p-4">Loading colleges...</div>
-      ) : error.colleges ? (
-        <div className="text-red-600 p-4">Error loading colleges. Please try again.</div>
-      ) : colleges.length === 0 ? (
-        <div className="text-[#72392C] p-4">There are no colleges</div>
-      ) : (
-        colleges.map(college => (
-          <div key={college._id} className="bg-white rounded-lg shadow">
-            <div className="flex items-center justify-between p-4 hover:bg-[#F6EEE6] transition-colors">
-              <div className="flex items-center gap-2">
-                <button onClick={() => setExpandedCollege(expandedCollege === college._id ? null : college._id)}>
-                  {expandedCollege === college._id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
-                </button>
-                <School size={20} className="text-[#72392C]" />
-                <span className="font-medium text-[#72392C]">{college.name}</span>
-                {college.nameAr && <span className="text-sm text-[#72392C]">({college.nameAr})</span>}
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => {
-                    setSelectedCollege(college);
-                    setShowYearModal(true);
-                  }}
-                  className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
-                  title="Add an academic year"
-                >
-                  <Plus size={18} className="text-[#72392C]" />
-                </button>
-                <button
-                  onClick={() => {
-                    setEditMode({ type: 'college', id: college._id, data: college });
-                    setShowCollegeModal(true);
-                  }}
-                  className="p-2 hover:bg-[#EDE1D7] rounded transition-colors"
-                >
-                  <Edit size={18} className="text-[#72392C]" />
-                </button>
-                <button
-                  onClick={() => handleDelete('college', college._id)}
-                  className="p-2 hover:bg-[#EDE1D7] rounded text-red-600 transition-colors"
-                >
-                  <Trash size={18} />
-                </button>
-              </div>
+    {loading.colleges ? (
+      <div className="text-[#72392C] p-2 sm:p-4">Loading colleges...</div>
+    ) : error.colleges ? (
+      <div className="text-red-600 p-2 sm:p-4">Error loading colleges. Please try again.</div>
+    ) : colleges.length === 0 ? (
+      <div className="text-[#72392C] p-2 sm:p-4">There are no colleges</div>
+    ) : (
+      colleges.map(college => (
+        <div key={college._id} className="bg-white rounded-lg shadow">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-2 sm:p-4 hover:bg-[#F6EEE6] transition-colors gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <button onClick={() => setExpandedCollege(expandedCollege === college._id ? null : college._id)}>
+                {expandedCollege === college._id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+              </button>
+              <School size={20} className="text-[#72392C]" />
+              <span className="font-medium text-[#72392C] text-sm sm:text-base break-words">{college.name}</span>
+              {college.nameAr && <span className="text-xs sm:text-sm text-[#72392C] break-words">({college.nameAr})</span>}
             </div>
-
-            {expandedCollege === college._id && (
-              <div className="ml-8 p-4 border-l-2 border-[#CCAB9A]">
-                {renderAcademicYears(college._id)}
-              </div>
-            )}
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+              <button
+                onClick={() => {
+                  setSelectedCollege(college);
+                  setShowYearModal(true);
+                }}
+                className="p-1 sm:p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+                title="Add an academic year"
+              >
+                <Plus size={16} sm={18} className="text-[#72392C]" />
+              </button>
+              <button
+                onClick={() => {
+                  setEditMode({ type: 'college', id: college._id, data: college });
+                  setShowCollegeModal(true);
+                }}
+                className="p-1 sm:p-2 hover:bg-[#EDE1D7] rounded transition-colors"
+              >
+                <Edit size={16} sm={18} className="text-[#72392C]" />
+              </button>
+              <button
+                onClick={() => handleDelete('college', college._id)}
+                className="p-1 sm:p-2 hover:bg-[#EDE1D7] rounded text-red-600 transition-colors"
+              >
+                <Trash size={16} sm={18} />
+              </button>
+            </div>
           </div>
-        ))
-      )}
 
-      {showCollegeModal && (
-        <CollageForm 
-          onClose={() => {
-            setShowCollegeModal(false);
-            setEditMode({ type: null, id: null, data: null });
-          }}
-          onSubmit={handleCollegeSubmit}
-          editData={editMode.type === 'college' ? editMode.data : null}
-        />
-      )}
-{/*       
-      {showYearModal && selectedCollege && (
-        <AcademicYearForm
-          colleges={[selectedCollege]}
-          editData={editMode.type === 'year' ? editMode.data : null}
-          onClose={() => {
-            setShowYearModal(false);
-            setSelectedCollege(null);
-            setEditMode({ type: null, id: null, data: null });
-          }}
-          onSubmit={handleYearSubmit}
-        />
-      )} */}
+          {expandedCollege === college._id && (
+            <div className="ml-2 sm:ml-8 p-2 sm:p-4 border-l-2 border-[#CCAB9A]">
+              {renderAcademicYears(college._id)}
+            </div>
+          )}
+        </div>
+      ))
+    )}
 
-{showYearModal && selectedCollege && (
-        <AcademicYearForm
-          colleges={[selectedCollege]}
-          editData={editMode.type === 'year' ? editMode.data : null}
-          onClose={() => {
-            setShowYearModal(false);
-            setSelectedCollege(null);
-            setEditMode({ type: null, id: null, data: null });
-          }}
-          onSubmit={handleYearSubmit}
-        />
-      )}
+    {/* Modal components remain unchanged */}
+    {showCollegeModal && (
+      <CollageForm 
+        onClose={() => {
+          setShowCollegeModal(false);
+          setEditMode({ type: null, id: null, data: null });
+        }}
+        onSubmit={handleCollegeSubmit}
+        editData={editMode.type === 'college' ? editMode.data : null}
+      />
+    )}
 
- {showSpecModal && selectedCollege && (
+    {showYearModal && selectedCollege && (
+      <AcademicYearForm
+        colleges={[selectedCollege]}
+        editData={editMode.type === 'year' ? editMode.data : null}
+        onClose={() => {
+          setShowYearModal(false);
+          setSelectedCollege(null);
+          setEditMode({ type: null, id: null, data: null });
+        }}
+        onSubmit={handleYearSubmit}
+      />
+    )}
+
+    {showSpecModal && selectedCollege && (
       <SpecializationForm
         colleges={[selectedCollege]}
         editData={editMode.type === 'specialization' ? editMode.data : null}
@@ -2671,8 +3064,8 @@ const AcademicSection = () => {
         onSubmit={handleSpecializationSubmit}
       />
     )}
-    </div>
-  );
+  </div>
+);
 };
 
 export default AcademicSection;

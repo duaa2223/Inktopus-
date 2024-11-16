@@ -1921,7 +1921,7 @@ const Level = () => {
     <>
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-center text-[#8D493A]">
+        <h1 className="text-4xl font-bold mb-8 mt-24 text-center text-[#8D493A]">
           Choose Your Academic Level
         </h1>
         <div id="map" style={mapContainerStyle}></div>

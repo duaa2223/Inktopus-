@@ -223,7 +223,7 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Phone, Mail, MapPin, MessageCircle, CheckCircle } from 'lucide-react';
 import axios from 'axios';
-
+import Navbar from '../components/NavBar';
 const CustomAlert = ({ message, onClose }) => (
   <div 
     className="fixed top-4 right-4 z-50 w-96 bg-white/90 backdrop-blur-lg rounded-lg shadow-xl border border-[#8D493A] p-4 transform transition-all duration-500 ease-in-out animate-fadeIn"
@@ -307,8 +307,9 @@ const ContactPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F8EDE3] to-[#DFD3C3] py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <Navbar />
       {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-[#D0B8A8] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div className="absolute top-0 left-0 w-64 h-64 bg-[#D0B8A8] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob "></div>
       <div className="absolute top-0 right-0 w-64 h-64 bg-[#DFD3C3] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
       <div className="absolute -bottom-8 left-20 w-64 h-64 bg-[#8D493A] rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
 
@@ -321,7 +322,7 @@ const ContactPage = () => {
         )}
 
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#8D493A] to-[#D0B8A8] mb-4">
+          <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#8D493A] to-[#D0B8A8] mb-4 mt-20">
             Get in Touch
           </h1>
           <p className="text-gray-600">We'd love to hear from you. Let's start a conversation.</p>

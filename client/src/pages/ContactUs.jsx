@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Send, Phone, Mail, MapPin, CheckCircle, X } from 'lucide-react';
-
+import Navbar from '../components/NavBar';
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -78,6 +78,7 @@ const ContactForm = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F8EDE3] via-[#DFD3C3] to-[#D0B8A8] py-12 px-4 sm:px-6 lg:px-8">
+      <Navbar />
       <div className="max-w-7xl mx-auto relative">
         {/* Custom Alert Notification */}
         {showAlert && (
@@ -119,8 +120,8 @@ const ContactForm = () => {
         )}
 
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-[#8D493A] mb-4">Get in Touch</h1>
-          <p className="text-[#8D493A]/80">We'd love to hear from you. Let's start a conversation.</p>
+          <h1 className="text-4xl font-bold text-[#8D493A] mb-4 mt-20">Get in Touch</h1>
+          <p className="text-[#8D493A]/80 ">We'd love to hear from you. Let's start a conversation.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

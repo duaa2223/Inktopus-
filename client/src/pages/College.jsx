@@ -1411,10 +1411,10 @@ const Resource = () => {
     <>
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-center" style={{ 
+        <h1 className="text-4xl font-bold mb-8 mt-24 text-center" style={{ 
           color: '#8D493A',
           textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)'
-        }}>اختر كليتك</h1>
+        }}>Choose Your College</h1>
         <div id="map" style={{
           height: '85vh',
           width: '100%',

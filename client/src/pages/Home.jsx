@@ -732,12 +732,13 @@ const HeroSection = () => {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
   
   const pageImages = [
-    "https://i.pinimg.com/474x/5f/c9/47/5fc947b953b26b4faabf94b2fdef9dc7.jpg",
-    "https://i.pinimg.com/474x/1f/9a/5f/1f9a5f6bac30ed7a749050b7a343746d.jpg",
-    "https://i.pinimg.com/236x/18/88/2b/18882ba3838c34cddf792e7f39a6f12d.jpg",
-    "https://i.pinimg.com/236x/79/f9/ee/79f9ee847b5644643cc998165a1841ce.jpg",
-    "https://i.pinimg.com/736x/1d/80/cb/1d80cbc8fde398d89e8afd75b073e015.jpg",
-    "https://i.pinimg.com/236x/b6/59/61/b659610d98f9398e5d361a2e6370c1d4.jpg",
+    "../../assets/sea.png",
+    "../../assets/sea2.svg",
+   
+    "https://i.pinimg.com/736x/b6/ec/ce/b6ecce66c76ec600313c0f75206c4482.jpg",
+    "https://i.pinimg.com/736x/36/61/8f/36618fc2b6eb7b26e858f538139df87a.jpg",
+    "https://i.pinimg.com/736x/3e/28/c5/3e28c509f6a9d3637a7a7aa3f8a28a00.jpg",
+    "https://i.pinimg.com/736x/d7/20/08/d720087205054228de6071d01324305b.jpg",
     
   ];
 
@@ -857,7 +858,7 @@ const HeroSection = () => {
         </div>
 
         {/* Book Container - Right side */}
-        <div className="w-full lg:w-1/2 relative mb-8 lg:mb-0 order-1 lg:order-2 lg:flex lg:justify-end">
+        <div className="hidden  w-full lg:w-1/2 relative mb-8 lg:mb-0 order-1 lg:order-2 lg:flex lg:justify-end">
           <div className="book-container w-[280px] h-[400px] sm:w-[400px] sm:h-[550px] perspective-[1500px] mx-auto lg:mx-0 relative">
             <motion.div 
               className="book relative w-full h-full"
@@ -1007,7 +1008,7 @@ const HeroSection = () => {
           <motion.button 
             onClick={prevPage} 
             disabled={currentPage === -1}
-            className="absolute left-0 lg:-left-12 top-1/2 transform -translate-y-1/2 bg-[#8D493A] text-white rounded-full p-4 shadow-lg disabled:opacity-50 z-10 text-2xl"
+            className="absolute left-0 lg:-left-52 top-1/2 transform -translate-y-1/2 bg-[#8D493A] text-white rounded-full p-4 shadow-lg disabled:opacity-50 z-10 text-2xl"
             whileHover={{ scale: 1.1, backgroundColor: "#D0B8A8", color: "#8D493A" }}
             whileTap={{ scale: 0.9 }}
           >

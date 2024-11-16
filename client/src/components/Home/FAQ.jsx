@@ -6,24 +6,24 @@ import { FaChevronDown } from "react-icons/fa";  // إضافة أيقونة أف
 
 const faqData = [
     {
-        question: "How can manure management improve soil health?",
-        answer: "Proper manure management enriches soil with nutrients, enhances microbial activity, and improves soil structure, which can lead to increased crop yields and reduced need for chemical fertilizers."
+        question: "Can I make a purchase without signing up?",
+        answer: "No, to proceed to the cart and complete a purchase, you must register on the website."
     },
     {
-        question: "What practices can help in effective manure management?",
-        answer: "Practices such as composting, using cover crops, and rotational grazing can optimize manure application, minimize nutrient runoff, and improve water quality."
+        question: "What can I access as a guest user?",
+        answer: "As a guest, you can browse colleges, academic years, and the library. However, you cannot view detailed book information."
     },
     {
-        question: "Is manure a sustainable fertilizer option?",
-        answer: "Yes, manure is a renewable resource that recycles nutrients back into the soil, promoting sustainability and reducing reliance on synthetic fertilizers."
+        question: "What details are available about books before purchase?",
+        answer: "For each book, we provide promo videos, sample pages, and an overview of its content to give you a visual and informational preview. These features are accessible to registered users to help you make an informed decision before buying."
     },
     {
-        question: "How does improper manure management affect the environment?",
-        answer: "Improper management can lead to nutrient runoff, which contaminates water bodies and contributes to eutrophication, harming aquatic ecosystems."
+        question: " How are the categories organized on the website?",
+        answer: "Our platform features a wide range of colleges, each with its specific academic years. Within each year, you’ll find diverse specializations. For example, you and a classmate may share the same college and year but study different specializations, potentially sharing the same materials or books."
     },
     {
-        question: "What are the regulations regarding manure application?",
-        answer: "Regulations vary by region but often include guidelines on application rates, timing, and methods to ensure environmental protection and public health."
+        question: "Will I receive a digital copy along with my physical book?",
+        answer: "Yes! With every physical book purchase, we gift you a complimentary PDF version for your convenience and long-term use."
     }
 ];
 

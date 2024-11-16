@@ -1,16 +1,38 @@
+// import { useState, useEffect } from 'react';
+// import PublisherApplications from '../components/tapDash/PublisherAppDash';
+// import AcademicSection from '../components/tapDash/AcademicSection';
+// import { Users, BookOpen, School, Layout, BarChart2, FileText, ShoppingBag,Mail } from 'lucide-react';
+// import ContentManagementTab  from '../components/tapDash/ContentTap'
+// import StatsDashboardTab from '../components/tapDash/StatsTab'
+// import UserManagementTab from '../components/tapDash/UserTab'
+// import OrdersManagementTab from '../components/tapDash/OrderTap'
+// import MessagesTab from '../components/tapDash/Massages';
+
+// const Tab = ({ children, isActive, onClick }) => (
+//   <button
+//     className={`px-4 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 ${
+//       isActive
+//         ? 'bg-[#8D493A] text-[#F8EDE3] shadow-lg'
+//         : 'bg-[#D0B8A8]/70 text-[#8D493A] hover:bg-[#DFD3C3] hover:shadow-md'
+//     }`}
+//     onClick={onClick}
+//   >
+//     {children}
+//   </button>
+// );
 import { useState, useEffect } from 'react';
 import PublisherApplications from '../components/tapDash/PublisherAppDash';
 import AcademicSection from '../components/tapDash/AcademicSection';
-import { Users, BookOpen, School, Layout, BarChart2, FileText, ShoppingBag,Mail } from 'lucide-react';
-import ContentManagementTab  from '../components/tapDash/ContentTap'
-import StatsDashboardTab from '../components/tapDash/StatsTab'
-import UserManagementTab from '../components/tapDash/UserTab'
-import OrdersManagementTab from '../components/tapDash/OrderTap'
+import { Users, BookOpen, School, Layout, BarChart2, FileText, ShoppingBag, Mail, Menu, X } from 'lucide-react';
+import ContentManagementTab from '../components/tapDash/ContentTap';
+import StatsDashboardTab from '../components/tapDash/StatsTab';
+import UserManagementTab from '../components/tapDash/UserTab';
+import OrdersManagementTab from '../components/tapDash/OrderTap';
 import MessagesTab from '../components/tapDash/Massages';
 
 const Tab = ({ children, isActive, onClick }) => (
   <button
-    className={`px-4 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 ${
+    className={`px-4 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 w-full ${
       isActive
         ? 'bg-[#8D493A] text-[#F8EDE3] shadow-lg'
         : 'bg-[#D0B8A8]/70 text-[#8D493A] hover:bg-[#DFD3C3] hover:shadow-md'
@@ -45,6 +67,7 @@ const Button = ({ children, onClick, variant = 'default', className = '' }) => (
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('users');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [colleges, setColleges] = useState([]);
   const [academicYears, setAcademicYears] = useState([]);
@@ -54,6 +77,7 @@ const AdminDashboard = () => {
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showAcademicYearModal, setShowAcademicYearModal] = useState(false);
+
   const [collegeData, setCollegeData] = useState({
     name: '',
     nameAr: '',
@@ -276,15 +300,24 @@ const handleAcademicYearSubmit = async (e) => {
 
 
 
- const tabIcons = {
-    users: <Users className="w-5 h-5" />,
-    'publisher-apps': <FileText className="w-5 h-5" />,
-    academic: <School className="w-5 h-5" />,
-    content: <BookOpen className="w-5 h-5" />,
-    stats: <BarChart2 className="w-5 h-5" />,
-    orders: <ShoppingBag className="w-5 h-5" /> ,
-    messages: <Mail className="w-5 h-5" />,
-  };
+//  const tabIcons = {
+//     users: <Users className="w-5 h-5" />,
+//     'publisher-apps': <FileText className="w-5 h-5" />,
+//     academic: <School className="w-5 h-5" />,
+//     content: <BookOpen className="w-5 h-5" />,
+//     stats: <BarChart2 className="w-5 h-5" />,
+//     orders: <ShoppingBag className="w-5 h-5" /> ,
+//     messages: <Mail className="w-5 h-5" />,
+//   };
+const tabIcons = {
+  users: <Users className="w-5 h-5" />,
+  'publisher-apps': <FileText className="w-5 h-5" />,
+  academic: <School className="w-5 h-5" />,
+  content: <BookOpen className="w-5 h-5" />,
+  stats: <BarChart2 className="w-5 h-5" />,
+  orders: <ShoppingBag className="w-5 h-5" />,
+  messages: <Mail className="w-5 h-5" />,
+};
 
   const renderContent = () => {
     switch (activeTab) {
@@ -313,41 +346,104 @@ const handleAcademicYearSubmit = async (e) => {
       }
     };
   
-    return (
-      <div className="min-h-screen bg-white p-6">
-        <div className="flex gap-6">
-          {/* Sidebar */}
-          <div className="w-20 bg-[#F8EDE3]/80 backdrop-blur-sm rounded-xl p-4 shadow-lg ">
-            <div className="flex flex-col items-center space-y-6">
-              {Object.entries(tabIcons).map(([key, icon]) => (
-                <button
-                  key={key}
-                  className={`p-3 rounded-lg transition-all duration-300 transform hover:scale-110 ${
-                    activeTab === key 
-                      ? 'bg-[#8D493A] text-[#F8EDE3] shadow-lg' 
-                      : 'text-[#8D493A] hover:bg-[#D0B8A8]/50'
-                  }`}
-                  onClick={() => setActiveTab(key)}
-                  title={key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' ')}
-                >
-                  {icon}
-                </button>
-              ))}
-            </div>
-          </div>
+  //   return (
+  //     <div className="min-h-screen bg-white p-6">
+  //       <div className="flex gap-6">
+  //         {/* Sidebar */}
+  //         <div className="w-20 bg-[#F8EDE3]/80 backdrop-blur-sm rounded-xl p-4 shadow-lg ">
+  //           <div className="flex flex-col items-center space-y-6">
+  //             {Object.entries(tabIcons).map(([key, icon]) => (
+  //               <button
+  //                 key={key}
+  //                 className={`p-3 rounded-lg transition-all duration-300 transform hover:scale-110 ${
+  //                   activeTab === key 
+  //                     ? 'bg-[#8D493A] text-[#F8EDE3] shadow-lg' 
+  //                     : 'text-[#8D493A] hover:bg-[#D0B8A8]/50'
+  //                 }`}
+  //                 onClick={() => setActiveTab(key)}
+  //                 title={key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' ')}
+  //               >
+  //                 {icon}
+  //               </button>
+  //             ))}
+  //           </div>
+  //         </div>
   
-          {/* Main Content */}
-          <div className="flex-1">
-            <div className="bg-[#F8EDE3]/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
-              <h1 className="text-3xl font-bold text-[#8D493A] mb-6">Admin Dashboard</h1>
-              <div className="transition-all duration-300">
-                {renderContent()}
-              </div>
+  //         {/* Main Content */}
+  //         <div className="flex-1">
+  //           <div className="bg-[#F8EDE3]/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
+  //             <h1 className="text-3xl font-bold text-[#8D493A] mb-6">Admin Dashboard</h1>
+  //             <div className="transition-all duration-300">
+  //               {renderContent()}
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
+  
+  // export default AdminDashboard;
+  return (
+    <div className="min-h-screen bg-white p-2 sm:p-6">
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden fixed top-4 right-4 z-50 p-2 bg-[#8D493A] text-white rounded-lg"
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+      >
+        {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+      </button>
+
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* Sidebar - Mobile Drawer */}
+        <div className={`
+          fixed md:relative inset-y-0 left-0 z-40 
+          transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} 
+          md:translate-x-0 transition-transform duration-300 ease-in-out
+          w-64 md:w-20 bg-[#F8EDE3]/80 backdrop-blur-sm rounded-xl p-4 shadow-lg
+        `}>
+          <div className="flex flex-col items-center space-y-6">
+            {Object.entries(tabIcons).map(([key, icon]) => (
+              <button
+                key={key}
+                className={`p-3 rounded-lg transition-all duration-300 transform hover:scale-110 
+                  flex items-center gap-3 w-full justify-center md:justify-center
+                  ${activeTab === key 
+                    ? 'bg-[#8D493A] text-[#F8EDE3] shadow-lg' 
+                    : 'text-[#8D493A] hover:bg-[#D0B8A8]/50'
+                  }`}
+                onClick={() => {
+                  setActiveTab(key);
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                {icon}
+                <span className="md:hidden">{key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' ')}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 w-full">
+          <div className="bg-[#F8EDE3]/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#8D493A] mb-6">Admin Dashboard</h1>
+            <div className="transition-all duration-300 overflow-x-auto">
+              {renderContent()}
             </div>
           </div>
         </div>
       </div>
-    );
-  };
-  
-  export default AdminDashboard;
+
+      {/* Overlay for mobile menu */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+    </div>
+  );
+};
+
+export default AdminDashboard;

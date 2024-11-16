@@ -1075,6 +1075,7 @@ import { fetchCart, removeFromCart, updateQuantity, clearCart } from '../feature
 // import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import toast from 'react-hot-toast';
 
+
 const CartPage = () => {
   const dispatch = useDispatch();
   const { items = [], isLoading, error } = useSelector((state) => state.cart);
