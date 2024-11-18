@@ -4,25 +4,6 @@ const User = require('../Models/User');
 const sendOTPEmail = require('../utils/sendOTPEmail');
 const users = {}; // يمكنك استخدام قاعدة بيانات لتخزين معلومات المستخدمين
 
-// const registerUser = async (req, res) => {
-//   const { username, email, password } = req.body;
-//   // تحقق من الحقول المطلوبة
-//   if (!username || !email || !password) {
-//       return res.status(400).json({ message: 'Username, email, and password are required' });
-//   }
-
-//   // توليد OTP وصلاحيته
-//   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-//   const otpExpiry = Date.now() + 10 * 60 * 1000; // 10 دقائق
-
-//   // تخزين بيانات المستخدم مع الـ OTP
-//   const newUser = new User({ username, email, password: await bcrypt.hash(password, 10), otp, otpExpiry });
-//   await newUser.save(); // حفظ المستخدم في قاعدة البيانات
-
-//   // إرسال OTP إلى البريد الإلكتروني
-//   await sendOTPEmail(email, otp);
-//   res.status(200).json({ message: 'OTP sent successfully. Please check your email.' });
-// };
 
 const registerUser = async (req, res) => {
   try {
@@ -166,9 +147,6 @@ const loginUser = async (req, res) => {
         if (!isMatch) return res.status(400).json({ message: 'Invalid username or password' });
 
        
-        // // إنشاء التوكن
-        // const token = jwt.sign({ userId: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        // // const refreshToken = jwt.sign({ userId: user._id.toString() }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
 // إنشاء التوكن
 const token = jwt.sign(
   { 
@@ -187,13 +165,6 @@ const token = jwt.sign(
             sameSite: 'Strict', 
         });
 
-        // تخزين refresh token
-        // res.cookie('refreshToken', refreshToken, {
-        //     httpOnly: true,
-        //     secure: process.env.NODE_ENV === 'production',
-        //     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 أيام
-        //     sameSite: 'Strict',
-        // });
 
         res.status(200).json({ message: 'Logged in successfully', role: user.role  });
     } catch (error) {
@@ -232,32 +203,6 @@ const logout = (req, res) => {
   res.clearCookie('token');
   res.status(200).json({ message: 'Logged out successfully' });
 };
-
-// تحديث التوكن
-// const refreshToken = async (req, res) => {
-//     const { refreshToken } = req.cookies;
-
-//     if (!refreshToken) {
-//         return res.status(401).json({ message: 'Refresh token not found, please log in again.' });
-//     }
-
-//     try {
-//         const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
-//         const newToken = jwt.sign({ userId: decoded.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-//         // تحديث التوكن في الكوكي
-//         res.cookie('jwt', newToken, {
-//             httpOnly: true,
-//             secure: process.env.NODE_ENV === 'production',
-//             maxAge: 3600000, // 1 ساعة
-//             sameSite: 'Strict',
-//         });
-
-//         res.status(200).json({ message: 'Token refreshed successfully' });
-//     } catch (error) {
-//         res.status(401).json({ message: 'Invalid refresh token, please log in again.'});
-//     }
-// };
 
 
 const getUserProfile = async (req, res) => {

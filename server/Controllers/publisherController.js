@@ -39,33 +39,7 @@ const getAllApplications = async (req, res) => {
   }
 };
 
-// Update application status (admin only)
-// const updateApplicationStatus = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { status, adminNotes } = req.body;
 
-//     const application = await PublisherApplication.findById(id);
-//     if (!application) {
-//       return res.status(404).json({ message: 'Application not found' });
-//     }
-
-//     application.status = status;
-//     application.adminNotes = adminNotes;
-//     await application.save();
-
-//     const user = await User.findById(application.user);
-//     user.publisherApplicationStatus = status;
-//     if (status === 'approved') {
-//       user.role = 'publisher';
-//     }
-//     await user.save();
-
-//     res.json({ message: 'Application updated successfully' });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error updating application', error: error.message });
-//   }
-// };
 
 // Update application status (admin only)
 const updateApplicationStatus = async (req, res) => {

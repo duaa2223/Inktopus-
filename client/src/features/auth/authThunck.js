@@ -20,18 +20,7 @@ export const login = createAsyncThunk(
   }
 );
 
-// دالة التسجيل هنا تم التعديل الاخير 
-// export const register = createAsyncThunk(
-//   'auth/register',
-//   async (userData, { rejectWithValue }) => {
-//     try {
-//       const data = await registerApi(userData);
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue(error.response?.data?.message || error.message);
-//     }
-//   }
-// );
+
 export const register = createAsyncThunk(
   'auth/register',
   async (userData, { rejectWithValue }) => {
@@ -78,34 +67,7 @@ export const logout = createAsyncThunk(
   }
 );
 
-// // دالة التحقق من حالة تسجيل الدخول
-// export const checkLoginStatus = createAsyncThunk(
-//   'auth/checkLoginStatus',
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const data = await getLoginStatusApi();
-//       return data.isLoggedIn;
-//     } catch (error) {
-//       return rejectWithValue(error.response?.data?.message || error.message);
-//     }
-//   }
-// );
 
-// للدور وتعمل 
-// export const checkLoginStatus = createAsyncThunk(
-//   'auth/checkLoginStatus',
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const data = await getLoginStatusApi();
-//       const role = localStorage.getItem('role');
-//       console.log('Fetched role:', role); // للتأكد من أن الدور يتم استرجاعه بشكل صحيح
-//       return { isLoggedIn: data.isLoggedIn, role };
-//     } catch (error) {
-//       return rejectWithValue(error.response?.data?.message || error.message);
-//     }
-//   }
-// );
-//دمج
 export const checkLoginStatus = createAsyncThunk(
   'auth/checkLoginStatus',
   async (_, { rejectWithValue }) => {

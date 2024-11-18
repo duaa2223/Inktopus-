@@ -1,19 +1,19 @@
 const nodemailer = require('nodemailer');
-require('dotenv').config(); // تحميل المتغيرات البيئية
+require('dotenv').config(); 
 
 const sendOTPEmail = async (email, otp) => {
     // إعداد نقل البريد
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.EMAIL_USER, // استخدام المتغير البيئي
-            pass: process.env.EMAIL_PASS  // استخدام المتغير البيئي
+            user: process.env.EMAIL_USER, 
+            pass: process.env.EMAIL_PASS  
         }
     });
 
     // إعداد تفاصيل البريد الإلكتروني
     const mailOptions = {
-        from: process.env.EMAIL_USER, // استخدام المتغير البيئي
+        from: process.env.EMAIL_USER, 
         to: email,
         subject: 'Your OTP Code',
         text: `Your OTP code is ${otp}`

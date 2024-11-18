@@ -1,56 +1,4 @@
-// const mongoose = require('mongoose');
 
-// const academicYearSchema = new mongoose.Schema({
-//   name: { type: String, required: true, unique: true }
-// });
-
-// const AcademicYear = mongoose.model('AcademicYear', academicYearSchema);
-
-// module.exports = AcademicYear;
-// const mongoose = require('mongoose');
-
-// const academicYearSchema = new mongoose.Schema({
-//   name: { type: String, required: true },
-//   college: { type: mongoose.Schema.Types.ObjectId, ref: 'College', required: true },
-//   imageUrl: { type: String }
-// });
-
-// const AcademicYear = mongoose.model('AcademicYear', academicYearSchema);
-
-// module.exports = AcademicYear;
-// Models/AcademicYearModel.js
-////////////////////////////////////////////////////////////
-// const mongoose = require('mongoose');
-
-// const academicYearSchema = new mongoose.Schema({
-//   name: { type: String, required: true },
-//   imageUrl: { type: String },
-//   college: { type: mongoose.Schema.Types.ObjectId, ref: 'College', required: true }
-// });
-
-// module.exports = mongoose.model('AcademicYear', academicYearSchema);
-/////////////////////////////////////////////////////////////////////////
-// const mongoose = require('mongoose');
-
-// const academicYearSchema = new mongoose.Schema({
-//   name: { type: String, required: true },
-//   nameAr: { type: String, required: true }, // الاسم بالعربية
-//   imageUrl: { type: String },
-//   description: { type: String },
-//   college: { type: mongoose.Schema.Types.ObjectId, ref: 'College', required: true },
-//   order: { type: Number, required: true }, // ترتيب السنة الدراسية
-//   isActive: { type: Boolean, default: true },
-// }, { timestamps: true });
-
-// // إنشاء فهرس مركب للكلية والترتيب
-// academicYearSchema.index({ college: 1, order: 1 }, { unique: true });
-
-// const AcademicYear = mongoose.model('AcademicYear', academicYearSchema);
-
-// module.exports = AcademicYear;
-//////////////////////////////////////////////////////////////////////////////////////////////
-// models/AcademicYear.js
-////////////////////////////////////////////////////////////////////////////////////////
 const mongoose = require('mongoose');
 
 const academicYearSchema = new mongoose.Schema({
@@ -90,7 +38,7 @@ academicYearSchema.pre('save', async function(next) {
     });
 
     if (existingWithOrder) {
-      throw new Error(`يوجد بالفعل سنة دراسية بالترتيب ${this.order} في هذه الكلية`);
+      throw new Error(`There is already an academic year in order${this.order} In this college`);
     }
 
     // التحقق من عدم وجود سنة دراسية بنفس الاسم في نفس الكلية
@@ -104,7 +52,7 @@ academicYearSchema.pre('save', async function(next) {
     });
 
     if (existingWithName) {
-      throw new Error('يوجد بالفعل سنة دراسية بنفس الاسم في هذه الكلية');
+      throw new Error('There is already an academic year with the same name in this college.');
     }
 
     next();

@@ -69,15 +69,6 @@ router.put('/colleges/:id', updateCollege);
 // تحديث مرحلة دراسية
 router.put('/academic-years/:id', updateAcademicYear);
 
-
-// عرض جميع التخصصات
-// router.get('/specializations/:id', getAllSpecializations);
-// جلب التخصصات بناءً على الكلية والسنة الأكاديمية
-// router.get('/specializations/college/:collegeId/year/:yearId', getSpecializations);
-
-// جلب التخصصات بناءً على الكلية والسنة الأكاديمية
-// router.get('/specializations/college/:collegeId/year/:yearId', getSpecializationsByCollegeAndYear);
-
 router.get('/specializations/college/:collegeId/year/:yearId', getSpecializationsByCollegeAndYear);  
 // console.log('Route hit!');
 

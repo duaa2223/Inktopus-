@@ -37,20 +37,6 @@ router.get('/users/:userId/toggle-activation', auth, userController.toggleUserAc
 // update password 
 router.put('/users/update-password', userController.updateUserPassword);  
 
-// المسار الخاص بالتحقق من حالة تسجيل الدخول
-// router.get('/auth/status', authenticateToken, userController.getLoginStatus );
-// Route لتسجيل الخروج
-// router.post('/logout', userController.logoutUser);
-// // Route للحصول على معلومات المستخدم المحمي بالـ token
-// router.get('/profile', authenticateToken, userController.getProfile);
 
-// // Route لتحديث ملف المستخدم (محمية بالـ token)
-// router.put('/profile', authenticateToken, userController.updateProfile);
-
-// // Route لحذف مستخدم (محمية بالـ token)
-// router.delete('/profile', authenticateToken, userController.deleteUser);
-
-// Route لاسترجاع قائمة الكتب المحفوظة للمستخدم (محمية بالـ token)
-// router.get('/saved-books', authenticateToken, userController.getSavedBooks);
 
 module.exports = router;

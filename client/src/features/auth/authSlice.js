@@ -49,14 +49,7 @@ export const authSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      //هنا تم التعديل الاخير
-      // .addCase(register.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   state.user = action.payload.user;
-      //   state.token = action.payload.token;
-      //   state.isLoggedIn = true;
-      //   state.error = null;
-      // })
+      
 
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -98,17 +91,7 @@ export const authSlice = createSlice({
         state.error = null;
         localStorage.removeItem('role');
       })
-      // Check Login Status
-      // .addCase(checkLoginStatus.fulfilled, (state, action) => {
-      //   state.isLoggedIn = action.payload;
-      //   state.role = action.payload.role; // تحديث الدور
-      //   if (!action.payload) {
-      //     state.user = null;
-      //     state.token = null;
-      //     state.role = null;
-      //     localStorage.removeItem('role');
-      //   }
-      // });
+  
       .addCase(checkLoginStatus.fulfilled, (state, action) => {
         state.isLoggedIn = action.payload.isLoggedIn;
             //  state.role = action.payload.role; // تحديث الدور

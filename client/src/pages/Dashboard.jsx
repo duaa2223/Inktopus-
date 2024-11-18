@@ -1,25 +1,4 @@
-// import { useState, useEffect } from 'react';
-// import PublisherApplications from '../components/tapDash/PublisherAppDash';
-// import AcademicSection from '../components/tapDash/AcademicSection';
-// import { Users, BookOpen, School, Layout, BarChart2, FileText, ShoppingBag,Mail } from 'lucide-react';
-// import ContentManagementTab  from '../components/tapDash/ContentTap'
-// import StatsDashboardTab from '../components/tapDash/StatsTab'
-// import UserManagementTab from '../components/tapDash/UserTab'
-// import OrdersManagementTab from '../components/tapDash/OrderTap'
-// import MessagesTab from '../components/tapDash/Massages';
 
-// const Tab = ({ children, isActive, onClick }) => (
-//   <button
-//     className={`px-4 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 ${
-//       isActive
-//         ? 'bg-[#8D493A] text-[#F8EDE3] shadow-lg'
-//         : 'bg-[#D0B8A8]/70 text-[#8D493A] hover:bg-[#DFD3C3] hover:shadow-md'
-//     }`}
-//     onClick={onClick}
-//   >
-//     {children}
-//   </button>
-// );
 import { useState, useEffect } from 'react';
 import PublisherApplications from '../components/tapDash/PublisherAppDash';
 import AcademicSection from '../components/tapDash/AcademicSection';
@@ -214,10 +193,6 @@ const handleAcademicYearSubmit = async (e) => {
       const collegesData = await collegesResponse.json();
       setColleges(collegesData); // تحديث حالة الكليات
   
-      // // استرجاع الأعوام الأكاديمية
-      // const academicYearsResponse = await fetch('http://localhost:5000/api/academicYears');
-      // const academicYearsData = await academicYearsResponse.json();
-      // setAcademicYears(academicYearsData); // تحديث حالة الأعوام الأكاديمية
   
       // استرجاع التخصصات
       const specializationsResponse = await fetch('http://localhost:5000/api/specializations');
@@ -299,16 +274,6 @@ const handleAcademicYearSubmit = async (e) => {
   if (error) return <div className="flex items-center justify-center h-screen bg-[#F8EDE3] text-red-500">{error}</div>;
 
 
-
-//  const tabIcons = {
-//     users: <Users className="w-5 h-5" />,
-//     'publisher-apps': <FileText className="w-5 h-5" />,
-//     academic: <School className="w-5 h-5" />,
-//     content: <BookOpen className="w-5 h-5" />,
-//     stats: <BarChart2 className="w-5 h-5" />,
-//     orders: <ShoppingBag className="w-5 h-5" /> ,
-//     messages: <Mail className="w-5 h-5" />,
-//   };
 const tabIcons = {
   users: <Users className="w-5 h-5" />,
   'publisher-apps': <FileText className="w-5 h-5" />,
@@ -346,42 +311,7 @@ const tabIcons = {
       }
     };
   
-  //   return (
-  //     <div className="min-h-screen bg-white p-6">
-  //       <div className="flex gap-6">
-  //         {/* Sidebar */}
-  //         <div className="w-20 bg-[#F8EDE3]/80 backdrop-blur-sm rounded-xl p-4 shadow-lg ">
-  //           <div className="flex flex-col items-center space-y-6">
-  //             {Object.entries(tabIcons).map(([key, icon]) => (
-  //               <button
-  //                 key={key}
-  //                 className={`p-3 rounded-lg transition-all duration-300 transform hover:scale-110 ${
-  //                   activeTab === key 
-  //                     ? 'bg-[#8D493A] text-[#F8EDE3] shadow-lg' 
-  //                     : 'text-[#8D493A] hover:bg-[#D0B8A8]/50'
-  //                 }`}
-  //                 onClick={() => setActiveTab(key)}
-  //                 title={key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' ')}
-  //               >
-  //                 {icon}
-  //               </button>
-  //             ))}
-  //           </div>
-  //         </div>
   
-  //         {/* Main Content */}
-  //         <div className="flex-1">
-  //           <div className="bg-[#F8EDE3]/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
-  //             <h1 className="text-3xl font-bold text-[#8D493A] mb-6">Admin Dashboard</h1>
-  //             <div className="transition-all duration-300">
-  //               {renderContent()}
-  //             </div>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // };
   
   // export default AdminDashboard;
   return (
